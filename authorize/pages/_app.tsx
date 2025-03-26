@@ -2,7 +2,7 @@ import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import Script from "next/script";
 
-const VILLAGE_PUBLIC_KEY = "AVeryPublicKey";
+const VILLAGE_PUBLIC_KEY = "AVeryPublicKey"; // Replace with actual public key
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
