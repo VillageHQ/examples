@@ -20,12 +20,15 @@ export default async function handler(
     const response = await fetch(
       "https://api.village.do/v1/users/authorization",
       {
-        method: "GET",
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
           "secret-key": secretKey,
           "user-identifier": session.user.id,
         },
+        body: JSON.stringify({
+          email: session.user.email,
+        }),
       }
     );
 
@@ -50,9 +53,9 @@ function getSession(
 ): Promise<{ user: { id: string; email: string; name: string } }> {
   return Promise.resolve({
     user: {
-      id: "123",
-      email: "test@test.com",
-      name: "Test User",
+      id: "abc123",
+      email: "example-authorization-test@village.do",
+      name: "Example Authorization Test",
     },
   });
 }
