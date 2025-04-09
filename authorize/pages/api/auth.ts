@@ -1,7 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
-const VILLAGE_SECRET_KEY = "sk_DonutsgDrM5KcZl10ZxvU4HGFIn8Zjdx6GJf"; // Replace with actual secret key
-
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -12,6 +10,12 @@ export default async function handler(
 
   const session = await getSession(req);
 
+  const secretKey = process.env.VILLAGE_SECRET_KEY;
+
+  if (!secretKey) {
+    return res.status(500).json({ error: "VILLAGE_SECRET_KEY is not set" });
+  }
+
   try {
     const response = await fetch(
       "https://api.village.do/v1/users/authorization",
@@ -19,7 +23,7 @@ export default async function handler(
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          "secret-key": VILLAGE_SECRET_KEY,
+          "secret-key": secretKey,
           "user-identifier": session.user.id,
         },
       }
