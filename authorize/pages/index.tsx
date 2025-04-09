@@ -35,15 +35,12 @@ const people: Person[] = [
 ];
 
 export default function Home() {
-  const [token, setToken] = useState<string | null>(null);
-
   useEffect(() => {
     const fetchToken = async () => {
       try {
         const response = await fetch("/api/auth");
         const data = await response.json();
         if (data.token) {
-          setToken(data.token);
           window.Village.authorize(data.token);
         }
       } catch (error) {
