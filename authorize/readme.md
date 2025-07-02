@@ -1,15 +1,30 @@
-# Village Authorization Flow Example
+# Village SDK Complete Integration Example
 
-This is a full-stack Next.js example showing how to implement Village's authorization flow for embedded UIs.
+This is a comprehensive Next.js example showcasing the complete Village SDK integration, including secure authorization flow and all available embedded UI widgets.
 
 ## Overview
 
 This example demonstrates how to:
 
 - Set up Village authorization in a Next.js application
-- Handle the OAuth redirect flow
+- Handle the OAuth redirect flow securely
 - Make authenticated requests to Village's API
-- Display connection paths and other relationship intelligence features
+- Implement all Village SDK embedded UI widgets:
+  - **Sync Network** - Network synchronization and onboarding
+  - **Search Widget** - Embedded network search experience
+  - **Browse Paths** - Connection path discovery for companies
+  - **Find Intro Buttons** - Introduction facilitation for specific people
+- Display connection paths and relationship intelligence features
+- Create a production-ready UI with proper error handling
+
+## Quick Demo
+
+The main page (`pages/index.tsx`) includes:
+
+1. **🔄 Sync Network Widget** - Blue section with network sync functionality
+2. **🔍 Search Widget** - Green section with embedded search experience
+3. **🛤️ Browse Paths Widget** - Purple section showing paths to companies (Google, Microsoft)
+4. **👥 Find Intro Buttons** - Orange section with person-specific intro requests
 
 ## Setup
 
@@ -35,9 +50,9 @@ This example demonstrates how to:
 
 ## How It Works
 
-### 1. Initialize Village Widget
+### 1. Initialize Village SDK
 
-The Village widget is initialized in `pages/_app.tsx` using your public key:
+The Village SDK is initialized in `pages/_app.tsx` using your public key:
 
 ```typescript
 // examples/authorize/pages/_app.tsx
@@ -65,7 +80,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
 ### 2. Generate Authorization Token Server-Side
 
-An API route (`pages/api/auth.ts`) handles the generation of the Village authorization token. This route should securely handle your `VILLAGE_SECRET_KEY` and call the Village API (`https://api.village.do/v1/users/authorization`) with the user's unique identifier and email.
+An API route (`pages/api/auth.ts`) handles the generation of the Village authorization token. This route securely handles your `VILLAGE_SECRET_KEY` and calls the Village API (`https://api.village.do/v1/users/authorization`) with the user's unique identifier and email.
 
 _Note: The `getSession` function in this example uses mock data. In a real application, you would fetch the actual logged-in user's session data._
 
@@ -147,52 +162,86 @@ declare global {
   interface Window {
     Village: {
       authorize: (token: string) => void;
-      // Potentially other Village methods
     };
   }
 }
 
 export default function Home() {
   useEffect(() => {
-    const fetchTokenAndAuthorize = async () => {
+    const fetchToken = async () => {
       try {
-        // Fetch the token from your backend API route
         const response = await fetch("/api/auth");
-        if (!response.ok) {
-          throw new Error(`API responded with status ${response.status}`);
-        }
         const data = await response.json();
-
-        // Check if token exists and authorize the user
-        if (data.token && window.Village) {
+        if (data.token) {
           window.Village.authorize(data.token);
-          console.log("Village user authorized.");
-        } else if (!data.token) {
-          console.error("Token not received from API.");
-        } else {
-          console.error("Village SDK not loaded yet.");
         }
       } catch (error) {
-        console.error("Failed to fetch token or authorize:", error);
+        console.error("Failed to fetch token:", error);
       }
     };
 
-    // Ensure Village SDK is loaded before attempting to authorize
-    if (window.Village) {
-       fetchTokenAndAuthorize();
-    } else {
-      // Optional: Add a listener or retry mechanism if the SDK might load later
-      console.log("Waiting for Village SDK to load...");
-      // Example: Re-check after a delay, or use the SDK's load callback if available
-    }
+    fetchToken();
+  }, []);
 
-  }, []); // Empty dependency array ensures this runs once on mount
-
-  // ... rest of the component JSX
-  return (
-    // ... JSX for displaying content, e.g., the people list ...
-  );
+  // ... rest of the component with all Village widgets
 }
 ```
 
-This flow ensures that only users authenticated by your application can interact with the Village widget under their identity.
+## Village SDK Widgets Implementation
+
+### 1. Sync Network Widget
+
+```html
+<button village-module="sync">Sync Network</button>
+```
+
+### 2. Search Widget
+
+```html
+<div village-module="search"></div>
+```
+
+### 3. Browse Paths Widget
+
+```html
+<div
+  village-module="paths"
+  village-data-url="https://www.linkedin.com/company/google"
+>
+  <div village-paths-availability="found">
+    <!-- Village will auto-populate this with an iframe if paths were found -->
+  </div>
+  <div village-paths-availability="not-found">
+    <!-- Fallback content when no paths are found -->
+    No paths found. <a href="#" village-module="sync">Grow my network →</a>
+  </div>
+  <div village-paths-availability="loading">
+    <!-- Loading state -->
+  </div>
+</div>
+```
+
+### 4. Find Intro Buttons
+
+```html
+<button village-data-url="https://www.linkedin.com/in/person">Get Intro</button>
+```
+
+## Features Demonstrated
+
+- **Responsive Design**: All widgets adapt to different screen sizes
+- **Loading States**: Proper loading indicators for async operations
+- **Error Handling**: Graceful fallbacks when content isn't available
+- **Color-Coded Sections**: Easy identification of different widget types
+- **Production Ready**: Proper TypeScript types and error boundaries
+
+## Documentation Links
+
+- [Village Documentation](https://docs.village.do/)
+- [Embedded UIs](https://docs.village.do/embedded-uis)
+- [Authorization Flow](https://docs.village.do/authorization-flow)
+- [Sync Network](https://docs.village.do/embedded-uis/sync-network)
+- [Search Widget](https://docs.village.do/embedded-uis/search)
+- [Browse Paths](https://docs.village.do/embedded-uis/browse-paths)
+
+This flow ensures that only users authenticated by your application can interact with the Village widget under their identity, while showcasing all available Village SDK capabilities.
