@@ -1,5 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
+const VILLAGE_API_URL = process.env.VILLAGE_API_URL;
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -17,20 +19,17 @@ export default async function handler(
   }
 
   try {
-    const response = await fetch(
-      "https://api.village.do/v1/users/authorization",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "secret-key": secretKey,
-          "user-identifier": session.user.id,
-        },
-        body: JSON.stringify({
-          email: session.user.email,
-        }),
-      }
-    );
+    const response = await fetch(`${VILLAGE_API_URL}/v1/users/authorization`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "secret-key": secretKey,
+        "user-identifier": session.user.id,
+      },
+      body: JSON.stringify({
+        email: session.user.email,
+      }),
+    });
 
     if (!response.ok) {
       const errorData = await response.text();
