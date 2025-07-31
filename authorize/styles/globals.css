@@ -71,3 +71,21 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Village SDK facepiles styles */
+[village-paths-data="facepiles"] img {
+  @apply w-7 h-7 rounded-full border border-white object-cover;
+}
+
+[village-paths-data="facepiles"] img:not(:first-child) {
+  @apply -ml-2;
+}
+
+/* Village SDK browse paths styles */
+[village-module="paths"] {
+  @apply min-h-[200px];
+}
+
+[village-module="paths"] iframe {
+  @apply w-full h-full min-h-[200px] border-0;
+}

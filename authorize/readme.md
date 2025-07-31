@@ -12,6 +12,7 @@ This example demonstrates how to:
 - Implement all Village SDK embedded UI widgets:
   - **Sync Network** - Network synchronization and onboarding
   - **Search Widget** - Embedded network search experience
+  - **Autopilot Widget** - AI-powered candidate search and screening
   - **Browse Paths** - Connection path discovery for companies
   - **Find Intro Buttons** - Introduction facilitation for specific people
 - Display connection paths and relationship intelligence features
@@ -23,8 +24,9 @@ The main page (`pages/index.tsx`) includes:
 
 1. **🔄 Sync Network Widget** - Blue section with network sync functionality
 2. **🔍 Search Widget** - Green section with embedded search experience
-3. **🛤️ Browse Paths Widget** - Purple section showing paths to companies (Google, Microsoft)
-4. **👥 Find Intro Buttons** - Orange section with person-specific intro requests
+3. **🤖 Autopilot Widget** - Indigo section with AI-powered search and screening
+4. **🛤️ Browse Paths Widget** - Purple section showing paths to companies (Google, Microsoft)
+5. **👥 Find Intro Buttons** - Orange section with person-specific intro requests
 
 ## Setup
 
@@ -201,7 +203,41 @@ export default function Home() {
 <div village-module="search"></div>
 ```
 
-### 3. Browse Paths Widget
+### 3. Autopilot Widget
+
+The Autopilot widget provides AI-powered candidate search and screening capabilities.
+
+#### Programmatic Usage:
+
+```javascript
+window.Village.startAutopilot({
+  initialQuery: "Senior engineers in San Francisco",
+  criteria: ["5+ years experience", "Python or JavaScript"],
+  onResultClick: (result) => {
+    console.log("Result clicked:", result);
+  },
+  onComplete: (data) => {
+    console.log("Autopilot completed with", data.results.length, "results");
+  },
+  onClose: () => {
+    console.log("Autopilot modal closed");
+  }
+});
+```
+
+#### Declarative Usage:
+
+```html
+<button 
+  village-module="autopilot"
+  village-autopilot-query="Product managers at B2B SaaS companies"
+  village-autopilot-criteria='["Experience with PLG", "Team leadership"]'
+>
+  Find Product Managers
+</button>
+```
+
+### 4. Browse Paths Widget
 
 ```html
 <div
@@ -221,7 +257,7 @@ export default function Home() {
 </div>
 ```
 
-### 4. Find Intro Buttons
+### 5. Find Intro Buttons
 
 ```html
 <button village-data-url="https://www.linkedin.com/in/person">Get Intro</button>
@@ -242,6 +278,7 @@ export default function Home() {
 - [Authorization Flow](https://docs.village.do/authorization-flow)
 - [Sync Network](https://docs.village.do/embedded-uis/sync-network)
 - [Search Widget](https://docs.village.do/embedded-uis/search)
+- [Autopilot Widget](https://docs.village.do/embedded-uis/autopilot)
 - [Browse Paths](https://docs.village.do/embedded-uis/browse-paths)
 
 This flow ensures that only users authenticated by your application can interact with the Village widget under their identity, while showcasing all available Village SDK capabilities.

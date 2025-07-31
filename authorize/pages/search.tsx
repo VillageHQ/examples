@@ -2,14 +2,6 @@ import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import Head from "next/head";
 
-declare global {
-  interface Window {
-    Village: {
-      authorize: (token: string) => void;
-    };
-  }
-}
-
 export default function Search() {
   useEffect(() => {
     const fetchToken = async () => {

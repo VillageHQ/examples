@@ -1,14 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import Head from "next/head";
-
-declare global {
-  interface Window {
-    Village: {
-      authorize: (token: string) => void;
-    };
-  }
-}
 
 interface Person {
   id: number;
@@ -19,18 +11,18 @@ interface Person {
 const people: Person[] = [
   {
     id: 1,
-    name: "Abd Absi",
+    name: "Abdallah Absi",
     linkedinUrl: "https://www.linkedin.com/in/abdabsi/",
   },
   {
     id: 2,
-    name: "John Doe",
-    linkedinUrl: "https://www.linkedin.com/in/johndoe/",
+    name: "Google",
+    linkedinUrl: "https://www.linkedin.com/company/google/",
   },
   {
     id: 3,
-    name: "Jane Smith",
-    linkedinUrl: "https://www.linkedin.com/in/janesmith/",
+    name: "Islam Ibrahim",
+    linkedinUrl: "https://www.linkedin.com/in/islaamm/",
   },
 ];
 
@@ -77,7 +69,20 @@ export default function Home() {
             Village SDK Integration Demo
           </h1>
 
-          {/* Village Sync Network Button */}
+          <div className="mb-8 p-4 bg-indigo-50 border border-indigo-200 rounded-lg text-center">
+            <p className="text-indigo-700 mb-2">
+              🚀 Check out the advanced Autopilot demo with more examples and
+              features
+            </p>
+            <a
+              href="/autopilot-demo"
+              className="inline-block px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition-colors"
+            >
+              View Autopilot Advanced Demo →
+            </a>
+          </div>
+
+          {/* 1. Village Sync Network Button */}
           <div className="mb-8 p-6 bg-blue-50 border border-blue-200 rounded-lg">
             <h2 className="text-2xl font-semibold text-blue-900 mb-2">
               1. Sync Network Widget
@@ -94,7 +99,7 @@ export default function Home() {
             </Button>
           </div>
 
-          {/* Village Search Widget */}
+          {/* 2. Village Search Widget */}
           <div className="mb-8 p-6 bg-green-50 border border-green-200 rounded-lg">
             <h2 className="text-2xl font-semibold text-green-900 mb-2">
               2. Search Widget
@@ -105,73 +110,21 @@ export default function Home() {
             </p>
             <div
               village-module="search"
-              className="w-full h-96 border border-green-300 rounded-md bg-white"
-              style={{ minHeight: "400px" }}
+              className="w-full border border-green-300 rounded-md bg-white"
+              style={{ height: "500px" }}
             >
               {/* Village will populate this container with search functionality */}
             </div>
           </div>
 
-          {/* Village Browse Paths Widget */}
-          <div className="mb-8 p-6 bg-purple-50 border border-purple-200 rounded-lg">
-            <h2 className="text-2xl font-semibold text-purple-900 mb-2">
-              3. Browse Paths Widget
-            </h2>
-            <p className="text-purple-700 mb-4">
-              Show connection paths to specific companies. Try the examples
-              below:
-            </p>
-
-            <div className="grid md:grid-cols-2 gap-4 mb-4">
-              {sampleCompanies.map((company) => (
-                <div
-                  key={company.name}
-                  className="border border-purple-300 rounded-md p-4 bg-white"
-                >
-                  <h3 className="font-semibold text-purple-900 mb-2">
-                    Paths to {company.name}
-                  </h3>
-                  <div
-                    village-module="paths"
-                    village-data-url={company.linkedinUrl}
-                    className="min-h-[200px]"
-                  >
-                    <div village-paths-availability="found">
-                      {/* Village will auto-populate this with an iframe if paths were found */}
-                    </div>
-                    <div
-                      village-paths-availability="not-found"
-                      className="text-center py-8 text-gray-500"
-                    >
-                      <p>No paths found to {company.name}.</p>
-                      <button
-                        village-module="sync"
-                        className="mt-2 text-purple-600 hover:text-purple-800 underline"
-                      >
-                        Grow my network →
-                      </button>
-                    </div>
-                    <div
-                      village-paths-availability="loading"
-                      className="text-center py-8 text-gray-500"
-                    >
-                      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600 mx-auto"></div>
-                      <p className="mt-2">Loading paths...</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Village Find Intro Buttons */}
+          {/* 3. Village Find Intro Buttons */}
           <div className="mb-8 p-6 bg-orange-50 border border-orange-200 rounded-lg">
             <h2 className="text-2xl font-semibold text-orange-900 mb-2">
-              4. Find Intro Buttons
+              3. Find Intro Buttons
             </h2>
             <p className="text-orange-700 mb-4">
-              Get introductions to specific people using their LinkedIn
-              profiles.
+              Get introductions to specific people or companies using their
+              LinkedIn profiles.
             </p>
             <div className="bg-white shadow overflow-hidden sm:rounded-lg">
               <ul className="divide-y divide-gray-200">
@@ -181,17 +134,228 @@ export default function Home() {
                       <div className="text-lg font-medium text-gray-900">
                         {person.name}
                       </div>
-                      <Button
-                        variant="outline"
+                      <button
                         village-data-url={person.linkedinUrl}
-                        className="get-intro-btn bg-orange-600 text-white hover:bg-orange-700"
+                        className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
                       >
-                        Get Intro
-                      </Button>
+                        <span
+                          village-paths-availability="found"
+                          className="inline-flex items-center"
+                        >
+                          <span
+                            village-paths-data="facepiles"
+                            className="flex -space-x-2 mr-2"
+                          ></span>
+                          <span village-paths-data="count"></span>
+                          <span className="ml-1">paths found →</span>
+                        </span>
+                        <span village-paths-availability="not-found">
+                          Get Intro →
+                        </span>
+                        <span
+                          village-paths-availability="loading"
+                          className="inline-flex items-center"
+                        >
+                          <svg
+                            className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                          >
+                            <circle
+                              className="opacity-25"
+                              cx="12"
+                              cy="12"
+                              r="10"
+                              stroke="currentColor"
+                              strokeWidth="4"
+                            ></circle>
+                            <path
+                              className="opacity-75"
+                              fill="currentColor"
+                              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                            ></path>
+                          </svg>
+                          Loading...
+                        </span>
+                      </button>
                     </div>
                   </li>
                 ))}
               </ul>
+            </div>
+          </div>
+
+          {/* 4. Village Browse Paths Widget */}
+          <div className="mb-8 p-6 bg-purple-50 border border-purple-200 rounded-lg">
+            <h2 className="text-2xl font-semibold text-purple-900 mb-2">
+              4. Browse Paths Widget
+            </h2>
+            <p className="text-purple-700 mb-4">
+              Click on the cards below to browse connection paths to specific
+              companies:
+            </p>
+
+            <div className="grid md:grid-cols-2 gap-4 mb-4">
+              {sampleCompanies.map((company) => (
+                <div
+                  key={company.name}
+                  className="border border-purple-300 rounded-md p-4 bg-white cursor-pointer hover:bg-purple-50 transition-colors"
+                  village-module="paths"
+                  village-data-url={company.linkedinUrl}
+                >
+                  <h3 className="font-semibold text-purple-900 mb-2">
+                    Paths to {company.name}
+                  </h3>
+                  <div className="min-h-[150px] flex items-center justify-center">
+                    <div
+                      village-paths-availability="found"
+                      className="text-center"
+                    >
+                      <div className="flex items-center justify-center gap-2">
+                        <span
+                          village-paths-data="facepiles"
+                          className="flex -space-x-2"
+                        ></span>
+                        <span className="text-purple-600 font-medium">
+                          <span village-paths-data="count"></span> paths
+                          available
+                        </span>
+                      </div>
+                      <p className="text-sm text-gray-600 mt-2">
+                        Click to view connection paths
+                      </p>
+                    </div>
+                    <div
+                      village-paths-availability="not-found"
+                      className="text-center"
+                    >
+                      <p className="text-gray-500">
+                        No paths found to {company.name}
+                      </p>
+                      <p className="text-sm text-gray-400 mt-2">
+                        Click to sync more connections
+                      </p>
+                    </div>
+                    <div
+                      village-paths-availability="loading"
+                      className="text-center"
+                    >
+                      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600 mx-auto"></div>
+                      <p className="mt-2 text-gray-500">Checking paths...</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* 5. Village Autopilot Widget - WIP */}
+          <div className="mb-8 p-6 bg-indigo-50 border border-indigo-200 rounded-lg relative">
+            {/* WIP Overlay */}
+            <div className="absolute inset-0 bg-gray-900 bg-opacity-60 rounded-lg flex items-center justify-center z-10">
+              <div className="text-center">
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-yellow-500 rounded-full mb-4">
+                  <svg
+                    className="w-8 h-8 text-white"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
+                    ></path>
+                  </svg>
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-2">
+                  Work in Progress
+                </h3>
+                <p className="text-white text-lg">
+                  Autopilot feature is currently under development
+                </p>
+                <p className="text-gray-300 text-sm mt-2">
+                  Check back soon for AI-powered search capabilities
+                </p>
+              </div>
+            </div>
+
+            <h2 className="text-2xl font-semibold text-indigo-900 mb-2">
+              5. Autopilot Widget (AI-Powered Search & Screening)
+            </h2>
+            <p className="text-indigo-700 mb-4">
+              Use AI to search and screen candidates based on natural language
+              queries and custom criteria.
+            </p>
+
+            <div className="space-y-4 opacity-50">
+              {/* Example 1: Basic Autopilot */}
+              <div className="bg-white p-4 rounded-lg border border-indigo-200">
+                <h3 className="font-semibold text-indigo-900 mb-2">
+                  Basic Autopilot
+                </h3>
+                <p className="text-sm text-gray-600 mb-3">
+                  Click to start autopilot with default settings
+                </p>
+                <Button
+                  disabled
+                  className="bg-indigo-600 hover:bg-indigo-700 text-white"
+                >
+                  Start Autopilot
+                </Button>
+              </div>
+
+              {/* Example 2: Pre-configured Searches */}
+              <div className="bg-white p-4 rounded-lg border border-indigo-200">
+                <h3 className="font-semibold text-indigo-900 mb-2">
+                  Pre-configured Searches
+                </h3>
+                <p className="text-sm text-gray-600 mb-3">
+                  Try these example searches:
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  <Button
+                    variant="outline"
+                    disabled
+                    className="text-indigo-600 border-indigo-300 hover:bg-indigo-50"
+                  >
+                    Find Engineers
+                  </Button>
+                  <Button
+                    variant="outline"
+                    disabled
+                    className="text-indigo-600 border-indigo-300 hover:bg-indigo-50"
+                  >
+                    Find Product Managers
+                  </Button>
+                  <Button
+                    variant="outline"
+                    disabled
+                    className="text-indigo-600 border-indigo-300 hover:bg-indigo-50"
+                  >
+                    Find AI Researchers
+                  </Button>
+                </div>
+              </div>
+
+              {/* Example 3: Declarative Autopilot Button */}
+              <div className="bg-white p-4 rounded-lg border border-indigo-200">
+                <h3 className="font-semibold text-indigo-900 mb-2">
+                  Declarative Autopilot
+                </h3>
+                <p className="text-sm text-gray-600 mb-3">
+                  Using HTML attributes for configuration
+                </p>
+                <button
+                  disabled
+                  className="px-4 py-2 bg-indigo-600 text-white rounded opacity-50 cursor-not-allowed"
+                >
+                  Find Marketing Leaders
+                </button>
+              </div>
             </div>
           </div>
 
@@ -218,6 +382,9 @@ export default function Home() {
                   <li>
                     ✅ Find Intro Buttons - <code>village-data-url</code>
                   </li>
+                  <li>
+                    🚧 Autopilot AI Search - <code>Coming Soon</code>
+                  </li>
                 </ul>
               </div>
               <div>
@@ -230,6 +397,7 @@ export default function Home() {
                   <li>• Connection path discovery</li>
                   <li>• Introduction facilitation</li>
                   <li>• Custom CTAs and branding</li>
+                  <li>• AI-powered screening (Coming Soon)</li>
                 </ul>
               </div>
             </div>
