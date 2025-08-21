@@ -39,12 +39,21 @@ const sampleCompanies = [
 
 export default function Home() {
   useEffect(() => {
+    let isMounted = true;
+
     const fetchToken = async () => {
+      // Check if already authorized to prevent re-initialization
+      if ((window.Village as any)?._isAuthorized) {
+        return;
+      }
+
       try {
         const response = await fetch("/api/auth");
         const data = await response.json();
-        if (data.token) {
+        if (data.token && isMounted) {
           window.Village.authorize(data.token);
+          // Mark as authorized to prevent re-initialization
+          (window.Village as any)._isAuthorized = true;
         }
       } catch (error) {
         console.error("Failed to fetch token:", error);
@@ -52,6 +61,11 @@ export default function Home() {
     };
 
     fetchToken();
+
+    // Cleanup function
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   return (
@@ -68,19 +82,6 @@ export default function Home() {
           <h1 className="text-4xl font-bold text-gray-900 mb-8">
             Village SDK Integration Demo
           </h1>
-
-          <div className="mb-8 p-4 bg-indigo-50 border border-indigo-200 rounded-lg text-center">
-            <p className="text-indigo-700 mb-2">
-              🚀 Check out the advanced Autopilot demo with more examples and
-              features
-            </p>
-            <a
-              href="/autopilot-demo"
-              className="inline-block px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition-colors"
-            >
-              View Autopilot Advanced Demo →
-            </a>
-          </div>
 
           {/* 1. Village Sync Network Button */}
           <div className="mb-8 p-6 bg-blue-50 border border-blue-200 rounded-lg">
@@ -111,7 +112,7 @@ export default function Home() {
             <div
               village-module="search"
               className="w-full border border-green-300 rounded-md bg-white"
-              style={{ height: "500px" }}
+              style={{ height: "440px" }}
             >
               {/* Village will populate this container with search functionality */}
             </div>
@@ -292,6 +293,19 @@ export default function Home() {
             </p>
 
             <div className="space-y-4 opacity-50">
+              {/* Link to Advanced Demo */}
+              <div className="bg-yellow-50 p-4 rounded-lg border-2 border-yellow-300">
+                <p className="text-yellow-800 font-semibold mb-2">
+                  🚀 Want to try Autopilot now?
+                </p>
+                <a
+                  href="/autopilot-demo"
+                  className="inline-block px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition-colors font-medium"
+                >
+                  View Advanced Autopilot Demo →
+                </a>
+              </div>
+
               {/* Example 1: Basic Autopilot */}
               <div className="bg-white p-4 rounded-lg border border-indigo-200">
                 <h3 className="font-semibold text-indigo-900 mb-2">
