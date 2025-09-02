@@ -1,7 +1,18 @@
 declare global {
   interface Window {
     Village: {
-      authorize: (token: string) => void;
+      init: (publicKey: string) => void;
+      authorize: (
+        token: string,
+        domain?: string,
+        refreshCallback?: () => Promise<string | null>
+      ) => Promise<{
+        ok: boolean;
+        status: 'authorized' | 'unauthorized';
+        reason?: string;
+        domain?: string;
+        expiresAt?: number;
+      }>;
       startAutopilot: (config?: {
         initialQuery?: string;
         criteria?: string[];
@@ -11,6 +22,8 @@ declare global {
       }) => void;
       on: (event: string, callback: Function) => void;
       off: (event: string, callback: Function) => void;
+      _isAuthorized?: boolean;
+      loaded?: boolean;
     };
   }
 }

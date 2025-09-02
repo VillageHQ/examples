@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import Head from "next/head";
+import AuthTest from "@/components/AuthTest";
 
 interface Person {
   id: number;
@@ -41,26 +42,81 @@ export default function Home() {
   useEffect(() => {
     let isMounted = true;
 
-    const fetchToken = async () => {
+    // Create a refresh callback function
+    async function refreshVillageToken() {
+      try {
+        console.log('[Village] Attempting to refresh token...');
+        // Call your backend endpoint to refresh the token
+        const response = await fetch('/api/refresh-village-token', {
+          method: 'POST',
+          credentials: 'include', // Include cookies for auth
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to refresh token');
+        }
+
+        const data = await response.json();
+        console.log('[Village] Token refreshed successfully');
+        return data.token; // Return the new token
+      } catch (error) {
+        console.error('[Village] Token refresh failed:', error);
+        return null; // Return null to indicate failure
+      }
+    }
+
+    // Authorize with token and refresh callback
+    async function authorizeUser(userToken: string, domain?: string) {
+      try {
+        console.log('[Village] Starting authorization with token...');
+        const result = await window.Village.authorize(
+          userToken,           // Your JWT token
+          domain,              // Optional: 'your-domain.com'
+          refreshVillageToken  // Refresh callback function
+        );
+
+        if (result.ok) {
+          console.log('✅ User authorized successfully');
+          return true;
+        } else {
+          console.error('❌ Authorization failed:', result.reason);
+          return false;
+        }
+      } catch (error) {
+        console.error('❌ Authorization error:', error);
+        return false;
+      }
+    }
+
+    const initializeVillage = async () => {
       // Check if already authorized to prevent re-initialization
       if ((window.Village as any)?._isAuthorized) {
         return;
       }
 
       try {
+        // Get initial token
         const response = await fetch("/api/auth");
         const data = await response.json();
+        
         if (data.token && isMounted) {
-          window.Village.authorize(data.token);
-          // Mark as authorized to prevent re-initialization
-          (window.Village as any)._isAuthorized = true;
+          // Use the new authorize method with refresh callback
+          const authorized = await authorizeUser(data.token, 'localhost:3003');
+          
+          if (authorized) {
+            // Mark as authorized to prevent re-initialization
+            (window.Village as any)._isAuthorized = true;
+          }
         }
       } catch (error) {
-        console.error("Failed to fetch token:", error);
+        console.error("Failed to initialize Village:", error);
       }
     };
 
-    fetchToken();
+    initializeVillage();
 
     // Cleanup function
     return () => {
@@ -371,6 +427,11 @@ export default function Home() {
                 </button>
               </div>
             </div>
+          </div>
+
+          {/* Authentication Testing */}
+          <div className="mb-8">
+            <AuthTest />
           </div>
 
           {/* Additional Village Features */}
