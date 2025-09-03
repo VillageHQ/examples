@@ -2,6 +2,15 @@ import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import Head from "next/head";
 
+declare global {
+  interface Window {
+    Village: {
+      authorize: (token: string) => void;
+      identify: (id: string) => void;
+    };
+  }
+}
+
 interface Person {
   id: number;
   name: string;
@@ -39,33 +48,7 @@ const sampleCompanies = [
 
 export default function Home() {
   useEffect(() => {
-    let isMounted = true;
-
-    const fetchToken = async () => {
-      // Check if already authorized to prevent re-initialization
-      if ((window.Village as any)?._isAuthorized) {
-        return;
-      }
-
-      try {
-        const response = await fetch("/api/auth");
-        const data = await response.json();
-        if (data.token && isMounted) {
-          window.Village.authorize(data.token);
-          // Mark as authorized to prevent re-initialization
-          (window.Village as any)._isAuthorized = true;
-        }
-      } catch (error) {
-        console.error("Failed to fetch token:", error);
-      }
-    };
-
-    fetchToken();
-
-    // Cleanup function
-    return () => {
-      isMounted = false;
-    };
+    window.Village.identify("abc123");
   }, []);
 
   return (
