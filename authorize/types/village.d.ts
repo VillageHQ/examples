@@ -1,6 +1,7 @@
 declare global {
   interface Window {
     Village: {
+      identify: (id: string) => void;
       authorize: (token: string) => void;
       startAutopilot: (config?: {
         initialQuery?: string;
