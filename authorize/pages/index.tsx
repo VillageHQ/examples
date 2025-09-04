@@ -86,9 +86,17 @@ export default function Home() {
             <div
               village-module="search"
               className="w-full border border-green-300 rounded-md bg-white"
-              style={{ height: "440px" }}
+              style={{ height: "500px" }}
             >
               {/* Village will populate this container with search functionality */}
+            </div>
+            <div className="mt-4">
+              <a
+                href="/public-search"
+                className="inline-block text-green-700 hover:text-green-900 underline font-medium"
+              >
+                Try the public search &rarr;
+              </a>
             </div>
           </div>
 
