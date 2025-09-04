@@ -12,18 +12,18 @@ interface Person {
 const people: Person[] = [
   {
     id: 1,
-    name: "Abdallah Absi",
-    linkedinUrl: "https://www.linkedin.com/in/abdabsi/",
+    name: "Ziad Ibrahim",
+    linkedinUrl: "https://www.linkedin.com/in/ziad-ibrahim-12391279/",
   },
   {
     id: 2,
-    name: "Google",
-    linkedinUrl: "https://www.linkedin.com/company/google/",
+    name: "4dx ventures",
+    linkedinUrl: "https://www.linkedin.com/company/4dx-ventures/",
   },
   {
     id: 3,
-    name: "Islam Ibrahim",
-    linkedinUrl: "https://www.linkedin.com/in/islaamm/",
+    name: "rafaelmuttoni",
+    linkedinUrl: "https://www.linkedin.com/in/rafaelmuttoni/",
   },
 ];
 
