@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import Head from "next/head";
-import AuthTest from "@/components/AuthTest";
 
 interface Person {
   id: number;
@@ -12,18 +11,18 @@ interface Person {
 const people: Person[] = [
   {
     id: 1,
-    name: "Ziad Ibrahim",
-    linkedinUrl: "https://www.linkedin.com/in/ziad-ibrahim-12391279/",
+    name: "Abdallah Absi",
+    linkedinUrl: "https://www.linkedin.com/in/abdabsi/",
   },
   {
     id: 2,
-    name: "4dx ventures",
-    linkedinUrl: "https://www.linkedin.com/company/4dx-ventures/",
+    name: "Google",
+    linkedinUrl: "https://www.linkedin.com/company/google/",
   },
   {
     id: 3,
-    name: "rafaelmuttoni",
-    linkedinUrl: "https://www.linkedin.com/in/rafaelmuttoni/",
+    name: "Islam Ibrahim",
+    linkedinUrl: "https://www.linkedin.com/in/islaamm/",
   },
 ];
 
@@ -40,88 +39,7 @@ const sampleCompanies = [
 
 export default function Home() {
   useEffect(() => {
-    let isMounted = true;
-
-    // Create a refresh callback function
-    async function refreshVillageToken() {
-      try {
-        console.log('[Village] Attempting to refresh token...');
-        // Call your backend endpoint to refresh the token
-        const response = await fetch('/api/refresh-village-token', {
-          method: 'POST',
-          credentials: 'include', // Include cookies for auth
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to refresh token');
-        }
-
-        const data = await response.json();
-        console.log('[Village] Token refreshed successfully');
-        return data.token; // Return the new token
-      } catch (error) {
-        console.error('[Village] Token refresh failed:', error);
-        return null; // Return null to indicate failure
-      }
-    }
-
-    // Authorize with token and refresh callback
-    async function authorizeUser(userToken: string, domain?: string) {
-      try {
-        console.log('[Village] Starting authorization with token...');
-        const result = await window.Village.authorize(
-          userToken,           // Your JWT token
-          domain,              // Optional: 'your-domain.com'
-          refreshVillageToken  // Refresh callback function
-        );
-
-        if (result.ok) {
-          console.log('✅ User authorized successfully');
-          return true;
-        } else {
-          console.error('❌ Authorization failed:', result.reason);
-          return false;
-        }
-      } catch (error) {
-        console.error('❌ Authorization error:', error);
-        return false;
-      }
-    }
-
-    const initializeVillage = async () => {
-      // Check if already authorized to prevent re-initialization
-      if ((window.Village as any)?._isAuthorized) {
-        return;
-      }
-
-      try {
-        // Get initial token
-        const response = await fetch("/api/auth");
-        const data = await response.json();
-        
-        if (data.token && isMounted) {
-          // Use the new authorize method with refresh callback
-          const authorized = await authorizeUser(data.token, 'localhost:3003');
-          
-          if (authorized) {
-            // Mark as authorized to prevent re-initialization
-            (window.Village as any)._isAuthorized = true;
-          }
-        }
-      } catch (error) {
-        console.error("Failed to initialize Village:", error);
-      }
-    };
-
-    initializeVillage();
-
-    // Cleanup function
-    return () => {
-      isMounted = false;
-    };
+    window.Village.identify("abc123");
   }, []);
 
   return (
@@ -168,9 +86,17 @@ export default function Home() {
             <div
               village-module="search"
               className="w-full border border-green-300 rounded-md bg-white"
-              style={{ height: "440px" }}
+              style={{ height: "500px" }}
             >
               {/* Village will populate this container with search functionality */}
+            </div>
+            <div className="mt-4">
+              <a
+                href="/public-search"
+                className="inline-block text-green-700 hover:text-green-900 underline font-medium"
+              >
+                Try the public search &rarr;
+              </a>
             </div>
           </div>
 
@@ -427,11 +353,6 @@ export default function Home() {
                 </button>
               </div>
             </div>
-          </div>
-
-          {/* Authentication Testing */}
-          <div className="mb-8">
-            <AuthTest />
           </div>
 
           {/* Additional Village Features */}

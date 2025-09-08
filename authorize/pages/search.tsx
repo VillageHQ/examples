@@ -4,19 +4,7 @@ import Head from "next/head";
 
 export default function Search() {
   useEffect(() => {
-    const fetchToken = async () => {
-      try {
-        const response = await fetch("/api/auth");
-        const data = await response.json();
-        if (data.token) {
-          window.Village.authorize(data.token);
-        }
-      } catch (error) {
-        console.error("Failed to fetch token:", error);
-      }
-    };
-
-    fetchToken();
+    window.Village.identify("abc123");
   }, []);
 
   return (

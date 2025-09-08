@@ -19,13 +19,16 @@ export default async function handler(
   }
 
   try {
-    // Use GET request to fetch the token
     const response = await fetch(`${VILLAGE_API_URL}/v1/users/authorization`, {
-      method: "GET",
+      method: "POST",
       headers: {
+        "Content-Type": "application/json",
         "secret-key": secretKey,
         "user-identifier": session.user.id,
       },
+      body: JSON.stringify({
+        email: session.user.email,
+      }),
     });
 
     if (!response.ok) {
@@ -45,11 +48,13 @@ export default async function handler(
 }
 
 function getSession(
-  _req: NextApiRequest
-): Promise<{ user: { id: string } }> {
+  req: NextApiRequest
+): Promise<{ user: { id: string; email: string; name: string } }> {
   return Promise.resolve({
     user: {
-      id: "156",
+      id: "abc123",
+      email: "example-authorization-test@village.do",
+      name: "Example Authorization Test",
     },
   });
 }
