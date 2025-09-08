@@ -38,52 +38,77 @@
       margin-bottom: 16px;
       text-align: center;
     }
+    .main-container {
+      padding: 16px;
+    }
+    .intro-card {
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+    .intro-card h3 {
+      margin: 0 0 8px 0;
+      font-size: 16px;
+      font-weight: 600;
+      color: #ea580c;
+    }
+    .intro-card p {
+      margin: 0 0 16px 0;
+      font-size: 12px;
+      color: #c2410c;
+    }
+    .person-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px;
+      background: white;
+      border-radius: 6px;
+      margin-bottom: 8px;
+      border: 1px solid #fed7aa;
+    }
+    .person-name {
+      font-size: 14px;
+      font-weight: 500;
+      color: #1f2937;
+    }
+    .intro-btn {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 12px;
+      border: none;
+      font-size: 12px;
+      font-weight: 500;
+      border-radius: 6px;
+      color: white;
+      background: #ea580c;
+      cursor: pointer;
+    }
     .section {
       margin-bottom: 16px;
       padding: 16px;
       background: #f8fafc;
       border-radius: 8px;
     }
-    .section h3 {
+    .section-title {
       margin: 0 0 12px 0;
       font-size: 14px;
       font-weight: 600;
       color: #374151;
     }
-    .person-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 8px;
-      background: white;
-      border-radius: 6px;
-      margin-bottom: 6px;
-      border: 1px solid #e2e8f0;
+    .gradient-text {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
-    .person-name {
+    .section-description {
+      margin: 0 0 16px 0;
       font-size: 13px;
+      color: #1e40af;
       font-weight: 500;
-      color: #1f2937;
-    }
-    .intro-btn {
-      padding: 6px 12px;
-      border: none;
-      font-size: 11px;
-      font-weight: 600;
-      border-radius: 4px;
-      color: white;
-      background: #ea580c;
-      cursor: pointer;
-    }
-    .paths-widget {
-      border: 1px solid #c084fc;
-      border-radius: 6px;
-      padding: 12px;
-      cursor: pointer;
-      background: white;
-      margin-bottom: 8px;
-      min-height: 60px;
-      text-align: center;
     }
     .sync-btn {
       width: 100%;
@@ -95,6 +120,42 @@
       cursor: pointer;
       font-size: 13px;
       font-weight: 600;
+    }
+    .sync-icon {
+      margin-right: 8px;
+    }
+    .demo-note {
+      background: #f0fdf4;
+      border: 1px solid #86efac;
+      border-radius: 8px;
+      padding: 16px;
+    }
+    .success-indicator {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .success-circle {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #10b981, #059669);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .success-checkmark {
+      color: white;
+      font-size: 14px;
+    }
+    .success-label {
+      color: #059669;
+      font-weight: 600;
+    }
+    .demo-note p {
+      margin: 0;
+      font-weight: 500;
     }
     
     /* Facepiles styling - ensure they show */
@@ -119,17 +180,28 @@
       100% { transform: rotate(360deg); }
     }
     
-    /* Village element visibility */
-    [village-paths-availability="found"] {
-      display: inline-flex !important;
-      align-items: center !important;
+    /* Village element visibility - all states visible, controlled by SDK */
+    .village-paths-found,
+    .village-paths-notfound,
+    .village-paths-loading {
+      display: inline-flex;
+      align-items: center;
     }
-    [village-paths-availability="not-found"] {
-      display: inline-flex !important;
-      align-items: center !important;
+    
+    .loading-spinner {
+      width: 12px;
+      height: 12px;
+      margin-right: 4px;
+      animation: spin 1s linear infinite;
     }
-    [village-paths-availability="loading"] {
-      display: none !important;
+    
+    .paths-count-text {
+      margin-left: 4px;
+    }
+    
+    .facepiles-container {
+      display: flex;
+      margin-right: 6px;
     }
   </style>
 </head>
@@ -139,29 +211,29 @@
     <div class="subtitle">Importable SDK</div>
   </div>
   
-  <div style="padding: 16px;">
+  <div class="main-container">
     <div class="status" id="status">Ready for full-page modals</div>
     
     <!-- Find Intro Buttons Card -->
-    <div style="background: #fff7ed; border: 1px solid #fed7aa; border-radius: 8px; padding: 16px; margin-bottom: 16px;">
-      <h3 style="margin: 0 0 8px 0; font-size: 16px; font-weight: 600; color: #ea580c;">🤝 Find Intro Buttons</h3>
-      <p style="margin: 0 0 16px 0; font-size: 12px; color: #c2410c;">Get introductions using imported Village module - same HTML attributes work!</p>
+    <div class="intro-card">
+      <h3>🤝 Find Intro Buttons</h3>
+      <p>Get introductions using imported Village module - same HTML attributes work!</p>
       
       <!-- Ziad Ibrahim -->
-      <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px; background: white; border-radius: 6px; margin-bottom: 8px; border: 1px solid #fed7aa;">
-        <div style="font-size: 14px; font-weight: 500; color: #1f2937;">Ziad Ibrahim</div>
+      <div class="person-row">
+        <div class="person-name">Ziad Ibrahim</div>
         <button 
           village-data-url="https://www.linkedin.com/in/ziad-ibrahim-12391279/"
-          style="display: inline-flex; align-items: center; padding: 8px 12px; border: none; font-size: 12px; font-weight: 500; border-radius: 6px; color: white; background: #ea580c; cursor: pointer;"
+          class="intro-btn"
         >
-          <span village-paths-availability="found" style="display: inline-flex; align-items: center;">
-            <span village-paths-data="facepiles" style="display: flex; margin-right: 6px;"></span>
+          <span village-paths-availability="found" class="village-paths-found">
+            <span village-paths-data="facepiles" class="facepiles-container"></span>
             <span village-paths-data="count"></span>
-            <span style="margin-left: 4px;">paths found →</span>
+            <span class="paths-count-text">paths found →</span>
           </span>
           <span village-paths-availability="not-found">Get Intro →</span>
-          <span village-paths-availability="loading" style="display: inline-flex; align-items: center;">
-            <svg style="width: 12px; height: 12px; margin-right: 4px; animation: spin 1s linear infinite;" viewBox="0 0 24 24" fill="none">
+          <span village-paths-availability="loading" class="village-paths-loading">
+            <svg class="loading-spinner" viewBox="0 0 24 24" fill="none">
               <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" opacity="0.25"></circle>
               <path fill="currentColor" opacity="0.75" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
             </svg>
@@ -171,20 +243,20 @@
       </div>
       
       <!-- 4dx ventures -->
-      <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px; background: white; border-radius: 6px; margin-bottom: 8px; border: 1px solid #fed7aa;">
-        <div style="font-size: 14px; font-weight: 500; color: #1f2937;">4dx ventures</div>
+      <div class="person-row">
+        <div class="person-name">4dx ventures</div>
         <button 
           village-data-url="https://www.linkedin.com/company/4dx-ventures/"
-          style="display: inline-flex; align-items: center; padding: 8px 12px; border: none; font-size: 12px; font-weight: 500; border-radius: 6px; color: white; background: #ea580c; cursor: pointer;"
+          class="intro-btn"
         >
-          <span village-paths-availability="found" style="display: inline-flex; align-items: center;">
-            <span village-paths-data="facepiles" style="display: flex; margin-right: 6px;"></span>
+          <span village-paths-availability="found" class="village-paths-found">
+            <span village-paths-data="facepiles" class="facepiles-container"></span>
             <span village-paths-data="count"></span>
-            <span style="margin-left: 4px;">paths found →</span>
+            <span class="paths-count-text">paths found →</span>
           </span>
           <span village-paths-availability="not-found">Get Intro →</span>
-          <span village-paths-availability="loading" style="display: inline-flex; align-items: center;">
-            <svg style="width: 12px; height: 12px; margin-right: 4px; animation: spin 1s linear infinite;" viewBox="0 0 24 24" fill="none">
+          <span village-paths-availability="loading" class="village-paths-loading">
+            <svg class="loading-spinner" viewBox="0 0 24 24" fill="none">
               <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" opacity="0.25"></circle>
               <path fill="currentColor" opacity="0.75" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
             </svg>
@@ -194,20 +266,20 @@
       </div>
       
       <!-- rafaelmuttoni -->
-      <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px; background: white; border-radius: 6px; margin-bottom: 8px; border: 1px solid #fed7aa;">
-        <div style="font-size: 14px; font-weight: 500; color: #1f2937;">rafaelmuttoni</div>
+      <div class="person-row">
+        <div class="person-name">rafaelmuttoni</div>
         <button 
           village-data-url="https://www.linkedin.com/in/rafaelmuttoni/"
-          style="display: inline-flex; align-items: center; padding: 8px 12px; border: none; font-size: 12px; font-weight: 500; border-radius: 6px; color: white; background: #ea580c; cursor: pointer;"
+          class="intro-btn"
         >
-          <span village-paths-availability="found" style="display: inline-flex; align-items: center;">
-            <span village-paths-data="facepiles" style="display: flex; margin-right: 6px;"></span>
+          <span village-paths-availability="found" class="village-paths-found">
+            <span village-paths-data="facepiles" class="facepiles-container"></span>
             <span village-paths-data="count"></span>
-            <span style="margin-left: 4px;">paths found →</span>
+            <span class="paths-count-text">paths found →</span>
           </span>
           <span village-paths-availability="not-found">Get Intro →</span>
-          <span village-paths-availability="loading" style="display: inline-flex; align-items: center;">
-            <svg style="width: 12px; height: 12px; margin-right: 4px; animation: spin 1s linear infinite;" viewBox="0 0 24 24" fill="none">
+          <span village-paths-availability="loading" class="village-paths-loading">
+            <svg class="loading-spinner" viewBox="0 0 24 24" fill="none">
               <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" opacity="0.25"></circle>
               <path fill="currentColor" opacity="0.75" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
             </svg>
@@ -217,27 +289,26 @@
       </div>
     </div>
     
-    
     <!-- Sync Network Section -->
     <div class="section">
       <h3 class="section-title">
-        <span style="background: linear-gradient(135deg, #2563eb, #1d4ed8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">🔄 Sync Network</span>
+        <span class="gradient-text">🔄 Sync Network</span>
       </h3>
-      <p style="margin: 0 0 16px 0; font-size: 13px; color: #1e40af; font-weight: 500;">Sync your network to unlock more connection opportunities!</p>
+      <p class="section-description">Sync your network to unlock more connection opportunities!</p>
       <button village-module="sync" class="sync-btn">
-        <span style="margin-right: 8px;">🔄</span>
+        <span class="sync-icon">🔄</span>
         Sync Network
       </button>
     </div>
     
     <div class="demo-note">
-      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
-        <div style="width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(135deg, #10b981, #059669); display: flex; align-items: center; justify-content: center;">
-          <span style="color: white; font-size: 14px;">✓</span>
+      <div class="success-indicator">
+        <div class="success-circle">
+          <span class="success-checkmark">✓</span>
         </div>
-        <strong style="color: #059669;">Success!</strong>
+        <strong class="success-label">Success!</strong>
       </div>
-      <p style="margin: 0; font-weight: 500;">All Village components loaded with importable SDK. Facepiles will appear when paths are found!</p>
+      <p>All Village components loaded with importable SDK. Facepiles will appear when paths are found!</p>
     </div>
   </div>
   
