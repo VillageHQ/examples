@@ -135,19 +135,9 @@ export default function Home() {
       </Head>
       <div className="min-h-screen bg-gray-50">
         <div className="max-w-6xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">
-              Village SDK Integration Demo
-            </h1>
-            <div className="flex justify-center space-x-4">
-              <Button variant="outline" asChild>
-                <a href="/importable-demo">🆕 Try Importable Module Demo →</a>
-              </Button>
-              <Button variant="outline" asChild>
-                <a href="/search">Search Demo →</a>
-              </Button>
-            </div>
-          </div>
+          <h1 className="text-4xl font-bold text-gray-900 mb-8">
+            Village SDK Integration Demo
+          </h1>
 
           {/* 1. Village Sync Network Button */}
           <div className="mb-8 p-6 bg-blue-50 border border-blue-200 rounded-lg">
