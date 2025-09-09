@@ -15,7 +15,7 @@ async function initPopup() {
     
     // Try to authorize
     try {
-      await Village.authorize('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkZW50aWZpZXIiOiIxNTYiLCJwdWJsaWNfa2V5IjoicGtfelQ0SHpabjdvVjh4N2RnN1l1Q2pCRUc0MEFNNERoenUiLCJqdGkiOiJmZGU5MTdmMTRkNzc1OGJkN2UxOTE5YTc4MmYzZjI1NyIsImlhdCI6MTc1Njk4Njc1MCwiZXhwIjoxNzg4NTIyNzUwfQ.Jz5KEbfy-61egZ44a3JkpBK7ZKrAvXd5ZFbU_S3W7HQ');
+      await Village.authorize('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkZW50aWZpZXIiOiIxNTYiLCJwdWJsaWNfa2V5IjoicGtfelQ0SHpabjdvVjh4N2RnN1l1Q2pCRUc0MEFNNERoenUiLCJqdGkiOiJkMmEzNmM0ZmQwOWE4MDk0MDU0NGMyM2I1NWUzMjNlMCIsImlhdCI6MTc1NzMzODgxNCwiZXhwIjoxNzg4ODc0ODE0fQ.8nR4PdHAQsAUudYg4P_I1vvDzNPBkQKXW4-WyBR4Wjg');
       document.getElementById('status').textContent = '✅ Village ready with facepiles!';
     } catch (e) {
       document.getElementById('status').textContent = '✅ Village SDK loaded';

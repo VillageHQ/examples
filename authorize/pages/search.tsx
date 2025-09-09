@@ -1,10 +1,21 @@
 import { useEffect } from "react";
-import { Button } from "@/components/ui/button";
 import Head from "next/head";
 
 export default function Search() {
   useEffect(() => {
-    window.Village.identify("abc123");
+    const fetchToken = async () => {
+      try {
+        const response = await fetch("/api/auth");
+        const data = await response.json();
+        if (data.token) {
+          window.Village.authorize(data.token);
+        }
+      } catch (error) {
+        console.error("Failed to fetch token:", error);
+      }
+    };
+
+    fetchToken();
   }, []);
 
   return (
