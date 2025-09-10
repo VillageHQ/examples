@@ -6,7 +6,7 @@ export default function TokenAuth() {
   const [authMode, setAuthMode] = useState<"legacy" | "token">("token");
   const [authStatus, setAuthStatus] = useState<string>("");
   const [token, setToken] = useState<string>("");
-  const [domain, setDomain] = useState<string>("simplify.jobs");
+  const [domain, setDomain] = useState<string>("yourdomain.com");
   const [refreshEnabled, setRefreshEnabled] = useState(false);
 
   // Mock token generator for demo
@@ -193,7 +193,7 @@ Village.identify('user123', {
                     value={domain}
                     onChange={(e) => setDomain(e.target.value)}
                     className="w-full p-3 border border-gray-300 rounded-lg"
-                    placeholder="e.g., simplify.jobs"
+                    placeholder="e.g., yourdomain.com"
                   />
                 </div>
 
@@ -244,7 +244,7 @@ if (result.ok) {
                     <pre className="bg-white p-3 rounded border border-blue-300 text-sm overflow-x-auto">
 {`const result = await Village.authorize(
   token,
-  'simplify.jobs'
+  'yourdomain.com'
 );
 
 console.log('Authorized for:', result.domain);`}

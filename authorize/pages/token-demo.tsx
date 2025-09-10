@@ -86,7 +86,7 @@ export default function TokenDemo() {
           // Use the new authorize flow with token, domain, and refresh callback
           const result = await window.Village.authorize(
             initialToken,
-            'simplify.jobs', // Your domain
+            'yourdomain.com', // Your domain
             refreshTokenCallback // Refresh callback function
           ) as { ok: boolean; status: string; reason?: string; domain?: string };
           

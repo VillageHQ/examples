@@ -44,18 +44,16 @@ async function main() {
     // Make it globally available for HTML attributes
     window.Village = villageSDK;
     
-    console.log('✅ Village SDK imported successfully');
-    console.log('📋 Village object type:', typeof villageSDK);
-    console.log('📋 Current page URL:', window.location.href);
-    console.log('📋 Is LinkedIn page?', window.location.href.includes('linkedin.com'));
+    publicKey = process.env.PUBLIC_KEY;
+    token = process.env.TOKEN;
     
     // Initialize Village
-    villageSDK.init('pk_SMhdS08sJc8UIIxDJbeN7lEeFekDcK9');
+    villageSDK.init(publicKey);
     console.log('🔧 Village initialized');
     
     // Try to authorize (in real extension, get token from your backend)
     try {
-      const result = await villageSDK.authorize('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkZW50aWZpZXIiOiIxNTYiLCJwdWJsaWNfa2V5IjoicGtfelQ0SHpabjdvVjh4N2RnN1l1Q2pCRUc0MEFNNERoenUiLCJqdGkiOiJmZGU5MTdmMTRkNzc1OGJkN2UxOTE5YTc4MmYzZjI1NyIsImlhdCI6MTc1Njk4Njc1MCwiZXhwIjoxNzg4NTIyNzUwfQ.Jz5KEbfy-61egZ44a3JkpBK7ZKrAvXd5ZFbU_S3W7HQ');
+      const result = await villageSDK.authorize(token);
       console.log('🔐 Village auth result:', result);
     } catch (e) {
       console.log('⚠️ Auth failed, but SDK works:', e);
