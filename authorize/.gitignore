@@ -37,3 +37,6 @@ next-env.d.ts
 .env
 
 /public/village-widget.js*
+/public/village-sdk.mjs*
+/public/village-sdk.js*
+/public/village-sdk.d.ts*
