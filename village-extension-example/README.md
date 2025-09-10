@@ -5,9 +5,6 @@ A simple browser extension demonstrating how to **import and use the Village SDK
 ## 🎯 Key Features
 
 - ✅ **Importable Village SDK** - No script tags needed
-- ✅ **No CSP Issues** - Everything bundled locally  
-- ✅ **Firefox Compatible** - No remote code execution
-- ✅ **Same API** - Exact same Village functions
 
 ## 📁 Files
 
@@ -73,12 +70,3 @@ Replace the demo credentials with your real Village API keys:
 Village.init('your_actual_public_key');
 await Village.authorize('token_from_your_backend');
 ```
-
-## 🎉 Result
-
-- **Content Script**: Adds Village intro buttons to LinkedIn pages
-- **Popup**: Shows Village SDK import status and test functions
-- **No Remote Code**: Everything runs locally in the extension
-- **Same Experience**: Identical to the web widget, but bundled
-
-Perfect for Luke's use case! 🚀
