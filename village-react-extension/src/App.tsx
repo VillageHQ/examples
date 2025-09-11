@@ -4,8 +4,10 @@ import './App.css';
 
 const App: React.FC = () => {
   const [status, setStatus] = useState<string>('Ready for full-page modals');
-  const publicKey = 'pk_SMhdS08sJc8UIIxDJbeN7lEeFekDcK9';
-  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkZW50aWZpZXIiOiIxNTYiLCJwdWJsaWNfa2V5IjoicGtfelQ0SHpabjdvVjh4N2RnN1l1Q2pCRUc0MEFNNERoenUiLCJqdGkiOiIxMzNjMDIwOTllZDU0ZjBjMmEwYzQ2MGU0YTZjYmQ0OSIsImlhdCI6MTc1NzU5NzE4MiwiZXhwIjoxNzg5MTMzMTgyfQ.2m2-RCQ4n8NRY5gyIefh1j4rCgP_5wDHPo4xb-yHESc';
+  // TODO: Replace with your public key and token (from your backend)
+  // TODO: token can be fetched from your backend using the authorization endpoint https://docs.village.do/api-reference/provisioned-users/create-authorization
+  const publicKey = 'PUBLIC_KEY';
+  const token = 'TOKEN';
   useEffect(() => {
     const initPopup = async () => {
       try {
