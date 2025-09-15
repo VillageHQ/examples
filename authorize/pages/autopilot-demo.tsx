@@ -89,7 +89,7 @@ export default function AutopilotDemo() {
       `Starting autopilot: "${customQuery}" with ${criteria.length} criteria`
     );
 
-    window.Village.startAutopilot({
+    window.Village.startAutopilot?.({
       initialQuery: customQuery,
       criteria: criteria,
       onResultClick: (result: any) => {

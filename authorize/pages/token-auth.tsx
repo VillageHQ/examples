@@ -61,7 +61,7 @@ export default function TokenAuth() {
         setAuthStatus(`❌ Authorization failed: ${result.reason || result.status}`);
       }
     } catch (error) {
-      setAuthStatus(`Error: ${error.message}`);
+      setAuthStatus(`Error: ${error instanceof Error ? error.message : String(error)}`);
     }
   };
 
@@ -274,7 +274,7 @@ Village.authorize(token, domain, refreshToken);`}
                 <ul className="space-y-2 text-gray-700">
                   <li className="flex items-start">
                     <span className="text-purple-600 mr-2">1.</span>
-                    <span>The function checks if the first parameter is a token (string > 20 chars with . or _)</span>
+                    <span>The function checks if the first parameter is a token (string &gt; 20 chars with . or _)</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-purple-600 mr-2">2.</span>
