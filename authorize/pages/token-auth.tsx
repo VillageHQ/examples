@@ -12,23 +12,20 @@ export default function TokenAuth() {
   // Mock token generator for demo
   const generateMockToken = () => {
     const header = btoa(JSON.stringify({ alg: "HS256", typ: "JWT" }));
-    const payload = btoa(
-      JSON.stringify({
-        user_id: "user_123",
-        email: "demo@example.com",
-        exp: Math.floor(Date.now() / 1000) + 3600,
-        iat: Math.floor(Date.now() / 1000),
-      })
-    );
-    const signature =
-      "mock_signature_" + Math.random().toString(36).substring(7);
+    const payload = btoa(JSON.stringify({
+      user_id: "user_123",
+      email: "demo@example.com",
+      exp: Math.floor(Date.now() / 1000) + 3600,
+      iat: Math.floor(Date.now() / 1000)
+    }));
+    const signature = "mock_signature_" + Math.random().toString(36).substring(7);
     return `${header}.${payload}.${signature}`;
   };
 
   // Mock refresh token function
   const refreshToken = async () => {
     // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 500));
+    await new Promise(resolve => setTimeout(resolve, 500));
     const newToken = generateMockToken();
     setToken(newToken);
     setAuthStatus("Token refreshed successfully!");
@@ -37,10 +34,9 @@ export default function TokenAuth() {
 
   // Legacy authorization
   const handleLegacyAuth = () => {
-    // @ts-ignore
     window.Village.authorize("user123", {
       email: "user@example.com",
-      name: "Demo User",
+      name: "Demo User"
     });
     setAuthStatus("Legacy authorization: Called identify('user123')");
   };
@@ -53,22 +49,18 @@ export default function TokenAuth() {
     }
 
     try {
-      // @ts-ignore
-      const result = (await window.Village.authorize(
+      const result = await window.Village.authorize(
         token,
-        // @ts-ignore
         domain || undefined,
         refreshEnabled ? refreshToken : undefined
-      )) as any;
-
+      );
+      
       if (result.ok) {
         setAuthStatus(`✅ Authorization successful! Status: ${result.status}`);
       } else {
-        setAuthStatus(
-          `❌ Authorization failed: ${result.reason || result.status}`
-        );
+        setAuthStatus(`❌ Authorization failed: ${result.reason || result.status}`);
       }
-    } catch (error: any) {
+    } catch (error) {
       setAuthStatus(`Error: ${error.message}`);
     }
   };
@@ -133,13 +125,12 @@ export default function TokenAuth() {
                 Legacy Authorization (Backward Compatible)
               </h2>
               <p className="text-gray-700 mb-4">
-                The authorize function maintains backward compatibility. When
-                called with a user ID and details object, it automatically calls
-                identify() internally.
+                The authorize function maintains backward compatibility. When called with
+                a user ID and details object, it automatically calls identify() internally.
               </p>
               <div className="bg-white p-4 rounded border border-yellow-300 mb-4">
                 <pre className="text-sm overflow-x-auto">
-                  {`Village.authorize('user123', {
+{`Village.authorize('user123', {
   email: 'user@example.com',
   name: 'Demo User'
 });
@@ -234,14 +225,12 @@ Village.identify('user123', {
                 <h3 className="text-xl font-semibold text-blue-900 mb-4">
                   Implementation Examples
                 </h3>
-
+                
                 <div className="space-y-4">
                   <div>
-                    <h4 className="font-semibold text-gray-800 mb-2">
-                      Simple Token Auth:
-                    </h4>
+                    <h4 className="font-semibold text-gray-800 mb-2">Simple Token Auth:</h4>
                     <pre className="bg-white p-3 rounded border border-blue-300 text-sm overflow-x-auto">
-                      {`const token = await fetchTokenFromBackend();
+{`const token = await fetchTokenFromBackend();
 const result = await Village.authorize(token);
 
 if (result.ok) {
@@ -251,11 +240,9 @@ if (result.ok) {
                   </div>
 
                   <div>
-                    <h4 className="font-semibold text-gray-800 mb-2">
-                      With Domain Validation:
-                    </h4>
+                    <h4 className="font-semibold text-gray-800 mb-2">With Domain Validation:</h4>
                     <pre className="bg-white p-3 rounded border border-blue-300 text-sm overflow-x-auto">
-                      {`const result = await Village.authorize(
+{`const result = await Village.authorize(
   token,
   'yourdomain.com'
 );
@@ -265,11 +252,9 @@ console.log('Authorized for:', result.domain);`}
                   </div>
 
                   <div>
-                    <h4 className="font-semibold text-gray-800 mb-2">
-                      With Auto-Refresh:
-                    </h4>
+                    <h4 className="font-semibold text-gray-800 mb-2">With Auto-Refresh:</h4>
                     <pre className="bg-white p-3 rounded border border-blue-300 text-sm overflow-x-auto">
-                      {`async function refreshToken() {
+{`async function refreshToken() {
   const response = await fetch('/api/refresh');
   const data = await response.json();
   return data.token;
@@ -289,37 +274,23 @@ Village.authorize(token, domain, refreshToken);`}
                 <ul className="space-y-2 text-gray-700">
                   <li className="flex items-start">
                     <span className="text-purple-600 mr-2">1.</span>
-                    <span>
-                      The function checks if the first parameter is a token
-                      (string `{">"}` 20 chars with . or _)
-                    </span>
+                    <span>The function checks if the first parameter is a token (string > 20 chars with . or _)</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-purple-600 mr-2">2.</span>
-                    <span>
-                      If not a token, it falls back to legacy mode (calls
-                      identify)
-                    </span>
+                    <span>If not a token, it falls back to legacy mode (calls identify)</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-purple-600 mr-2">3.</span>
-                    <span>
-                      For tokens, it validates with your backend and stores in
-                      secure storage
-                    </span>
+                    <span>For tokens, it validates with your backend and stores in secure storage</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-purple-600 mr-2">4.</span>
-                    <span>
-                      Optional refresh callback auto-refreshes expired tokens
-                    </span>
+                    <span>Optional refresh callback auto-refreshes expired tokens</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-purple-600 mr-2">5.</span>
-                    <span>
-                      Returns Promise with status:{" "}
-                      {`{ ok: boolean, status: string, reason?: string }`}
-                    </span>
+                    <span>Returns Promise with status: {`{ ok: boolean, status: string, reason?: string }`}</span>
                   </li>
                 </ul>
               </div>
@@ -340,8 +311,7 @@ Village.authorize(token, domain, refreshToken);`}
               Test Authorization with Widgets
             </h2>
             <p className="text-gray-600 mb-4">
-              After authorizing, these widgets will work with your authenticated
-              session:
+              After authorizing, these widgets will work with your authenticated session:
             </p>
             <div className="grid md:grid-cols-2 gap-4">
               <Button
