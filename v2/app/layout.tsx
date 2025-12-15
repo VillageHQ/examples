@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { QueryProvider } from "@/components/providers/query-provider";
 import { AuthProvider } from "@/contexts/auth-context";
+import { JotaiProvider } from "@/components/providers/jotai-provider";
+import { VillageWidget } from "@/components/village-widget";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -30,7 +32,12 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <QueryProvider>
-          <AuthProvider>{children}</AuthProvider>
+          <JotaiProvider>
+            <AuthProvider>
+              {children}
+              <VillageWidget />
+            </AuthProvider>
+          </JotaiProvider>
         </QueryProvider>
       </body>
     </html>

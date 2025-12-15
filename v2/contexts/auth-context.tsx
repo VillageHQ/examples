@@ -8,6 +8,7 @@ import {
   useCallback,
   ReactNode,
 } from "react";
+import { useSetAtom } from "jotai";
 import type {
   AuthContextValue,
   AuthState,
@@ -20,6 +21,7 @@ import {
   VillageApiException,
   resetVillageApi,
 } from "@/lib/services/village-api";
+import { widgetTokenAtom } from "@/lib/store/widget-atoms";
 
 const initialState: AuthState = {
   isLoading: true,
@@ -37,6 +39,7 @@ interface AuthProviderProps {
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [state, setState] = useState<AuthState>(initialState);
+  const setWidgetToken = useSetAtom(widgetTokenAtom);
 
   // Fetch authentication data
   const fetchAuth = useCallback(async () => {
@@ -112,6 +115,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
   useEffect(() => {
     fetchAuth();
   }, [fetchAuth]);
+
+  // Sync token to Jotai atom for widget preloading
+  useEffect(() => {
+    setWidgetToken(state.villageToken);
+  }, [state.villageToken, setWidgetToken]);
 
   // Compute derived state
   const isActiveCustomer = state.mockUser?.isActiveCustomer ?? false;

@@ -1,18 +1,18 @@
 "use client";
 
 import { useState, useCallback } from "react";
+import { useSetAtom } from "jotai";
 import { Button } from "@/components/ui/button";
 import { UpsellModal } from "@/components/modals/upsell-modal";
-import { SyncIframeModal } from "@/components/modals/sync-iframe-modal";
 import { PathsModal } from "@/components/modals/paths-modal";
 import { useAuth } from "@/contexts/auth-context";
 import { useCompanyPaths } from "@/hooks/use-company-paths";
+import { widgetVisibleAtom } from "@/lib/store/widget-atoms";
 import type { VillageCompanyPathsResponse } from "@/lib/types/village-api.types";
 
 type ModalState =
   | { type: "closed" }
   | { type: "upsell" }
-  | { type: "sync" }
   | { type: "paths"; data?: VillageCompanyPathsResponse };
 
 interface CompanyTableCtaProps {
@@ -21,13 +21,8 @@ interface CompanyTableCtaProps {
 }
 
 export function CompanyTableCta({ companyName, domain }: CompanyTableCtaProps) {
-  const {
-    isActiveCustomer,
-    hasToken,
-    userNeedsSync,
-    villageToken,
-    refreshAuth,
-  } = useAuth();
+  const { isActiveCustomer, userNeedsSync } = useAuth();
+  const setWidgetVisible = useSetAtom(widgetVisibleAtom);
   const [modalState, setModalState] = useState<ModalState>({ type: "closed" });
 
   const companyPathsMutation = useCompanyPaths({
@@ -46,28 +41,20 @@ export function CompanyTableCta({ companyName, domain }: CompanyTableCtaProps) {
       return;
     }
 
-    // State 2: Has token but user doesn't exist in Village → show sync iframe
+    // State 2: Has token but user doesn't exist in Village → show sync widget
     if (userNeedsSync) {
-      setModalState({ type: "sync" });
+      setWidgetVisible(true);
       return;
     }
 
     // State 3: User exists → fetch and show paths
     setModalState({ type: "paths" });
     companyPathsMutation.mutate(domain);
-  }, [isActiveCustomer, userNeedsSync, domain, companyPathsMutation]);
+  }, [isActiveCustomer, userNeedsSync, domain, companyPathsMutation, setWidgetVisible]);
 
   const handleCloseModal = useCallback(() => {
     setModalState({ type: "closed" });
   }, []);
-
-  const handleSyncComplete = useCallback(async () => {
-    // Refresh auth to get updated user data
-    await refreshAuth();
-    // Close sync modal and open paths modal
-    setModalState({ type: "paths" });
-    companyPathsMutation.mutate(domain);
-  }, [refreshAuth, domain, companyPathsMutation]);
 
   const handleRetryPaths = useCallback(() => {
     companyPathsMutation.mutate(domain);
@@ -98,16 +85,6 @@ export function CompanyTableCta({ companyName, domain }: CompanyTableCtaProps) {
         isOpen={modalState.type === "upsell"}
         onClose={handleCloseModal}
       />
-
-      {/* Sync Iframe Modal */}
-      {villageToken && (
-        <SyncIframeModal
-          isOpen={modalState.type === "sync"}
-          token={villageToken}
-          onClose={handleCloseModal}
-          onSyncComplete={handleSyncComplete}
-        />
-      )}
 
       {/* Paths Modal */}
       <PathsModal
