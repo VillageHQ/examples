@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { UpsellModal } from "@/components/modals/upsell-modal";
 import { SyncIframeModal } from "@/components/modals/sync-iframe-modal";
 import { PathsModal } from "@/components/modals/paths-modal";
-import { useAuth } from "@/hooks/use-auth";
+import { useAuth } from "@/contexts/auth-context";
 import { useCompanyPaths } from "@/hooks/use-company-paths";
 import type { VillageCompanyPathsResponse } from "@/lib/types/village-api.types";
 
@@ -21,8 +21,13 @@ interface CompanyTableCtaProps {
 }
 
 export function CompanyTableCta({ companyName, domain }: CompanyTableCtaProps) {
-  const { isActiveCustomer, hasToken, userNeedsSync, villageToken, refreshAuth } =
-    useAuth();
+  const {
+    isActiveCustomer,
+    hasToken,
+    userNeedsSync,
+    villageToken,
+    refreshAuth,
+  } = useAuth();
   const [modalState, setModalState] = useState<ModalState>({ type: "closed" });
 
   const companyPathsMutation = useCompanyPaths({
@@ -81,7 +86,9 @@ export function CompanyTableCta({ companyName, domain }: CompanyTableCtaProps) {
         onClick={handleClick}
         variant={isActiveCustomer ? "primary" : "secondary"}
         size="sm"
-        isLoading={modalState.type === "paths" && companyPathsMutation.isPending}
+        isLoading={
+          modalState.type === "paths" && companyPathsMutation.isPending
+        }
       >
         {getButtonText()}
       </Button>
@@ -109,9 +116,7 @@ export function CompanyTableCta({ companyName, domain }: CompanyTableCtaProps) {
         companyName={companyName}
         isLoading={companyPathsMutation.isPending}
         error={companyPathsMutation.error}
-        data={
-          modalState.type === "paths" ? modalState.data : undefined
-        }
+        data={modalState.type === "paths" ? modalState.data : undefined}
         onRetry={handleRetryPaths}
       />
     </>

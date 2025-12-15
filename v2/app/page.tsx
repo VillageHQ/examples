@@ -1,7 +1,7 @@
 "use client";
 
 import { CompanyTable } from "@/components/company-table/company-table";
-import { useAuth } from "@/hooks/use-auth";
+import { useAuth } from "@/contexts/auth-context";
 import { LoadingScreen } from "@/components/ui/spinner";
 
 export default function Home() {
@@ -105,19 +105,19 @@ export default function Home() {
               !hasToken
                 ? "N/A"
                 : userNeedsSync
-                  ? "Required"
-                  : villageUser?.is_sync_complete
-                    ? "Complete"
-                    : "In progress"
+                ? "Required"
+                : villageUser?.is_sync_complete
+                ? "Complete"
+                : "In progress"
             }
             status={
               !hasToken
                 ? "neutral"
                 : userNeedsSync
-                  ? "warning"
-                  : villageUser?.is_sync_complete
-                    ? "success"
-                    : "neutral"
+                ? "warning"
+                : villageUser?.is_sync_complete
+                ? "success"
+                : "neutral"
             }
           />
         </div>
@@ -221,8 +221,10 @@ function StatusCard({
   status: "success" | "warning" | "neutral";
 }) {
   const statusColors = {
-    success: "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300",
-    warning: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300",
+    success:
+      "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300",
+    warning:
+      "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300",
     neutral: "bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400",
   };
 
@@ -230,7 +232,9 @@ function StatusCard({
     <div className="rounded-lg border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900">
       <p className="text-sm text-zinc-500 dark:text-zinc-400">{title}</p>
       <div className="mt-1 flex items-center gap-2">
-        <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${statusColors[status]}`}>
+        <span
+          className={`rounded-full px-2 py-0.5 text-xs font-medium ${statusColors[status]}`}
+        >
           {value}
         </span>
       </div>
