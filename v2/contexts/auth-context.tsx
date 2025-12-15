@@ -66,6 +66,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
           villageToken: null,
           villageUser: null,
         });
+        setWidgetToken(null);
         return;
       }
 
@@ -93,6 +94,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         villageToken: authData.villageToken,
         villageUser,
       });
+      setWidgetToken(authData.villageToken);
     } catch (error) {
       console.error("Auth error:", error);
       setState({
@@ -102,8 +104,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
         villageToken: null,
         villageUser: null,
       });
+      setWidgetToken(null);
     }
-  }, []);
+  }, [setWidgetToken]);
 
   // Refresh auth (useful after sync completes)
   const refreshAuth = useCallback(async () => {
@@ -115,11 +118,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
   useEffect(() => {
     fetchAuth();
   }, [fetchAuth]);
-
-  // Sync token to Jotai atom for widget preloading
-  useEffect(() => {
-    setWidgetToken(state.villageToken);
-  }, [state.villageToken, setWidgetToken]);
 
   // Compute derived state
   const isActiveCustomer = state.mockUser?.isActiveCustomer ?? false;
