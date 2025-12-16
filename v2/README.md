@@ -1,6 +1,6 @@
 # Village V2 API Integration Example
 
-A production-ready Next.js application demonstrating how to integrate with Village's V2 API-first partner system. Build custom frontend experiences while leveraging Village's relationship intelligence backend.
+A Next.js application demonstrating how to integrate with Village's V2 API-first system. Build custom frontend experiences while leveraging Village's relationship intelligence backend.
 
 ## Overview
 
