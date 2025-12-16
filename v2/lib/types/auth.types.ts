@@ -32,6 +32,4 @@ export interface AuthComputedState {
 }
 
 // Full auth context value
-export interface AuthContextValue extends AuthState, AuthComputedState {
-  refreshAuth: () => Promise<void>;
-}
+export interface AuthContextValue extends AuthState, AuthComputedState {}

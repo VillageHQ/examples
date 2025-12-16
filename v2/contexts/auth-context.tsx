@@ -108,12 +108,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   }, [setWidgetToken]);
 
-  // Refresh auth (useful after sync completes)
-  const refreshAuth = useCallback(async () => {
-    resetVillageApi();
-    await fetchAuth();
-  }, [fetchAuth]);
-
   // Fetch auth on mount
   useEffect(() => {
     fetchAuth();
@@ -129,7 +123,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
     isActiveCustomer,
     hasToken,
     userNeedsSync,
-    refreshAuth,
   };
 
   return (

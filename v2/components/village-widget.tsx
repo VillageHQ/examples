@@ -2,20 +2,20 @@
 
 import { useEffect, useRef } from "react";
 import { useAtomValue, useSetAtom } from "jotai";
+import { useQueryClient } from "@tanstack/react-query";
 import { widgetVisibleAtom, widgetTokenAtom } from "@/lib/store/widget-atoms";
 import {
   createWidgetUrl,
   createWidgetMessageListener,
   navigateWidget,
 } from "@/lib/utils/iframe-messenger";
-import { useAuth } from "@/contexts/auth-context";
 
 export function VillageWidget() {
   const token = useAtomValue(widgetTokenAtom);
   const isVisible = useAtomValue(widgetVisibleAtom);
   const setVisible = useSetAtom(widgetVisibleAtom);
   const iframeRef = useRef<HTMLIFrameElement>(null);
-  const { refreshAuth } = useAuth();
+  const queryClient = useQueryClient();
 
   // Handle widget messages
   useEffect(() => {
@@ -24,17 +24,17 @@ export function VillageWidget() {
     const handler = createWidgetMessageListener({
       onCloseRequested: () => setVisible(false),
       onSyncInit: () => {
-        refreshAuth();
+        queryClient.invalidateQueries();
       },
       onSyncComplete: () => {
-        refreshAuth();
+        queryClient.invalidateQueries();
         setVisible(false);
       },
     });
 
     window.addEventListener("message", handler);
     return () => window.removeEventListener("message", handler);
-  }, [token, setVisible, refreshAuth]);
+  }, [token, setVisible, queryClient]);
 
   // Navigate to sync view when becoming visible
   useEffect(() => {
