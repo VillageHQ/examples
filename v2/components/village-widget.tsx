@@ -23,12 +23,12 @@ export function VillageWidget() {
 
     const handler = createWidgetMessageListener({
       onCloseRequested: () => setVisible(false),
-      onViewChanged: ({ view, previous }) => {
-        // Detect sync completion
-        if (previous === "sync" && view !== "sync") {
-          refreshAuth();
-          setVisible(false);
-        }
+      onSyncInit: () => {
+        refreshAuth();
+      },
+      onSyncComplete: () => {
+        refreshAuth();
+        setVisible(false);
       },
     });
 

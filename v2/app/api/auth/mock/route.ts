@@ -17,7 +17,9 @@ const MOCK_USER: MockUser = {
   isActiveCustomer: true, // Set to false to test upsell flow
 };
 
-export async function POST(): Promise<NextResponse<MockAuthResponse | { error: string }>> {
+export async function POST(): Promise<
+  NextResponse<MockAuthResponse | { error: string }>
+> {
   // Simulate your auth system returning user data
   const mockUser = MOCK_USER;
 

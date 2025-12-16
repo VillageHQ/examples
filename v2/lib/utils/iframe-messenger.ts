@@ -10,6 +10,8 @@ export const WidgetEvents = {
   CLOSE_REQUESTED: "village:close-requested",
   ERROR: "village:error",
   VIEW_CHANGED: "village:view.changed",
+  SYNC_INIT: "village:sync-init",
+  SYNC_COMPLETE: "village:sync-complete",
 } as const;
 
 // Widget commands (from parent to widget)
@@ -42,6 +44,7 @@ export interface ViewChangedPayload {
   view: string;
   previous?: string;
 }
+
 
 // Create widget URL with token
 export function createWidgetUrl(token: string): string {
@@ -82,6 +85,8 @@ export interface WidgetMessageHandlers {
   onCloseRequested?: (payload: CloseRequestedPayload) => void;
   onError?: (payload: ErrorPayload) => void;
   onViewChanged?: (payload: ViewChangedPayload) => void;
+  onSyncInit?: () => void;
+  onSyncComplete?: () => void;
 }
 
 // Create a message listener for widget events
@@ -111,6 +116,12 @@ export function createWidgetMessageListener(
         break;
       case WidgetEvents.VIEW_CHANGED:
         handlers.onViewChanged?.(message.payload as ViewChangedPayload);
+        break;
+      case WidgetEvents.SYNC_INIT:
+        handlers.onSyncInit?.();
+        break;
+      case WidgetEvents.SYNC_COMPLETE:
+        handlers.onSyncComplete?.();
         break;
     }
   };
