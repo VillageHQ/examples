@@ -37,7 +37,9 @@ export function CompanyTableCta({ companyName, domain }: CompanyTableCtaProps) {
   });
 
   const shouldCheckPaths = isActiveCustomer && !userNeedsSync;
-  const pathsCheck = useCompanyPathsCheck(domain, { enabled: shouldCheckPaths });
+  const pathsCheck = useCompanyPathsCheck(domain, {
+    enabled: shouldCheckPaths,
+  });
 
   const handleClick = useCallback(() => {
     // State 1: Not an active customer → show upsell
@@ -55,7 +57,13 @@ export function CompanyTableCta({ companyName, domain }: CompanyTableCtaProps) {
     // State 3: User exists → fetch and show paths
     setModalState({ type: "paths" });
     companyPathsMutation.mutate(domain);
-  }, [isActiveCustomer, userNeedsSync, domain, companyPathsMutation, setWidgetVisible]);
+  }, [
+    isActiveCustomer,
+    userNeedsSync,
+    domain,
+    companyPathsMutation,
+    setWidgetVisible,
+  ]);
 
   const handleCloseModal = useCallback(() => {
     setModalState({ type: "closed" });
@@ -82,7 +90,9 @@ export function CompanyTableCta({ companyName, domain }: CompanyTableCtaProps) {
       return (
         <span className="flex items-center gap-2">
           <Facepile avatars={avatars} count={pathsCount} maxVisible={3} />
-          <span>{pathsCount} {pathsCount === 1 ? "path" : "paths"}</span>
+          <span>
+            {pathsCount} {pathsCount === 1 ? "path" : "paths"}
+          </span>
         </span>
       );
     }

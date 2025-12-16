@@ -15,6 +15,14 @@ export interface MockAuthResponse {
   expiresAt: number | null;
 }
 
+// State for token and mock user (fetched once, rarely changes)
+export interface TokenState {
+  isLoading: boolean;
+  error: Error | null;
+  mockUser: MockUser | null;
+  villageToken: string | null;
+}
+
 // Auth context state
 export interface AuthState {
   isLoading: boolean;

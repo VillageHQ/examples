@@ -9,10 +9,12 @@ import {
   ReactNode,
 } from "react";
 import { useSetAtom } from "jotai";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import type {
   AuthContextValue,
-  AuthState,
+  MockUser,
   MockAuthResponse,
+  TokenState,
 } from "@/lib/types/auth.types";
 import type { VillageUser } from "@/lib/types/village-api.types";
 import {
@@ -22,13 +24,13 @@ import {
   resetVillageApi,
 } from "@/lib/services/village-api";
 import { widgetTokenAtom } from "@/lib/store/widget-atoms";
+import { QueryKeys } from "@/lib/constants/query-keys";
 
-const initialState: AuthState = {
+const initialTokenState: TokenState = {
   isLoading: true,
   error: null,
   mockUser: null,
   villageToken: null,
-  villageUser: null,
 };
 
 const AuthContext = createContext<AuthContextValue | null>(null);
@@ -38,88 +40,94 @@ interface AuthProviderProps {
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  const [state, setState] = useState<AuthState>(initialState);
+  const [tokenState, setTokenState] = useState<TokenState>(initialTokenState);
   const setWidgetToken = useSetAtom(widgetTokenAtom);
+  const queryClient = useQueryClient();
 
-  // Fetch authentication data
-  const fetchAuth = useCallback(async () => {
-    setState((prev) => ({ ...prev, isLoading: true, error: null }));
+  // Fetch token from mock auth API
+  const fetchToken = useCallback(async () => {
+    setTokenState((prev) => ({ ...prev, isLoading: true, error: null }));
 
     try {
-      // Step 1: Call mock auth API to get user and token
-      const authResponse = await fetch("/api/auth/mock", {
-        method: "POST",
-      });
-
-      if (!authResponse.ok) {
-        throw new Error("Failed to authenticate");
-      }
+      const authResponse = await fetch("/api/auth/mock", { method: "POST" });
+      if (!authResponse.ok) throw new Error("Failed to authenticate");
 
       const authData: MockAuthResponse = await authResponse.json();
 
       // If no token (non-active customer), set state without Village data
       if (!authData.villageToken) {
-        setState({
+        setTokenState({
           isLoading: false,
           error: null,
           mockUser: authData.user,
           villageToken: null,
-          villageUser: null,
         });
         setWidgetToken(null);
         return;
       }
 
-      // Step 2: Initialize Village API with token
+      // Initialize Village API with token
       initializeVillageApi(authData.villageToken);
 
-      // Step 3: Try to fetch Village user
-      let villageUser: VillageUser | null = null;
-
-      try {
-        villageUser = await fetchVillageUser();
-      } catch (error) {
-        // 404 means user doesn't exist in Village yet (needs sync)
-        if (error instanceof VillageApiException && error.isNotFound) {
-          villageUser = null;
-        } else {
-          throw error;
-        }
-      }
-
-      setState({
+      setTokenState({
         isLoading: false,
         error: null,
         mockUser: authData.user,
         villageToken: authData.villageToken,
-        villageUser,
       });
       setWidgetToken(authData.villageToken);
     } catch (error) {
       console.error("Auth error:", error);
-      setState({
+      setTokenState({
         isLoading: false,
         error: error instanceof Error ? error : new Error("Unknown error"),
         mockUser: null,
         villageToken: null,
-        villageUser: null,
       });
       setWidgetToken(null);
     }
   }, [setWidgetToken]);
 
-  // Fetch auth on mount
-  useEffect(() => {
-    fetchAuth();
-  }, [fetchAuth]);
+  // Fetch Village user via React Query (depends on token)
+  // This allows queryClient.invalidateQueries() to trigger a refetch
+  const villageUserQuery = useQuery<VillageUser | null>({
+    queryKey: [QueryKeys.VILLAGE_USER],
+    queryFn: async () => {
+      try {
+        return await fetchVillageUser();
+      } catch (error) {
+        // 404 means user doesn't exist in Village yet (needs sync)
+        if (error instanceof VillageApiException && error.isNotFound) {
+          return null;
+        }
+        throw error;
+      }
+    },
+    enabled: !!tokenState.villageToken,
+    retry: false,
+  });
 
-  // Compute derived state
-  const isActiveCustomer = state.mockUser?.isActiveCustomer ?? false;
-  const hasToken = state.villageToken !== null;
-  const userNeedsSync = hasToken && state.villageUser === null;
+  // Fetch token on mount
+  useEffect(() => {
+    fetchToken();
+  }, [fetchToken]);
+
+  // Combined loading state
+  const isLoading =
+    tokenState.isLoading ||
+    (!!tokenState.villageToken && villageUserQuery.isLoading);
+
+  // Computed state
+  const isActiveCustomer = tokenState.mockUser?.isActiveCustomer ?? false;
+  const hasToken = tokenState.villageToken !== null;
+  const userNeedsSync = hasToken && villageUserQuery.data === null;
 
   const contextValue: AuthContextValue = {
-    ...state,
+    isLoading,
+    error: tokenState.error,
+    mockUser: tokenState.mockUser,
+    villageToken: tokenState.villageToken,
+    villageUser: villageUserQuery.data ?? null,
     isActiveCustomer,
     hasToken,
     userNeedsSync,
