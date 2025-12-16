@@ -3,10 +3,12 @@
 import { useState, useCallback } from "react";
 import { useSetAtom } from "jotai";
 import { Button } from "@/components/ui/button";
+import { Facepile } from "@/components/ui/facepile";
 import { UpsellModal } from "@/components/modals/upsell-modal";
 import { PathsModal } from "@/components/modals/paths-modal";
 import { useAuth } from "@/contexts/auth-context";
 import { useCompanyPaths } from "@/hooks/use-company-paths";
+import { useCompanyPathsCheck } from "@/hooks/use-company-paths-check";
 import { widgetVisibleAtom } from "@/lib/store/widget-atoms";
 import type { VillageCompanyPathsResponse } from "@/lib/types/village-api.types";
 
@@ -34,6 +36,9 @@ export function CompanyTableCta({ companyName, domain }: CompanyTableCtaProps) {
     },
   });
 
+  const shouldCheckPaths = isActiveCustomer && !userNeedsSync;
+  const pathsCheck = useCompanyPathsCheck(domain, { enabled: shouldCheckPaths });
+
   const handleClick = useCallback(() => {
     // State 1: Not an active customer → show upsell
     if (!isActiveCustomer) {
@@ -60,10 +65,28 @@ export function CompanyTableCta({ companyName, domain }: CompanyTableCtaProps) {
     companyPathsMutation.mutate(domain);
   }, [domain, companyPathsMutation]);
 
-  // Determine button text based on state
-  const getButtonText = () => {
-    if (!isActiveCustomer) return "Find paths";
-    if (userNeedsSync) return "Connect network";
+  const hasPaths = pathsCheck.data?.has_paths ?? false;
+  const pathsCount = pathsCheck.data?.count ?? 0;
+  const avatars = pathsCheck.data?.avatars ?? [];
+
+  const renderButtonContent = () => {
+    if (!isActiveCustomer) {
+      return "Find paths";
+    }
+
+    if (userNeedsSync) {
+      return "Connect network";
+    }
+
+    if (hasPaths && avatars.length > 0) {
+      return (
+        <span className="flex items-center gap-2">
+          <Facepile avatars={avatars} count={pathsCount} maxVisible={3} />
+          <span>{pathsCount} {pathsCount === 1 ? "path" : "paths"}</span>
+        </span>
+      );
+    }
+
     return "Find paths";
   };
 
@@ -77,7 +100,7 @@ export function CompanyTableCta({ companyName, domain }: CompanyTableCtaProps) {
           modalState.type === "paths" && companyPathsMutation.isPending
         }
       >
-        {getButtonText()}
+        {renderButtonContent()}
       </Button>
 
       {/* Upsell Modal */}
