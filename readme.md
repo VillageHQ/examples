@@ -6,7 +6,7 @@ This directory contains various examples demonstrating how to integrate and util
 
 ## Examples Included
 
-### **Authorization Flow & Complete SDK Integration**
+### V1: Authorization Flow & Widget SDK Integration (`authorize/`)
 
 A comprehensive Next.js example that demonstrates:
 
@@ -21,19 +21,23 @@ A comprehensive Next.js example that demonstrates:
 - 🛤️ **Browse Paths** - Connection path discovery for companies
 - 👥 **Find Intro Buttons** - Introduction facilitation for specific people
 
-**Key Features:**
-
-- Modern UI with responsive design
-- Color-coded widget sections for easy testing
-- Loading states and fallback content
-- Comprehensive error handling
-- Ready for production deployment
-
 See the [Authorization Flow Documentation](https://docs.village.do/authorization-flow) and [Embedded UIs Documentation](https://docs.village.do/embedded-uis) for more details.
 
-## Getting Started
+---
 
-Navigate to the `authorize/` directory and follow the setup instructions in its README to see all Village SDK features in action.
+### V2: API-First Partner Integration (`v2/`)
+
+A modern Next.js application showcasing the **V2 API-first architecture**. This example demonstrates how partners can build custom frontend experiences while leveraging Village's relationship intelligence backend.
+
+**Features Demonstrated:**
+
+- 🔐 **Two-Layer Authentication** - Server-to-server (secret key) + Client-to-API (Bearer token)
+- 🎨 **Custom UI** - Partner-controlled paths display with custom styling
+- 📦 **Iframe Widget Integration** - Preloaded sync widget with postMessage communication
+
+See the [V2 README](./v2/README.md) for detailed setup and integration guide.
+
+---
 
 ## Documentation Links
 
