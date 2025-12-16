@@ -181,7 +181,6 @@ export function VillageWidget() {
     const handler = createWidgetMessageListener({
       onCloseRequested: () => setVisible(false),
       onSyncComplete: () => {
-        refreshAuth();
         setVisible(false);
       },
     });
