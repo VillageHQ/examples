@@ -16,7 +16,7 @@ import type {
   MockAuthResponse,
   TokenState,
 } from "@/lib/types/auth.types";
-import type { VillageUser } from "@/lib/types/village-api.types";
+import type { VillageUser } from "@/lib/services/village-api";
 import {
   initializeVillageApi,
   fetchVillageUser,

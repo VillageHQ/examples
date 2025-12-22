@@ -50,7 +50,15 @@ The V2 integration enables partners to:
 npm install
 ```
 
-### 2. Configure environment variables
+### 2. Generate API types
+
+```bash
+npm run generate:village-types
+```
+
+This generates `lib/village-api.d.ts` from Village's OpenAPI spec, providing full type safety for all API calls.
+
+### 3. Configure environment variables
 
 Create a `.env.local` file:
 
@@ -64,7 +72,7 @@ NEXT_PUBLIC_VILLAGE_API_URL=https://api.village.do
 NEXT_PUBLIC_VILLAGE_APP_URL=https://village.do
 ```
 
-### 3. Run the development server
+### 4. Run the development server
 
 ```bash
 npm run dev
@@ -72,7 +80,7 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) to see the demo.
 
-### 4. Test different user flows
+### 5. Test different user flows
 
 The mock auth endpoint (`/api/auth/mock`) has a toggle for testing:
 
@@ -107,11 +115,11 @@ v2/
 │   ├── use-village-user.ts     # User query hook
 │   └── use-company-paths.ts    # Paths mutation hook
 ├── lib/
+│   ├── village-api.d.ts        # Generated API types (npm run generate:village-types)
 │   ├── services/
-│   │   └── village-api.ts      # API client with Bearer auth
+│   │   └── village-api.ts      # API client with Bearer auth (openapi-fetch)
 │   ├── types/
-│   │   ├── auth.types.ts       # Auth type definitions
-│   │   └── village-api.types.ts # API response types
+│   │   └── auth.types.ts       # Auth type definitions
 │   ├── utils/
 │   │   └── iframe-messenger.ts # Widget postMessage protocol
 │   ├── store/
@@ -149,18 +157,22 @@ const { data } = await response.json();
 
 ```typescript
 // Your frontend
-const villageApi = axios.create({
-  baseURL: "https://api.village.do",
+import createClient from 'openapi-fetch';
+import type { paths } from './village-api';
+
+const client = createClient<paths>({
+  baseUrl: "https://api.village.do",
   headers: {
     Authorization: `Bearer ${token}`,
   },
 });
 
-// Check user status
-const user = await villageApi.get("/v2/user/me");
-// Query paths
-const paths = await villageApi.post("/v2/companies/paths", {
-  domain: "acme.com",
+// Check user status (fully type-safe)
+const { data: user } = await client.GET("/v2/user/me");
+
+// Query paths (type-safe request body and response)
+const { data: paths } = await client.POST("/v2/companies/paths", {
+  body: { domain: "acme.com" },
 });
 ```
 
@@ -270,7 +282,8 @@ All responses follow a standardized envelope:
 - **React:** 19.2.1
 - **State Management:** Jotai (atomic state)
 - **Data Fetching:** TanStack React Query v5
-- **HTTP Client:** Axios
+- **HTTP Client:** openapi-fetch (type-safe API calls)
+- **Type Generation:** openapi-typescript (from OpenAPI spec)
 - **Styling:** Tailwind CSS v4
 
 ## Key Integration Points

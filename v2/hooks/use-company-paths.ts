@@ -2,8 +2,8 @@ import { useMutation } from "@tanstack/react-query";
 import {
   fetchCompanyPaths,
   VillageApiException,
+  type VillageCompanyPathsResponse,
 } from "@/lib/services/village-api";
-import type { VillageCompanyPathsResponse } from "@/lib/types/village-api.types";
 
 interface UseCompanyPathsOptions {
   onSuccess?: (data: VillageCompanyPathsResponse) => void;

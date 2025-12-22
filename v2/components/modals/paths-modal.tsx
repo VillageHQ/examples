@@ -7,7 +7,7 @@ import type {
   VillageCompanyPathsResponse,
   VillageTargetPerson,
   VillagePath,
-} from "@/lib/types/village-api.types";
+} from "@/lib/services/village-api";
 
 interface PathsModalProps {
   isOpen: boolean;
@@ -77,11 +77,11 @@ export function PathsModal({
                 </h3>
                 <p className="text-sm text-zinc-500">{data.company.domain}</p>
               </div>
-              {data.summary.score !== null && (
+              {data.summary.score != null && (
                 <div className="text-right">
                   <ScoreBadge
                     score={data.summary.score}
-                    label={data.summary.score_label}
+                    label={data.summary.score_label ?? null}
                   />
                 </div>
               )}
@@ -222,7 +222,7 @@ function TargetPersonCard({
             <h4 className="font-medium text-zinc-900 dark:text-white truncate">
               {target.full_name}
             </h4>
-            {summary.score !== null && (
+            {summary.score != null && (
               <span
                 className={`text-xs font-medium ${getScoreColor(summary.score).text}`}
               >

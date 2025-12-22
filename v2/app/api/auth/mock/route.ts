@@ -3,7 +3,7 @@ import type { MockAuthResponse, MockUser } from "@/lib/types/auth.types";
 import type {
   VillageApiResponse,
   VillageTokenResponse,
-} from "@/lib/types/village-api.types";
+} from "@/lib/services/village-api";
 
 const VILLAGE_API_URL = process.env.VILLAGE_API_URL ?? "https://api.village.do";
 const VILLAGE_SECRET_KEY = process.env.VILLAGE_SECRET_KEY;

@@ -10,7 +10,7 @@ import { useAuth } from "@/contexts/auth-context";
 import { useCompanyPaths } from "@/hooks/use-company-paths";
 import { useCompanyPathsCheck } from "@/hooks/use-company-paths-check";
 import { widgetVisibleAtom } from "@/lib/store/widget-atoms";
-import type { VillageCompanyPathsResponse } from "@/lib/types/village-api.types";
+import type { VillageCompanyPathsResponse } from "@/lib/services/village-api";
 
 type ModalState =
   | { type: "closed" }

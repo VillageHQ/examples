@@ -1,4 +1,4 @@
-import type { VillageUser } from "./village-api.types";
+import type { VillageUser } from "@/lib/services/village-api";
 
 // Mock user data from your authentication system
 export interface MockUser {
