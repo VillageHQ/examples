@@ -4,9 +4,9 @@ import { Modal } from "@/components/ui/modal";
 import { Spinner } from "@/components/ui/spinner";
 import { Button } from "@/components/ui/button";
 import type {
-  VillageCompanyPathsResponse,
   VillageTargetPerson,
   VillagePath,
+  VillageCompanyPathsResponse,
 } from "@/lib/services/village-api";
 
 interface PathsModalProps {
@@ -15,7 +15,13 @@ interface PathsModalProps {
   companyName: string;
   isLoading: boolean;
   error: Error | null;
-  data: VillageCompanyPathsResponse | undefined;
+  company: VillageCompanyPathsResponse["company"] | undefined;
+  summary: VillageCompanyPathsResponse["summary"] | undefined;
+  targetPeople: VillageTargetPerson[];
+  totalCount: number;
+  hasNextPage: boolean;
+  isLoadingMore: boolean;
+  onLoadMore: () => void;
   onRetry: () => void;
 }
 
@@ -25,9 +31,17 @@ export function PathsModal({
   companyName,
   isLoading,
   error,
-  data,
+  company,
+  summary,
+  targetPeople,
+  totalCount,
+  hasNextPage,
+  isLoadingMore,
+  onLoadMore,
   onRetry,
 }: PathsModalProps) {
+  const hasData = company && summary;
+
   return (
     <Modal
       isOpen={isOpen}
@@ -35,7 +49,7 @@ export function PathsModal({
       title={`Connections at ${companyName}`}
       size="xl"
     >
-      {isLoading && (
+      {isLoading && !hasData && (
         <div className="flex flex-col items-center justify-center py-12">
           <Spinner size="lg" />
           <p className="mt-4 text-sm text-zinc-500">
@@ -44,7 +58,7 @@ export function PathsModal({
         </div>
       )}
 
-      {error && (
+      {error && !hasData && (
         <div className="flex flex-col items-center justify-center gap-4 py-12 text-center">
           <div className="flex h-12 w-12 items-center justify-center rounded-full bg-red-100 dark:bg-red-900/20">
             <svg
@@ -66,22 +80,22 @@ export function PathsModal({
         </div>
       )}
 
-      {data && !isLoading && (
+      {hasData && (
         <div className="space-y-6">
           {/* Company summary */}
           <div className="rounded-lg bg-zinc-50 p-4 dark:bg-zinc-800/50">
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="font-semibold text-zinc-900 dark:text-white">
-                  {data.company.name}
+                  {company.name}
                 </h3>
-                <p className="text-sm text-zinc-500">{data.company.domain}</p>
+                <p className="text-sm text-zinc-500">{company.domain}</p>
               </div>
-              {data.summary.score != null && (
+              {summary.score != null && (
                 <div className="text-right">
                   <ScoreBadge
-                    score={data.summary.score}
-                    label={data.summary.score_label ?? null}
+                    score={summary.score}
+                    label={summary.score_label ?? null}
                   />
                 </div>
               )}
@@ -89,7 +103,7 @@ export function PathsModal({
           </div>
 
           {/* No connections state */}
-          {data.count === 0 && (
+          {totalCount === 0 && (
             <div className="py-8 text-center">
               <p className="text-zinc-500">
                 No connections found at this company.
@@ -101,28 +115,42 @@ export function PathsModal({
           )}
 
           {/* Target people list */}
-          {data.count > 0 && (
+          {totalCount > 0 && (
             <div className="space-y-4">
               <h4 className="text-sm font-medium text-zinc-600 dark:text-zinc-400">
-                {data.count} {data.count === 1 ? "person" : "people"} you can
+                {totalCount} {totalCount === 1 ? "person" : "people"} you can
                 reach
               </h4>
               <div className="divide-y divide-zinc-100 dark:divide-zinc-800">
-                {data.target_people.map((targetPerson) => (
+                {targetPeople.map((targetPerson) => (
                   <TargetPersonCard
                     key={targetPerson.target.id}
                     targetPerson={targetPerson}
                   />
                 ))}
               </div>
+
+              {/* Load More */}
+              {hasNextPage && (
+                <div className="flex justify-center pt-2">
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    onClick={onLoadMore}
+                    isLoading={isLoadingMore}
+                  >
+                    Load more
+                  </Button>
+                </div>
+              )}
             </div>
           )}
 
           {/* Village link */}
-          {data.company.village_url && (
+          {company.village_url && (
             <div className="border-t border-zinc-200 pt-4 dark:border-zinc-700">
               <a
-                href={data.company.village_url}
+                href={company.village_url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-sm text-blue-600 hover:underline dark:text-blue-400"
@@ -268,7 +296,7 @@ function TargetPersonCard({
 
 // Path type badge
 function PathBadge({ path }: { path: VillagePath }) {
-  const isIntro = path.type === "intro";
+  const isIntro = path.degree > 1;
 
   return (
     <span

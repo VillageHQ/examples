@@ -10,12 +10,11 @@ import { useAuth } from "@/contexts/auth-context";
 import { useCompanyPaths } from "@/hooks/use-company-paths";
 import { useCompanyPathsCheck } from "@/hooks/use-company-paths-check";
 import { widgetVisibleAtom } from "@/lib/store/widget-atoms";
-import type { VillageCompanyPathsResponse } from "@/lib/services/village-api";
 
 type ModalState =
   | { type: "closed" }
   | { type: "upsell" }
-  | { type: "paths"; data?: VillageCompanyPathsResponse };
+  | { type: "paths" };
 
 interface CompanyTableCtaProps {
   companyName: string;
@@ -27,14 +26,20 @@ export function CompanyTableCta({ companyName, domain }: CompanyTableCtaProps) {
   const setWidgetVisible = useSetAtom(widgetVisibleAtom);
   const [modalState, setModalState] = useState<ModalState>({ type: "closed" });
 
-  const companyPathsMutation = useCompanyPaths({
-    onSuccess: (data) => {
-      setModalState({ type: "paths", data });
-    },
-    onError: (error) => {
-      console.error("Failed to fetch paths:", error);
-    },
-  });
+  const isPathsModalOpen = modalState.type === "paths";
+
+  const {
+    targetPeople,
+    totalCount,
+    company,
+    summary,
+    isLoading,
+    error,
+    hasNextPage,
+    isLoadingMore,
+    loadMore,
+    refetch,
+  } = useCompanyPaths(domain, { enabled: isPathsModalOpen });
 
   const shouldCheckPaths = isActiveCustomer && !userNeedsSync;
   const pathsCheck = useCompanyPathsCheck(domain, {
@@ -42,36 +47,30 @@ export function CompanyTableCta({ companyName, domain }: CompanyTableCtaProps) {
   });
 
   const handleClick = useCallback(() => {
-    // State 1: Not an active customer → show upsell
     if (!isActiveCustomer) {
       setModalState({ type: "upsell" });
       return;
     }
 
-    // State 2: Has token but user doesn't exist in Village → show sync widget
     if (userNeedsSync) {
       setWidgetVisible(true);
       return;
     }
 
-    // State 3: User exists → fetch and show paths
     setModalState({ type: "paths" });
-    companyPathsMutation.mutate(domain);
-  }, [
-    isActiveCustomer,
-    userNeedsSync,
-    domain,
-    companyPathsMutation,
-    setWidgetVisible,
-  ]);
+  }, [isActiveCustomer, userNeedsSync, setWidgetVisible]);
 
   const handleCloseModal = useCallback(() => {
     setModalState({ type: "closed" });
   }, []);
 
   const handleRetryPaths = useCallback(() => {
-    companyPathsMutation.mutate(domain);
-  }, [domain, companyPathsMutation]);
+    refetch();
+  }, [refetch]);
+
+  const handleLoadMore = useCallback(() => {
+    loadMore();
+  }, [loadMore]);
 
   const hasPaths = pathsCheck.data?.has_paths ?? false;
   const pathsCount = pathsCheck.data?.count ?? 0;
@@ -106,9 +105,7 @@ export function CompanyTableCta({ companyName, domain }: CompanyTableCtaProps) {
         onClick={handleClick}
         variant={isActiveCustomer ? "primary" : "secondary"}
         size="sm"
-        isLoading={
-          modalState.type === "paths" && companyPathsMutation.isPending
-        }
+        isLoading={isPathsModalOpen && isLoading}
       >
         {renderButtonContent()}
       </Button>
@@ -121,12 +118,18 @@ export function CompanyTableCta({ companyName, domain }: CompanyTableCtaProps) {
 
       {/* Paths Modal */}
       <PathsModal
-        isOpen={modalState.type === "paths"}
+        isOpen={isPathsModalOpen}
         onClose={handleCloseModal}
         companyName={companyName}
-        isLoading={companyPathsMutation.isPending}
-        error={companyPathsMutation.error}
-        data={modalState.type === "paths" ? modalState.data : undefined}
+        isLoading={isLoading}
+        error={error}
+        company={company}
+        summary={summary}
+        targetPeople={targetPeople}
+        totalCount={totalCount}
+        hasNextPage={hasNextPage ?? false}
+        isLoadingMore={isLoadingMore}
+        onLoadMore={handleLoadMore}
         onRetry={handleRetryPaths}
       />
     </>

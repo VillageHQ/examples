@@ -4,6 +4,206 @@
  */
 
 export interface paths {
+    "/v2/people": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * List People
+         * @description Get your network contacts ranked by connection strength. Returns a paginated list with enrichment data for each person. Supports cursor-based pagination and optional connection degree filtering.
+         */
+        post: operations["list_people"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v2/people/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Search People
+         * @description Search for people using natural language queries. Pass your search text in the "prompt" field (not "query"). Use this to find professionals matching specific criteria like job titles, companies, industries, or skills. Examples: "engineers at Google", "investors in fintech", "product managers in San Francisco". Returns matching profiles with relevance scores. Supports cursor-based pagination for large result sets.
+         */
+        post: operations["search_people"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v2/people/paths": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Get Person Paths
+         * @description Find introduction paths to reach a specific person through your professional network. Use this when you want to connect with someone and need to find who can introduce you. Provide a LinkedIn URL and get back: direct connections, mutual contacts who can make introductions, and connection strength scores (0-100). Higher scores indicate stronger, more reliable paths.
+         */
+        post: operations["get_person_paths"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v2/people/paths/bulk": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Get Person Paths (Bulk)
+         * @description Find introduction paths to multiple people in a single request. Use this for batch processing, such as scoring leads in a sales sequence or prioritizing outreach targets. Provide up to 100 LinkedIn IDs and get connection paths for each. Returns the same path information as get_person_paths but optimized for bulk operations.
+         */
+        post: operations["get_person_paths_bulk"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v2/people/sort": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Sort People
+         * @description Rank a list of people by how well-connected you are to them. Use this to prioritize outreach by focusing on people you have the strongest connections to. Provide LinkedIn URLs and get them sorted by connection strength score (highest first). Each result includes: score (0-100), score_label (e.g., "Strong", "Weak"), and the original URL.
+         */
+        post: operations["sort_people"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v2/people/enrich": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Enrich Person
+         * @description Get detailed profile information for a person. Use this to look up professional details when you have a LinkedIn URL or Village ID. Returns: full name, job title/headline, current company, location, profile photo URL, and LinkedIn URL. Useful for enriching CRM records or preparing for outreach.
+         */
+        post: operations["enrich_person"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v2/people/enrich/bulk": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Enrich Person (Bulk)
+         * @description Get detailed profile information for multiple people in a single request. Use this for batch enrichment of contact lists or CRM records. Provide up to 10 LinkedIn URLs or Village IDs. Returns the same profile data as enrich_person for each. Partial results are returned if some lookups fail - check each result for success/error status.
+         */
+        post: operations["enrich_person_bulk"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v2/people/enrich/emails": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Enrich Person Email
+         * @description Find the email address for a person. Use this when you need to contact someone directly and have their LinkedIn URL or Village ID. Returns the verified email address if found, or null if unavailable. The email is looked up from professional data sources.
+         */
+        post: operations["enrich_person_email"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v2/people/enrich/emails/bulk": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Enrich Person Email (Bulk)
+         * @description Find email addresses for multiple people in a single request. Use this for batch email lookup when preparing outreach campaigns. Provide up to 10 LinkedIn URLs or Village IDs. Returns email addresses where found, with error messages for failed lookups. More efficient than calling enrich_person_email multiple times.
+         */
+        post: operations["enrich_person_email_bulk"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v2/people/refresh": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Refresh People
+         * @description Refresh/import people data from LinkedIn URLs. Supports both realtime (synchronous with timeout) and async modes. In realtime mode, returns enriched person data immediately or times out after 25 seconds. In async mode, returns job IDs for later status checking.
+         */
+        post: operations["people_refresh"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v2/companies/paths": {
         parameters: {
             query?: never;
@@ -15,58 +215,9 @@ export interface paths {
         put?: never;
         /**
          * Get Company Paths
-         * @description Returns connection paths to a company. Returns up to 50 people at the company with up to 10 introducers per person.
+         * @description Find introduction paths to people at a specific company. Use this when targeting a company for sales, recruiting, or partnerships. Provide a company domain or LinkedIn URL and get: employees you can reach through your network, potential introducers for each person, and connection strength scores. Returns up to 50 employees ranked by how well-connected you are.
          */
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody: {
-                content: {
-                    "application/json": components["schemas"]["CompanyPathsRequest"];
-                };
-            };
-            responses: {
-                /** @description Company paths found successfully */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            data: components["schemas"]["CompanyPathsResponse"];
-                            metadata: {
-                                request_id: string;
-                            };
-                        };
-                    };
-                };
-                /** @description Bad request - invalid company identifier */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-                /** @description Unauthorized - missing or invalid authentication */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-                /** @description Company not found */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
+        post: operations["get_company_paths"];
         delete?: never;
         options?: never;
         head?: never;
@@ -84,58 +235,16 @@ export interface paths {
         put?: never;
         /**
          * Check Company Paths
-         * @description Quickly check if introduction paths exist to a company. Returns the warmth score and connector avatars (facepile) without full path details. Use this for previews or to determine if a full paths query is worthwhile.
+         * @description Quickly check if you have connections to a company without fetching full details. Use this for fast previews in lists or search results before calling get_company_paths. Returns: whether paths exist, overall connection score, count of reachable people, and avatar thumbnails of top connectors. Much faster than get_company_paths.
          */
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody: {
-                content: {
-                    "application/json": components["schemas"]["CompanyPathsRequest"];
-                };
-            };
-            responses: {
-                /** @description Company check completed successfully */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            data: components["schemas"]["CompanyCheckResponse"];
-                            metadata: {
-                                request_id: string;
-                            };
-                        };
-                    };
-                };
-                /** @description Bad request - invalid company identifier */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-                /** @description Unauthorized - missing or invalid authentication */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
+        post: operations["check_company_paths"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/v2/auth/tokens": {
+    "/v2/companies/sort": {
         parameters: {
             query?: never;
             header?: never;
@@ -145,66 +254,17 @@ export interface paths {
         get?: never;
         put?: never;
         /**
-         * Create Authorization
-         * @description Generate a token for a user. The token can be used to authenticate subsequent API requests on behalf of the user.
+         * Sort Companies
+         * @description Rank a list of companies by how well-connected you are to people there. Use this to prioritize target accounts by focusing on companies where you have the strongest network. Provide LinkedIn URLs or domains (up to 100) and get them sorted by connection strength score (highest first). Each result includes: score (0-100), score_label, LinkedIn URL, and domain.
          */
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody: {
-                content: {
-                    "application/json": components["schemas"]["CreateTokenRequest"];
-                };
-            };
-            responses: {
-                /** @description Token created successfully */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            data: components["schemas"]["TokenResponse"];
-                            metadata: {
-                                request_id: string;
-                            };
-                        };
-                    };
-                };
-                /** @description Bad request - invalid request body */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-                /** @description Unauthorized - missing or invalid secret-key header */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-                /** @description Validation error - invalid external_user_id or email format */
-                422: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
+        post: operations["sort_companies"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/v2/auth/tokens/revoke": {
+    "/v2/companies": {
         parameters: {
             query?: never;
             header?: never;
@@ -214,52 +274,346 @@ export interface paths {
         get?: never;
         put?: never;
         /**
-         * Revoke Token
-         * @description Revoke the current Bearer token. After revocation, the token can no longer be used for API requests. The user can obtain a new token by calling POST /v2/auth/tokens.
+         * List Companies
+         * @description Get your top-connected companies ranked by network strength. Use this to discover which companies you have the best access to through your professional network. Returns a paginated list with: connection score, score_label, LinkedIn URL, and domain for each company. Supports cursor-based pagination and optional connection degree filtering.
          */
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Token revoked successfully */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            data: components["schemas"]["RevokeTokenResponse"];
-                            metadata: {
-                                request_id: string;
-                            };
-                        };
-                    };
-                };
-                /** @description Bad request - token missing jti claim */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-                /** @description Unauthorized - missing or invalid Bearer token */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
+        post: operations["list_companies"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
+        trace?: never;
+    };
+    "/v2/companies/enrich": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Enrich Company
+         * @description Get detailed information about a company. Use this to look up company details when you have a domain, LinkedIn URL, or any URL. Returns: company name, website, LinkedIn URL, logo, employee count, industry, founded year, and description. Useful for enriching CRM records or researching target accounts.
+         */
+        post: operations["enrich_company"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v2/companies/enrich/bulk": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Enrich Company (Bulk)
+         * @description Get detailed information for multiple companies in a single request. Use this for batch enrichment of account lists or CRM records. Provide up to 10 domains, LinkedIn URLs, or URLs. Returns the same company data as enrich_company for each. Partial results are returned if some lookups fail - check each result for company data or error status.
+         */
+        post: operations["enrich_company_bulk"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v2/companies/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Search Companies
+         * @description Search for companies using natural language queries. Pass your search text in the "prompt" field (not "query"). Use this to find companies matching specific criteria like industry, location, funding stage, or technology. Examples: "AI startups in San Francisco", "Series B fintech companies", "healthcare companies using Python". Returns matching companies with relevance scores and connection strength. Supports cursor-based pagination for large result sets.
+         */
+        post: operations["search_companies"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v2/companies/refresh": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Refresh Companies
+         * @description Refresh/import company data from LinkedIn URLs or domains. Supports both realtime (synchronous with timeout) and async modes. In realtime mode, returns enriched company data immediately or times out after 25 seconds. In async mode, returns job IDs for later status checking.
+         */
+        post: operations["companies_refresh"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v2/lists": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List all lists
+         * @description Get all your saved lists. Use this to see your collections of people or companies. Supports pagination (page, limit), filtering by type (people or company), and searching by title. Each list includes: id, title, type, description, item_count, and timestamps.
+         */
+        get: operations["list_lists"];
+        put?: never;
+        /**
+         * Create a list
+         * @description Create a new list to organize people or companies. Use this to start building collections for outreach, tracking, or organization. Provide: title (required), type (people or company), and optional description. The creator becomes the list owner. List creation may be limited based on your subscription plan.
+         */
+        post: operations["create_list"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v2/lists/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get a list
+         * @description Get a list with all its items. Use this to view the contents of a specific list. Returns the list metadata plus paginated items. For people lists, items are sorted by connection strength (warmth score). Each item includes: id, graph_id, type, profile data, and timestamps. Supports pagination with page and limit parameters.
+         */
+        get: operations["get_list"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete a list
+         * @description Permanently delete a list and all its items. Use this to remove lists you no longer need. This action cannot be undone. All items in the list will also be removed.
+         */
+        delete: operations["delete_list"];
+        options?: never;
+        head?: never;
+        /**
+         * Update a list
+         * @description Update a list's metadata. Use this to rename a list or change its description. Provide at least one of: title or description. The list type cannot be changed after creation. Returns the updated list with new timestamps.
+         */
+        patch: operations["update_list"];
+        trace?: never;
+    };
+    "/v2/lists/{id}/items": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Add items to list
+         * @description Add people or companies to a list. Use this to populate your lists with contacts or accounts. Provide an array of identifiers (LinkedIn URLs, company domains, or graph IDs). Each identifier is resolved and added to the list. Returns detailed results for each item: successful additions include the created item, failures include error codes and messages. Duplicates are detected and reported.
+         */
+        post: operations["add_list_items"];
+        /**
+         * Remove items from list
+         * @description Remove items from a list by their item IDs. Use this to clean up lists by removing people or companies you no longer want to track. Provide an array of item_ids (obtained from get_list). Returns the count of successfully removed items.
+         */
+        delete: operations["remove_list_items"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v2/teams": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Teams
+         * @description Get all teams you are a member of. Use this to see your team memberships and access team invite links. Each team includes: id, name, logo, invite_link (for sharing), and is_admin flag indicating your admin status. For partner app integrations, only teams scoped to that partner are returned.
+         */
+        get: operations["list_teams"];
+        put?: never;
+        /**
+         * Create or Update Team
+         * @description Create a new team or update an existing one. Use this to set up team workspaces for collaboration. To create: provide a name (id is auto-generated). To update: provide the team_id (requires admin permissions). The creator automatically becomes team admin. Returns: team id, name, logo, and invite_link for sharing with others.
+         */
+        post: operations["upsert_team"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v2/teams/join": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Join Team
+         * @description Join a team using an invite link. Use this when you have received a team invite link from an admin. Provide the invite link code (the part after /join/ in the URL). Returns success confirmation. Fails if the invite link is invalid or you are already a team member.
+         */
+        post: operations["join_team"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v2/groups": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Groups
+         * @description Get all groups (communities) you are a member of. Groups allow members to share network access with each other, expanding everyone's reach. Each group includes: id, name, logo, invite_link (for sharing), and is_admin flag. Use this to see your community memberships and manage group invitations.
+         */
+        get: operations["list_groups"];
+        put?: never;
+        /**
+         * Create or Update Group
+         * @description Create a new group or update an existing one. Groups enable network sharing between members. To create: provide a name (id is auto-generated). To update: provide group_id (requires admin permissions). The creator automatically becomes group admin. Returns: group id, name, logo, and invite_link for inviting others.
+         */
+        post: operations["upsert_group"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v2/groups/join": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Join Group
+         * @description Join a group using an invite link. Use this when you have received a group invite from an admin or member. Provide the invite link code. Once joined, you gain access to the shared network of all group members. Returns success confirmation. Fails if the invite is invalid or you are already a member.
+         */
+        post: operations["join_group"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v2/integration-store/store": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Integration Store
+         * @description Get all integration categories with their apps and the authenticated user's connection status for each app. Use this to render the integration store on the frontend.
+         */
+        get: operations["get_integration_store"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v2/integration-store/token": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Activepieces Token
+         * @description Get an Activepieces provisioning token scoped to the shared app store project. Use this token on the frontend to interact with Activepieces for creating connections.
+         */
+        get: operations["get_integration_store_token"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v2/integration-store/connections": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Integration Connections
+         * @description Get all integration connections for the authenticated user, including app and category details.
+         */
+        get: operations["list_integration_connections"];
+        put?: never;
+        /**
+         * Create Integration Connection
+         * @description Create a new connection to an integration app.
+         */
+        post: operations["create_integration_connection"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v2/integration-store/connections/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Delete Integration Connection
+         * @description Delete an integration connection.
+         */
+        delete: operations["delete_integration_connection"];
+        options?: never;
+        head?: never;
+        /**
+         * Update Integration Connection
+         * @description Update the status or Activepieces connection ID of an existing connection.
+         */
+        patch: operations["update_integration_connection"];
         trace?: never;
     };
     "/v2/user/me": {
@@ -271,47 +625,9 @@ export interface paths {
         };
         /**
          * Get Current User
-         * @description Returns basic information and status for the currently authenticated user.
+         * @description Get profile information for the authenticated user. Use this to verify authentication is working and check sync status. Returns: external user id, email, name, account creation date, sync completion status (is_sync_complete), and active status. The is_sync_complete flag indicates whether the user's network data is ready for queries.
          */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description User information retrieved successfully */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            data: components["schemas"]["UserMeResponse"];
-                            metadata: {
-                                request_id: string;
-                            };
-                        };
-                    };
-                };
-                /** @description Unauthorized - missing or invalid Bearer token */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-                /** @description User not found in the partner app */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
+        get: operations["get_current_user"];
         put?: never;
         post?: never;
         delete?: never;
@@ -331,47 +647,76 @@ export interface paths {
         put?: never;
         /**
          * Cancel User Subscription
-         * @description Cancel the subscription for the currently authenticated user. All existing tokens for this user will become invalid. The user can be reactivated by calling POST /v2/auth/tokens.
+         * @description Deactivate a user and invalidate all their tokens. Use this when a user cancels their subscription or should lose access. The user is marked inactive and all tokens are revoked. To reactivate, generate a new token via the create_auth_token endpoint.
          */
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description User subscription cancelled successfully */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            data: components["schemas"]["CancelUserResponse"];
-                            metadata: {
-                                request_id: string;
-                            };
-                        };
-                    };
-                };
-                /** @description Unauthorized - missing or invalid Bearer token */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
+        post: operations["cancel_user"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/v2/integrations": {
+    "/v2/user/relationships": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Import Relationships
+         * @description Import manual relationships to expand your network graph. Use this to add people you know but aren't connected to digitally. Provide email addresses or LinkedIn URLs with optional relationship scores (0-100). Higher scores indicate stronger relationships. Maximum 100 people per request. Returns: summary counts and individual results showing created, updated, or failed imports.
+         */
+        post: operations["import_relationships"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v2/auth/tokens": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Create Authorization
+         * @description Generate a Bearer token for a user. Use this to authenticate users for API access. Requires your app secret key in the secret-key header. Provide: external_user_id (your unique user identifier) and email. Returns a JWT token valid for 1 year. If the user was previously cancelled, this reactivates them.
+         */
+        post: operations["create_auth_token"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v2/auth/tokens/revoke": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Revoke Token
+         * @description Invalidate the current Bearer token. Use this when a user logs out or when you need to force re-authentication. The token is added to a revocation list and can no longer be used. To restore access, generate a new token via create_auth_token.
+         */
+        post: operations["revoke_auth_token"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v2/app": {
         parameters: {
             query?: never;
             header?: never;
@@ -379,182 +724,259 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * List Gmail Integrations
-         * @description Returns all Gmail integrations for the authenticated user with their settings and status.
+         * Get App Information
+         * @description Get information about the partner application associated with your token. Use this to verify your app configuration and check activation status. Returns: app title, description, domain, logo URL, public key, and is_active flag.
          */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Integrations retrieved successfully */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            data: components["schemas"]["ListIntegrationsResponse"];
-                            metadata: {
-                                request_id: string;
-                            };
-                        };
-                    };
-                };
-                /** @description Unauthorized - missing or invalid Bearer token */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-                /** @description Internal Server Error */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
+        get: operations["get_app_info"];
         put?: never;
-        /**
-         * Create Gmail Integration
-         * @description Creates a new Gmail integration for mailbox functionality. This endpoint bypasses the OAuth flow and directly creates an integration with provided credentials.
-         */
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody: {
-                content: {
-                    "application/json": {
-                        google_integration_properties: {
-                            /**
-                             * @description Google account identifier
-                             * @example go:123456789
-                             */
-                            account_identifier: string;
-                            /**
-                             * Format: email
-                             * @description Gmail address
-                             * @example user@gmail.com
-                             */
-                            email: string;
-                            authentication_token_data: {
-                                /** @description Google OAuth access token */
-                                access_token: string;
-                                /** @description Google OAuth refresh token */
-                                refresh_token?: string;
-                                /** @description OAuth scopes granted */
-                                scope: string;
-                            };
-                            /**
-                             * @description Integration type
-                             * @enum {string}
-                             */
-                            type: "google";
-                            /**
-                             * @description Data scopes for the integration
-                             * @example [
-                             *       "email",
-                             *       "contacts"
-                             *     ]
-                             */
-                            data_scope: string[];
-                            /**
-                             * @description Must be true for Gmail integration
-                             * @enum {boolean}
-                             */
-                            authorized_gmail: true;
-                            sync_data: {
-                                /**
-                                 * Format: email
-                                 * @description Email address for sync data
-                                 */
-                                email: string;
-                            };
-                        };
-                    };
-                };
-            };
-            responses: {
-                /** @description Integration created successfully */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            data: components["schemas"]["IntegrationResponse"];
-                            metadata: {
-                                request_id: string;
-                            };
-                        };
-                    };
-                };
-                /** @description Bad Request - Invalid input data */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                                details?: {
-                                    field: string;
-                                    message: string;
-                                }[];
-                            };
-                        };
-                    };
-                };
-                /** @description Unauthorized - missing or invalid Bearer token */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-                /** @description Forbidden - plan limits exceeded or insufficient permissions */
-                403: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-                /** @description Conflict - integration already exists for this account */
-                409: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-                /** @description Internal Server Error */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/v2/integrations/{id}": {
+    "/v2/sequences/system_email_templates": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get system email templates
+         * @description Returns system email templates filtered by use case
+         */
+        get: operations["get_system_email_templates"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v2/sequences/activities": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get outgoing email activities
+         * @description Retrieve outgoing email activities across all sequences for the authenticated user, with optional filtering by decision status.
+         */
+        get: operations["get_sequence_outgoing_activities"];
+        put?: never;
+        /**
+         * Create sequence activity
+         * @description Create a new sequence activity (note) and update the associated lead
+         */
+        post: operations["create_sequence_activity"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v2/sequences": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List sequences
+         * @description Get all sequences for the authenticated user with optional filtering and pagination
+         */
+        get: operations["list_sequences"];
+        put?: never;
+        /**
+         * Create sequence
+         * @description Create a new sequence for the authenticated user
+         */
+        post: operations["create_sequence"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v2/sequences/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get sequence
+         * @description Get a specific sequence by its encrypted ID
+         */
+        get: operations["get_sequence"];
+        /**
+         * Update sequence
+         * @description Update an existing sequence by its encrypted ID
+         */
+        put: operations["update_sequence"];
+        post?: never;
+        /**
+         * Archive sequence
+         * @description Archive a specific sequence by its encrypted ID (sets status to archived)
+         */
+        delete: operations["archive_sequence"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v2/sequences/{sequence_id}/leads": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get sequence leads
+         * @description Get all leads for a specific sequence with optional status filtering
+         */
+        get: operations["get_sequence_leads"];
+        put?: never;
+        /**
+         * Add leads to sequence
+         * @description Add multiple leads to a sequence by their lead identifiers (person IDs)
+         */
+        post: operations["add_leads_to_sequence"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v2/sequences/{sequence_id}/emails": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get sequence emails
+         * @description Get all outgoing emails for a specific sequence with optional status filtering
+         */
+        get: operations["get_sequence_emails"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v2/sequences/{sequence_id}/leads/bulk": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Bulk update all leads in sequence
+         * @description Update all leads in a sequence with the same introducer configuration (e.g., for cold email conversion)
+         */
+        put: operations["bulk_update_sequence_leads"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v2/sequences/{sequence_id}/leads/{lead_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Update sequence lead
+         * @description Update a specific lead in a sequence
+         */
+        put: operations["update_sequence_lead"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v2/sequences/leads/{lead_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Delete sequence lead
+         * @description Delete a specific sequence lead (sets status to deleted)
+         */
+        delete: operations["delete_sequence_lead"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v2/sequences/email_outgoing/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Cancel outgoing email
+         * @description Cancel a specific outgoing email (sets status to canceled)
+         */
+        delete: operations["cancel_outgoing_email"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v2/sequences/leads/{sequence_lead_id}/activities": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get lead activities
+         * @description Get activity history for a specific sequence lead
+         */
+        get: operations["get_lead_activities"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v2/sequences/activities/{activity_id}": {
         parameters: {
             query?: never;
             header?: never;
@@ -568,173 +990,199 @@ export interface paths {
         options?: never;
         head?: never;
         /**
-         * Update Gmail Integration
-         * @description Updates settings for an existing Gmail integration including rate limits, status, and default flag.
+         * Update activity decision
+         * @description Update activity decision and associated email status
          */
-        patch: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    /**
-                     * @description Integration ID
-                     * @example 123
-                     */
-                    id: string;
-                };
-                cookie?: never;
-            };
-            requestBody: {
-                content: {
-                    "application/json": {
-                        /**
-                         * @description Daily email sending limit
-                         * @example 50
-                         */
-                        email_sending_per_day?: number;
-                        /**
-                         * @description Hourly email sending limit
-                         * @example 20
-                         */
-                        email_sending_per_hour?: number;
-                        /**
-                         * @description Minimum delay between emails in seconds
-                         * @example 600
-                         */
-                        email_sending_min_delay_seconds?: number;
-                        /**
-                         * @description Timezone for scheduling
-                         * @example America/New_York
-                         */
-                        timezone?: string;
-                        /**
-                         * @description Integration status
-                         * @example connected
-                         * @enum {string}
-                         */
-                        status?: "connected" | "disconnected" | "failed";
-                        /**
-                         * @description Whether this should be the default integration for email sending
-                         * @example false
-                         */
-                        email_sending_default?: boolean;
-                    };
-                };
-            };
-            responses: {
-                /** @description Integration updated successfully */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            data: components["schemas"]["UpdateIntegrationResponse"];
-                            metadata: {
-                                request_id: string;
-                            };
-                        };
-                    };
-                };
-                /** @description Bad Request - Invalid input data or business rule violation */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            error: {
-                                code: string;
-                                message: string;
-                            };
-                        };
-                    };
-                };
-                /** @description Unauthorized - missing or invalid Bearer token */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-                /** @description Not Found - integration not found */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-                /** @description Internal Server Error */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
-        trace?: never;
-    };
-    "/v2/app": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get App Information
-         * @description Returns the partner application information for the authenticated token.
-         */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description App information retrieved successfully */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            data: components["schemas"]["AppResponse"];
-                            metadata: {
-                                request_id: string;
-                            };
-                        };
-                    };
-                };
-                /** @description Unauthorized - missing or invalid Bearer token */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
+        patch: operations["update_activity_decision"];
         trace?: never;
     };
 }
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
-        /** @description Basic company information */
-        CompanyInfo: {
-            name: string;
-            domain: string;
+        /** @description A person in the network list with enrichment data */
+        PersonListItem: {
+            linkedin_identifier: string;
+            full_name: string;
+            linkedin_url: string | null;
+            avatar: string | null;
+            headline: string | null;
+            location: string | null;
+            current_company: {
+                name: string | null;
+                linkedin_url: string | null;
+                domain: string | null;
+                image_url: string | null;
+                position: string | null;
+            } | null;
+            score: number;
+            score_label: string;
+        };
+        /** @description Paginated list of network people ranked by connection strength */
+        ListPeopleResponse: {
+            people: components["schemas"]["PersonListItem"][];
+            pagination: {
+                cursor: string | null;
+                limit: number;
+                has_next_page: boolean;
+                count: number;
+            };
+        };
+        /** @description Request body for listing network people with cursor pagination */
+        ListPeopleBody: {
+            /** @description Opaque cursor for pagination (from previous response) */
+            cursor?: string;
+            /**
+             * @description Number of results per page (default 25, max 100)
+             * @example 25
+             */
+            limit?: number;
+            /**
+             * @description Filter by connection degree (1=direct, 2=second-degree, 3=third-degree)
+             * @example [
+             *       1,
+             *       2
+             *     ]
+             */
+            connection_degrees?: number[];
+            /**
+             * @description Filter by current company domain (exact match)
+             * @example google.com
+             */
+            company_domain?: string;
+        };
+        /** @description Person in search results */
+        SearchResultPerson: {
+            id: string;
+            full_name: string;
+            first_name?: string | null;
+            last_name?: string | null;
+            linkedin_url?: string | null;
+            avatar?: string | null;
+            headline?: string | null;
+            location?: string | null;
+            company_name?: string | null;
+            company_linkedin_url?: string | null;
+            warmth_score?: number | null;
+            warmth_label?: string | null;
+        };
+        /** @description Paginated people search results */
+        PeopleSearchResponse: {
+            results: components["schemas"]["SearchResultPerson"][];
+            cursor?: string | null;
+            has_next_page: boolean;
+            count: number;
+            /** @enum {string} */
+            source?: "network" | "global";
+        };
+        /** @description Cursor for paginated search results */
+        SearchCursor: {
+            /**
+             * @default network
+             * @enum {string}
+             */
+            source: "network" | "global";
+            /** @default 0 */
+            chunk_skip: number;
+            /** @default 0 */
+            results_skip: number;
+            cumulative_results?: number;
+        };
+        /** @description Network filtering options for people search */
+        NetworkFilters: {
+            connection_degrees?: number[];
+            introducer_linkedin_ids?: string[];
+            user_to_introducer_types?: ("direct" | "colleague" | "classmate" | "family" | "friend" | "other" | "same_team" | "same_community")[];
+            /** @enum {string} */
+            user_to_introducer_min_score?: "warm" | "good" | "strong" | "very_strong" | "best_friend";
+            introducer_to_target_types?: ("direct" | "colleague" | "classmate" | "family" | "friend" | "other")[];
+            /** @enum {string} */
+            introducer_to_target_min_score?: "warm" | "good" | "strong" | "very_strong" | "best_friend";
+            exclude_teams?: boolean;
+            exclude_community?: boolean;
+        };
+        /** @description Request body for searching people using natural language and/or structured filters */
+        PeopleSearchRequest: {
+            /**
+             * @description Natural language search query
+             * @example Find CTOs at SaaS companies in San Francisco
+             */
+            prompt?: string;
+            /** @description Structured search filters */
+            filters?: {
+                name?: string;
+                linkedinId?: string;
+                linkedinUrl?: string;
+                country?: string;
+                city?: string;
+                position?: string;
+                company?: string;
+                companyUrl?: string;
+                companyLinkedin?: string;
+                companyLinkedinUrl?: string;
+                companyIndustry?: string;
+                companySize?: string;
+                companyKeywords?: string;
+                pastPosition?: string;
+                pastCompany?: string;
+                pastCompanyUrl?: string;
+                pastCompanyLinkedin?: string;
+                pastCompanyLinkedinUrl?: string;
+                pastCompanyIndustry?: string;
+                pastCompanySize?: string;
+                pastCompanyKeywords?: string;
+            };
+            /**
+             * @description Maximum number of results per page
+             * @default 25
+             * @example 25
+             */
+            limit: number;
+            /**
+             * @description Enable high reasoning mode for more accurate results
+             * @example false
+             */
+            high_reasoning?: boolean;
+            /** @description Pagination cursor (encoded string or cursor object) */
+            cursor?: string | components["schemas"]["SearchCursor"] | {
+                /**
+                 * @default network
+                 * @enum {string}
+                 */
+                source: "network" | "global";
+                /** @default 0 */
+                chunkSkip: number;
+                /** @default 0 */
+                resultsSkip: number;
+                cumulativeResults?: number;
+            } | {
+                /** @enum {string} */
+                source: "network" | "global";
+                chunkSkip: number;
+                resultsSkip: number;
+                /** @enum {string} */
+                searchType: "people";
+                filtersHash: string;
+            };
+            network_filters?: components["schemas"]["NetworkFilters"];
+            /**
+             * @description Skip network stage and run global search directly
+             * @example false
+             */
+            global_only?: boolean;
+            /**
+             * @description Skip network stage and run global search directly
+             * @example false
+             */
+            globalOnly?: boolean;
+        };
+        /** @description Basic person information */
+        PersonInfo: {
+            first_name: string;
+            last_name: string;
+            full_name: string;
             linkedin_url: string;
+            avatar?: string;
             village_url: string;
         };
         /** @description Connection strength summary with optional description */
@@ -743,25 +1191,13 @@ export interface components {
             score_label?: string;
             description?: string;
         };
-        /** @description Target person information */
-        Target: {
-            avatar?: string;
-            first_name: string;
-            last_name: string;
-            full_name: string;
-            id: string;
-            identity_id: string;
-            linkedin_identifier?: string;
-            linkedin_url?: string;
-            title?: string | null;
-            village_person_url?: string;
-        };
         /** @description Basic profile information for a person in a path */
         Profile: {
             first_name: string;
             last_name: string;
             linkedin_url: string;
             headline: string;
+            avatar?: string;
         };
         /** @description Relationship metadata explaining connection strength */
         ScoreMeta: {
@@ -783,29 +1219,423 @@ export interface components {
             score_label: string;
             score_meta: components["schemas"]["ScoreMeta"][];
         };
-        /** @description Introduction path through mutual connections */
-        IntroPath: {
-            /** @enum {string} */
-            type: "intro";
+        /** @description Connection path to target person */
+        PersonPath: {
+            /** @description Connection degree (1=direct, 2=you → introducer → target, 3=team member → introducer → target) */
+            degree: 1 | 2 | 3;
             summary: components["schemas"]["PathSummary"];
             starters: components["schemas"]["PathStarter"][];
             introducer: components["schemas"]["PathIntroducer"];
-        };
-        /** @description Direct connection to the target person */
-        DirectPath: {
-            /** @enum {string} */
-            type: "direct";
-            summary: components["schemas"]["PathSummary"];
             score_meta: components["schemas"]["ScoreMeta"][];
         };
-        /** @description Connection path to target (either direct or via introduction) */
-        Path: components["schemas"]["IntroPath"] | components["schemas"]["DirectPath"];
+        /** @description Person paths response with connection information */
+        PersonPathsResponse: {
+            person: components["schemas"]["PersonInfo"];
+            summary: components["schemas"]["PathSummary"];
+            paths: components["schemas"]["PersonPath"][];
+            count: number;
+        };
+        /** @description Person identifier - provide one of: linkedin_url or url */
+        PersonPathsRequest: {
+            /**
+             * @description LinkedIn person profile URL
+             * @example https://linkedin.com/in/johndoe
+             */
+            linkedin_url: string;
+        } | {
+            /**
+             * @description Generic URL (auto-detected)
+             * @example https://linkedin.com/in/johndoe
+             */
+            url: string;
+        };
+        /** @description Target person information */
+        PersonTarget: {
+            avatar?: string;
+            first_name: string;
+            last_name: string;
+            full_name: string;
+            id: string;
+            identity_id: string;
+            linkedin_identifier?: string;
+            linkedin_url?: string;
+            title?: string | null;
+            village_person_url?: string;
+        };
+        /** @description Paths result for a single person in bulk request */
+        BulkPersonPathsResult: {
+            target: components["schemas"]["PersonTarget"];
+            paths: components["schemas"]["PersonPath"][];
+            summary: components["schemas"]["PathSummary"];
+            count: number;
+        };
+        /** @description Array of person paths results for bulk request */
+        PeopleBulkPathsResponse: components["schemas"]["BulkPersonPathsResult"][];
+        /** @description Request for bulk person paths (max 100 LinkedIn IDs) */
+        PeopleBulkPathsRequest: {
+            /**
+             * @description Array of LinkedIn identifiers to get paths for
+             * @example [
+             *       "johndoe",
+             *       "janedoe",
+             *       "mikesmith"
+             *     ]
+             */
+            linkedin_ids: string[];
+        };
+        /** @description Person with connection score */
+        SortedPerson: {
+            score: number;
+            score_label: string;
+            linkedin_url: string;
+            url: string;
+        };
+        /** @description Error for an invalid URL in sort request */
+        SortError: {
+            url: string;
+            error: string;
+        };
+        /** @description Response containing sorted people and any URL validation errors */
+        PersonSortResponse: {
+            sorted: components["schemas"]["SortedPerson"][];
+            errors?: components["schemas"]["SortError"][];
+        };
+        /** @description List of person URLs to sort by connection strength */
+        PersonSortRequest: {
+            /**
+             * @description Array of LinkedIn person profile URLs
+             * @example [
+             *       "https://linkedin.com/in/johndoe",
+             *       "https://linkedin.com/in/janedoe"
+             *     ]
+             */
+            people: string[];
+        };
+        /** @description Company information in work experience */
+        WorkCompany: {
+            id: string;
+            /** @enum {string} */
+            type: "company";
+            name: string;
+            linkedin_url: string | null;
+            website: string | null;
+            domain: string | null;
+        };
+        /** @description Current work position and company */
+        CurrentWork: {
+            position: string;
+            start_date: string | null;
+            end_date: string | null;
+            company: components["schemas"]["WorkCompany"];
+        } | null;
+        /** @description Basic person profile with 6 core fields */
+        BasicPersonProfile: {
+            full_name: string;
+            linkedin_url: string;
+            avatar?: string;
+            current_work: components["schemas"]["CurrentWork"];
+        };
+        /** @description Successful basic enrichment result */
+        EnrichBasicSuccess: {
+            profile: components["schemas"]["BasicPersonProfile"];
+        };
+        /** @description Enrichment error for a person */
+        EnrichError: {
+            id: string;
+            /** @enum {boolean} */
+            found: false;
+            error: {
+                code: string;
+                message: string;
+            };
+        };
+        /** @description Response for basic person enrichment */
+        EnrichBasicResponse: {
+            success: boolean;
+            data: (components["schemas"]["EnrichBasicSuccess"] | components["schemas"]["EnrichError"])[];
+        };
+        /** @description Request for basic person enrichment */
+        EnrichBasicRequest: {
+            /**
+             * @description LinkedIn person profile URL
+             * @example https://linkedin.com/in/johndoe
+             */
+            linkedin_url: string;
+        } | {
+            /**
+             * @description Generic URL (auto-detected)
+             * @example https://linkedin.com/in/johndoe
+             */
+            url: string;
+        };
+        /** @description Response for bulk person enrichment */
+        EnrichBulkResponse: {
+            success: boolean;
+            data: (components["schemas"]["EnrichBasicSuccess"] | components["schemas"]["EnrichError"])[];
+        };
+        /** @description Person identifier - provide one of: linkedin_url or url */
+        EnrichIdentifier: {
+            /**
+             * @description LinkedIn person profile URL
+             * @example https://linkedin.com/in/johndoe
+             */
+            linkedin_url: string;
+        } | {
+            /**
+             * @description Generic URL (auto-detected)
+             * @example https://linkedin.com/in/johndoe
+             */
+            url: string;
+        };
+        /** @description Request for bulk person enrichment (max 10 identifiers) */
+        EnrichBulkRequest: {
+            identifiers: components["schemas"]["EnrichIdentifier"][];
+        };
+        /** @description Successful email enrichment result */
+        EnrichEmailsSuccess: {
+            email: string | null;
+            linkedinUrl: string;
+        };
+        /** @description Response for person email enrichment */
+        EnrichEmailsResponse: {
+            success: boolean;
+            data: components["schemas"]["EnrichEmailsSuccess"];
+        };
+        /** @description Request for person email enrichment */
+        EnrichEmailsRequest: {
+            /**
+             * @description LinkedIn person profile URL
+             * @example https://linkedin.com/in/johndoe
+             */
+            linkedin_url: string;
+        } | {
+            /**
+             * @description Generic URL (auto-detected)
+             * @example https://linkedin.com/in/johndoe
+             */
+            url: string;
+        };
+        /** @description Email enrichment result for a single person in bulk request */
+        BulkEmailProfile: {
+            villageId?: string;
+            linkedinUrl: string;
+            email?: string;
+            error?: string;
+        };
+        /** @description Response for bulk email enrichment */
+        EnrichEmailsBulkResponse: {
+            success: boolean;
+            data: {
+                profiles: components["schemas"]["BulkEmailProfile"][];
+            };
+        };
+        /** @description Request for bulk email enrichment (max 10 identifiers) */
+        EnrichEmailsBulkRequest: {
+            identifiers: components["schemas"]["EnrichIdentifier"][];
+        };
+        /** @description Geographic location */
+        Location: {
+            city?: string | null;
+            state?: string | null;
+            country?: string | null;
+        } | null;
+        /** @description Company object */
+        Company: {
+            /**
+             * @description Postgres ID
+             * @example 11111
+             */
+            id: number;
+            /**
+             * @description Company name
+             * @example Acme Corporation
+             */
+            name: string;
+            /**
+             * Format: uri
+             * @description LinkedIn company page URL
+             * @example https://linkedin.com/company/acme
+             */
+            linkedin_url?: string | null;
+            /**
+             * @description Company website domain
+             * @example acme.com
+             */
+            domain?: string | null;
+            /**
+             * @description Primary industry
+             * @example Technology
+             */
+            industry?: string | null;
+            /**
+             * @description Number of employees
+             * @example 5000
+             */
+            employee_count?: number | null;
+            /**
+             * Format: uri
+             * @description Company logo URL
+             * @example https://logo.clearbit.com/acme.com
+             */
+            image_url?: string | null;
+            location?: components["schemas"]["Location"] & unknown;
+        } | null;
+        /** @description Relevant job position based on the search */
+        Work: {
+            /**
+             * @description Job title
+             * @example Chief Executive Officer
+             */
+            title?: string | null;
+            company?: components["schemas"]["Company"];
+            /**
+             * @description Start date (YYYY-MM-DD)
+             * @example 2020-01-15
+             */
+            start_date?: string | null;
+            /**
+             * @description End date (YYYY-MM-DD), null if current
+             * @example null
+             */
+            end_date?: string | null;
+        } | null;
+        /** @description Education information */
+        Education: {
+            /**
+             * @description institute/university name
+             * @example Stanford University
+             */
+            institute?: string | null;
+            /**
+             * @description Degree obtained
+             * @example Bachelor of Science
+             */
+            degree?: string | null;
+            /**
+             * @description Field of study
+             * @example Computer Science
+             */
+            field_of_study?: string | null;
+            /** @description Start date (YYYY-MM-DD) */
+            start_date?: string | null;
+            /** @description End date (YYYY-MM-DD) */
+            end_date?: string | null;
+        };
+        /** @description Person information - standard schema used across V2 API */
+        Person: {
+            /**
+             * @description Postgres ID
+             * @example 11111
+             */
+            id: number;
+            /**
+             * @description First name
+             * @example John
+             */
+            first_name: string;
+            /**
+             * @description Last name
+             * @example Doe
+             */
+            last_name: string;
+            /**
+             * @description Full name (computed)
+             * @example John Doe
+             */
+            full_name?: string | null;
+            /**
+             * Format: uri
+             * @description LinkedIn profile URL
+             * @example https://linkedin.com/in/johndoe
+             */
+            linkedin_url?: string | null;
+            /**
+             * @description Professional headline
+             * @example CEO at Acme Corporation
+             */
+            headline?: string | null;
+            location?: components["schemas"]["Location"];
+            work_relevant?: components["schemas"]["Work"];
+            /** @description Array of job positions */
+            work_history?: (components["schemas"]["Work"] & unknown)[] | null;
+            /** @description Array of education */
+            education_history?: components["schemas"]["Education"][] | null;
+            /**
+             * Format: uri
+             * @description Profile image URL
+             * @example https://media.licdn.com/dms/image/...
+             */
+            image_url?: string | null;
+            /**
+             * Format: email
+             * @description Email address (if available)
+             * @example john.doe@example.com
+             */
+            email?: string | null;
+        };
+        /** @description Response containing job IDs for people refresh requests. When realtime=true, also includes the refreshed person data and any failures. If timeout_occurred is true, the request exceeded the timeout limit and was converted to async mode. */
+        PeopleRefreshResponse: {
+            /**
+             * @description Array of job IDs (base64-encoded workflow IDs) for the refresh requests
+             * @example [
+             *       "cGVvcGxlLXJlZnJlc2gtMTczNDg4MzIwMDAwMC1hYmMxMjM="
+             *     ]
+             */
+            job_ids: string[];
+            /** @description Array of person data (only included for realtime requests) */
+            people?: components["schemas"]["Person"][];
+            /** @description Indicates if the realtime request timed out and was converted to async mode */
+            timeout_occurred?: boolean;
+            /** @description Array of failures for URLs that could not be processed (only included for realtime requests with failures) */
+            failures?: {
+                /** @description The LinkedIn URL that failed to process */
+                linkedin_url: string;
+                /** @description Error message describing why the request failed (e.g., "Person not found") */
+                error: string;
+            }[];
+        };
+        /** @description Refresh/import people data from LinkedIn URLs */
+        PeopleRefreshRequest: {
+            linkedin_urls: string | string[];
+            realtime: boolean | 0 | 1;
+        };
+        /** @description Basic company information */
+        CompanyInfo: {
+            name: string;
+            domain: string;
+            linkedin_url: string;
+            village_url: string;
+        };
+        /** @description Target person information */
+        Target: {
+            avatar?: string;
+            first_name: string;
+            last_name: string;
+            full_name: string;
+            id: string;
+            identity_id: string;
+            linkedin_identifier?: string;
+            linkedin_url?: string;
+            title?: string | null;
+            village_person_url?: string;
+        };
+        /** @description Connection path to target person */
+        Path: {
+            /** @description Connection degree (1=direct, 2=you → introducer → target, 3=team member → introducer → target) */
+            degree: 1 | 2 | 3;
+            summary: components["schemas"]["PathSummary"];
+            starters: components["schemas"]["PathStarter"][];
+            introducer: components["schemas"]["PathIntroducer"];
+            score_meta: components["schemas"]["ScoreMeta"][];
+        };
         /** @description Person at the target company with connection path info */
         TargetPerson: {
             target: components["schemas"]["Target"];
             paths: components["schemas"]["Path"][];
             summary: components["schemas"]["PathSummary"];
             count: number;
+            /** @description Connection degree of the strongest path (1=direct, 2=you → introducer → target, 3=team member → introducer → target) */
+            degree: 1 | 2 | 3;
         };
         /** @description Company paths response with connection information */
         CompanyPathsResponse: {
@@ -813,22 +1643,48 @@ export interface components {
             summary: components["schemas"]["PathSummary"];
             target_people: components["schemas"]["TargetPerson"][];
             count: number;
+            pagination: {
+                cursor: string | null;
+                limit: number;
+                has_next_page: boolean;
+            };
         };
-        /** @description Company identifier - provide one of: domain, linkedin_url, or url */
+        /** @description Company identifier with optional cursor pagination */
         CompanyPathsRequest: {
             /**
              * @description Company domain (normalized, without www prefix)
              * @example acme.com
              */
             domain: string;
+            /** @description Opaque cursor for pagination (from previous response) */
+            cursor?: string;
+            /**
+             * @description Number of results per page (default 25, max 50)
+             * @example 25
+             */
+            limit?: number;
         } | {
             /**
              * @description LinkedIn company page URL
              * @example https://linkedin.com/company/acme-corp
              */
             linkedin_url: string;
+            /** @description Opaque cursor for pagination (from previous response) */
+            cursor?: string;
+            /**
+             * @description Number of results per page (default 25, max 50)
+             * @example 25
+             */
+            limit?: number;
         } | {
             url: string;
+            /** @description Opaque cursor for pagination (from previous response) */
+            cursor?: string;
+            /**
+             * @description Number of results per page (default 25, max 50)
+             * @example 25
+             */
+            limit?: number;
         };
         /** @description Quick check for company connection paths */
         CompanyCheckResponse: {
@@ -843,51 +1699,644 @@ export interface components {
             /** @description Facepile avatar URLs (max 10) */
             avatars: string[];
         };
-        /** @description Authentication token response */
-        TokenResponse: {
+        /** @description Company identifier - provide one of: domain, linkedin_url, or url */
+        CompanyIdentifierInput: {
             /**
-             * @description JWT access token for API requests
-             * @example eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+             * @description Company domain (normalized, without www prefix)
+             * @example acme.com
              */
-            token: string;
+            domain: string;
+        } | {
             /**
-             * @description Token lifetime in seconds
-             * @example 31536000
+             * @description LinkedIn company page URL
+             * @example https://linkedin.com/company/acme-corp
              */
-            expires_in: number;
+            linkedin_url: string;
+        } | {
+            url: string;
+        };
+        /** @description Company with warmth score and identifiers */
+        SortedCompany: {
+            /** @description Warmth score (0-100) */
+            score: number;
+            /** @description Human-readable score label */
+            score_label: string;
+            /** @description LinkedIn company URL */
+            linkedin_url: string;
+            /** @description Company domain */
+            domain_name?: string;
+            /** @description Original URL provided in request */
+            url: string;
+        };
+        /** @description Array of companies sorted by warmth score (highest first) */
+        CompanySortResponse: components["schemas"]["SortedCompany"][];
+        /** @description Request to sort companies by warmth/connection strength */
+        CompanySortRequest: {
             /**
-             * @description Unix timestamp when token expires
-             * @example 1764739200
+             * @description Array of company URLs (LinkedIn URLs or domains)
+             * @example [
+             *       "https://linkedin.com/company/acme-corp",
+             *       "example.com",
+             *       "https://linkedin.com/company/tech-startup"
+             *     ]
              */
-            expires_at: number;
+            companies: string[];
+        };
+        /** @description Company in list with warmth score and enrichment data */
+        CompanyListItem: {
+            /** @description Warmth score (0-100) */
+            score: number;
+            /** @description Human-readable score label */
+            score_label: string;
+            /** @description LinkedIn company URL */
+            linkedin_url: string;
+            /** @description Company domain */
+            domain_name?: string;
+            /** @description Company name */
+            name: string | null;
+            /** @description Company logo URL */
+            image_url: string | null;
+            /** @description Company industry */
+            industry: string | null;
+            /** @description Number of employees */
+            employee_count: number | null;
+            /** @description Company headquarters location */
+            headquarters: string | null;
+        };
+        /** @description Paginated list of top companies by connection strength */
+        ListCompaniesResponse: {
+            companies: components["schemas"]["CompanyListItem"][];
+            pagination: {
+                cursor: string | null;
+                limit: number;
+                has_next_page: boolean;
+            };
+        };
+        /** @description Request body for listing top companies with cursor pagination */
+        ListCompaniesBody: {
+            /** @description Opaque cursor for pagination (from previous response) */
+            cursor?: string;
             /**
-             * @description Token type (always Bearer)
-             * @example Bearer
+             * @description Number of results per page (default 25, max 100)
+             * @example 25
+             */
+            limit?: number;
+            /**
+             * @description Filter by connection degree (1=direct, 2=second-degree, 3=third-degree)
+             * @example [
+             *       1,
+             *       2
+             *     ]
+             */
+            connection_degrees?: number[];
+        };
+        /** @description Basic company profile with enriched data */
+        BasicCompanyProfile: {
+            name: string;
+            linkedin_url: string | null;
+            website: string | null;
+            domain: string | null;
+            employee_count: number | null;
+            industry: string | null;
+            crunchbase_url?: string | null;
+            founded?: number | null;
+            description?: string | null;
+        };
+        /** @description Single company enrichment response */
+        SingleCompanyEnrichResponse: {
+            company: components["schemas"]["BasicCompanyProfile"];
+        };
+        /** @description Company identifier - provide one of: domain, linkedin_url, or url */
+        CompanyEnrichIdentifier: {
+            /**
+             * @description Company domain (normalized, without www prefix)
+             * @example acme.com
+             */
+            domain: string;
+        } | {
+            /**
+             * @description LinkedIn company page URL
+             * @example https://linkedin.com/company/acme-corp
+             */
+            linkedin_url: string;
+        } | {
+            url: string;
+        };
+        /** @description Single company enrichment result */
+        CompanyEnrichmentItem: {
+            company?: components["schemas"]["BasicCompanyProfile"];
+            error?: {
+                code: string;
+                message: string;
+            };
+        };
+        /** @description Bulk company enrichment response array */
+        CompanyEnrichResponse: components["schemas"]["CompanyEnrichmentItem"][];
+        /** @description Bulk company enrichment request (max 10 companies) */
+        CompanyEnrichBulkRequest: {
+            /**
+             * @description Array of company identifiers to enrich
+             * @example [
+             *       {
+             *         "domain": "example.com"
+             *       },
+             *       {
+             *         "linkedin_url": "https://linkedin.com/company/acme-corp"
+             *       },
+             *       {
+             *         "url": "techstartup.io"
+             *       }
+             *     ]
+             */
+            identifiers: components["schemas"]["CompanyEnrichIdentifier"][];
+        };
+        /** @description Company in search results */
+        SearchResultCompany: {
+            id: string;
+            name: string;
+            domain?: string | null;
+            linkedin_url?: string | null;
+            website?: string | null;
+            employee_count?: number | null;
+            industry?: string | null;
+            description?: string | null;
+            location?: string | null;
+            warmth_score?: number | null;
+            warmth_label?: string | null;
+        };
+        /** @description Paginated companies search results */
+        CompaniesSearchResponse: {
+            results: components["schemas"]["SearchResultCompany"][];
+            cursor?: string | null;
+            has_next_page: boolean;
+            count: number;
+            /** @enum {string} */
+            source?: "network" | "global";
+        };
+        /** @description Cursor for paginated company search results */
+        CompanySearchCursor: {
+            /**
+             * @default network
              * @enum {string}
              */
-            token_type: "Bearer";
+            source: "network" | "global";
+            /** @default 0 */
+            chunk_skip: number;
+            /** @default 0 */
+            results_skip: number;
+            cumulative_results?: number;
         };
-        /** @description Request body for creating an authentication token */
-        CreateTokenRequest: {
+        /** @description Request body for searching companies with natural language */
+        CompaniesSearchRequest: {
             /**
-             * @description Unique identifier for the user in your system
-             * @example user_123
+             * @description Natural language search query
+             * @example Find B2B SaaS companies with 50-200 employees in California
              */
-            external_user_id: string;
+            prompt: string;
             /**
-             * Format: email
-             * @description Email address of the user
-             * @example user@example.com
+             * @description Maximum number of results per page
+             * @default 25
+             * @example 25
              */
-            email: string;
+            limit: number;
+            /**
+             * @description Enable high reasoning mode for more accurate results
+             * @default false
+             * @example false
+             */
+            high_reasoning: boolean;
+            /** @description Pagination cursor (encoded string or cursor object) */
+            cursor?: string | components["schemas"]["CompanySearchCursor"];
         };
-        /** @description Token revocation response */
-        RevokeTokenResponse: {
+        /** @description Company HQ location */
+        CompanyLocation: {
+            /** @description City */
+            city?: string;
+            /** @description State/province */
+            state?: string;
+            /** @description Country code */
+            country?: string;
+        };
+        /** @description Company data response */
+        CompanyResponse: {
+            /** @description Company ID */
+            id: string;
+            /** @description Company name */
+            name: string;
             /**
-             * @description Success message
-             * @example Token revoked successfully
+             * Format: uri
+             * @description LinkedIn company page URL
              */
+            linkedin_url?: string;
+            /** @description Company website domain */
+            domain?: string;
+            /** @description Primary industry */
+            industry?: string;
+            /** @description Number of employees */
+            employee_count?: number;
+            /**
+             * Format: uri
+             * @description Company logo URL
+             */
+            image_url?: string;
+            location?: components["schemas"]["CompanyLocation"];
+        };
+        /** @description Response containing job IDs for company refresh requests. When realtime=true, also includes the refreshed company data and any failures. If timeout_occurred is true, the request exceeded the timeout limit and was converted to async mode. */
+        CompanyRefreshResponse: {
+            /**
+             * @description Array of job IDs (base64-encoded workflow IDs) for the refresh requests
+             * @example [
+             *       "Y29tcGFueS1yZWZyZXNoLTE3MzQ4ODMyMDAwMDAtYWJjMTIz"
+             *     ]
+             */
+            job_ids: string[];
+            /** @description Array of company data (only included for realtime requests) */
+            companies?: components["schemas"]["CompanyResponse"][];
+            /** @description Indicates if the realtime request timed out and was converted to async mode */
+            timeout_occurred?: boolean;
+            /** @description Array of failures for identifiers that could not be processed (only included for realtime requests with failures) */
+            failures?: {
+                /** @description The identifier (LinkedIn URL or domain) that failed to process */
+                identifier: string;
+                /**
+                 * @description Type of identifier
+                 * @enum {string}
+                 */
+                identifier_type: "linkedin" | "domain";
+                /** @description Error message describing why the request failed (e.g., "Company not found") */
+                error: string;
+            }[];
+        };
+        /** @description List object with metadata */
+        List: {
+            /** @description Unique list identifier */
+            id: number;
+            /** @description List title */
+            title: string;
+            /**
+             * @description Type of entities in the list
+             * @enum {string}
+             */
+            type: "people" | "company";
+            /** @description List description */
+            description: string | null;
+            /** @description Number of items in the list */
+            item_count: number;
+            /** @description ISO 8601 creation timestamp */
+            created_at: string;
+            /** @description ISO 8601 last update timestamp */
+            updated_at: string;
+        };
+        /** @description Pagination information */
+        Pagination: {
+            /** @description Current page number */
+            page: number;
+            /** @description Items per page */
+            limit: number;
+            /** @description Total number of items */
+            total: number;
+            /** @description Whether more pages exist */
+            has_next_page: boolean;
+        };
+        /** @description Response containing paginated list of user lists */
+        ListsListResponse: {
+            lists: components["schemas"]["List"][];
+            pagination: components["schemas"]["Pagination"];
+        };
+        /** @description Response after creating a new list */
+        CreateListResponse: {
+            /** @description Unique list identifier */
+            id: number;
+            /** @description List title */
+            title: string;
+            /**
+             * @description Type of entities in the list
+             * @enum {string}
+             */
+            type: "people" | "company";
+            /** @description List description */
+            description: string | null;
+            /** @description Number of items in the list */
+            item_count: number;
+            /** @description ISO 8601 creation timestamp */
+            created_at: string;
+            /** @description ISO 8601 last update timestamp */
+            updated_at: string;
+        };
+        /** @description Request body for creating a new list */
+        CreateListRequest: {
+            /**
+             * @description List title
+             * @example Sales Leads Q1
+             */
+            title: string;
+            /**
+             * @description Type of entities in the list
+             * @default people
+             * @example people
+             * @enum {string}
+             */
+            type: "people" | "company";
+            /**
+             * @description Optional list description
+             * @example Qualified sales leads for Q1 outreach
+             */
+            description?: string;
+            /**
+             * @description Whether the list is publicly accessible
+             * @default false
+             * @example false
+             */
+            is_public: boolean;
+        };
+        /** @description List item with entity data */
+        ListItem: {
+            /** @description Unique item identifier */
+            id: number;
+            /** @description Graph database identifier */
+            graph_id: string;
+            /**
+             * @description Entity type
+             * @enum {string}
+             */
+            type: "people" | "company";
+            /** @description Entity data (profile information) */
+            data: {
+                [key: string]: unknown;
+            };
+            /** @description ISO 8601 creation timestamp */
+            created_at: string;
+        };
+        /** @description List with paginated items */
+        ListWithItemsResponse: {
+            id: number;
+            title: string;
+            /** @enum {string} */
+            type: "people" | "company";
+            description: string | null;
+            item_count: number;
+            created_at: string;
+            updated_at: string;
+            items: {
+                data: components["schemas"]["ListItem"][];
+                pagination: components["schemas"]["Pagination"];
+            };
+        };
+        /** @description Response after updating a list */
+        UpdateListResponse: {
+            /** @description Unique list identifier */
+            id: number;
+            /** @description List title */
+            title: string;
+            /**
+             * @description Type of entities in the list
+             * @enum {string}
+             */
+            type: "people" | "company";
+            /** @description List description */
+            description: string | null;
+            /** @description Number of items in the list */
+            item_count: number;
+            /** @description ISO 8601 creation timestamp */
+            created_at: string;
+            /** @description ISO 8601 last update timestamp */
+            updated_at: string;
+        };
+        /** @description Request body for updating list metadata */
+        UpdateListRequest: {
+            /**
+             * @description New list title
+             * @example Updated Sales Leads
+             */
+            title?: string;
+            /**
+             * @description New list description (null to clear)
+             * @example Updated description for the list
+             */
+            description?: string | null;
+        };
+        /** @description Response after deleting a list */
+        DeleteListResponse: {
+            /** @description Success message */
             message: string;
+        };
+        /** @description Result for a single item add operation */
+        AddItemResult: {
+            /** @description Original identifier provided */
+            identifier: string;
+            item?: components["schemas"]["ListItem"] & unknown;
+            /** @description Error details (if failed) */
+            error?: {
+                /**
+                 * @description Error code
+                 * @enum {string}
+                 */
+                code: "DUPLICATE" | "NOT_FOUND" | "INVALID_IDENTIFIER" | "INTERNAL_ERROR";
+                /** @description Human-readable error message */
+                message: string;
+            };
+        };
+        /** @description Response after adding items to a list */
+        AddItemsResponse: {
+            /** @description Results for each item */
+            results: components["schemas"]["AddItemResult"][];
+            summary: {
+                /** @description Total items processed */
+                total: number;
+                /** @description Successfully added items */
+                added: number;
+                /** @description Failed items */
+                failed: number;
+            };
+        };
+        /** @description Request body for adding items to a list */
+        AddItemsRequest: {
+            /** @description Array of items to add to the list */
+            items: {
+                /**
+                 * @description Identifier for the entity (LinkedIn URL, domain, email, or graph ID)
+                 * @example https://linkedin.com/in/john-doe
+                 */
+                identifier: string;
+                /**
+                 * @description Entity type hint (optional, will be inferred from identifier if not provided)
+                 * @example people
+                 * @enum {string}
+                 */
+                type?: "people" | "company";
+            }[];
+        };
+        /** @description Response after removing items from a list */
+        RemoveItemsResponse: {
+            /** @description Number of items removed */
+            removed: number;
+        };
+        /** @description Request body for removing items from a list */
+        RemoveItemsRequest: {
+            /**
+             * @description Array of item IDs to remove from the list
+             * @example [
+             *       "1",
+             *       "2",
+             *       "3"
+             *     ]
+             */
+            item_ids: string[];
+        };
+        /** @description Team information with admin status and invite link */
+        Team: {
+            id: string;
+            name: string;
+            logo: string | null;
+            invite_link: string | null;
+            is_admin: boolean;
+        };
+        /** @description List of user teams */
+        TeamsListResponse: {
+            teams: components["schemas"]["Team"][];
+        };
+        /** @description Response after creating or updating a team */
+        UpsertTeamResponse: {
+            id: string;
+            name: string;
+            logo: string | null;
+            invite_link: string;
+        };
+        /** @description Request body for creating or updating a team */
+        UpsertTeamRequest: {
+            name: string;
+            team_id?: string;
+            logo?: string;
+        };
+        /** @description Response after joining a team */
+        JoinTeamResponse: {
+            success: boolean;
+            message: string;
+        };
+        /** @description Request body for joining a team via invite link */
+        JoinTeamRequest: {
+            team_invite_link: string;
+        };
+        /** @description List of user groups/communities */
+        ListGroupsResponse: {
+            groups: {
+                id: string;
+                name: string;
+                logo: string | null;
+                invite_link: string | null;
+                is_admin: boolean;
+            }[];
+        };
+        /** @description Response after creating or updating a group */
+        UpsertGroupResponse: {
+            id: string;
+            name: string;
+            logo: string | null;
+            invite_link: string;
+        };
+        /** @description Request body for creating or updating a group */
+        UpsertGroupRequest: {
+            group_id?: string;
+            name: string;
+            logo?: string;
+        };
+        /** @description Response after joining a group */
+        JoinGroupResponse: {
+            success: boolean;
+            message: string;
+        };
+        /** @description Request body for joining a group via invite link */
+        JoinGroupRequest: {
+            group_invite_link: string;
+        };
+        /** @description Integration store with categories, apps, and user connection status */
+        IntegrationStoreResponse: {
+            id: number;
+            name: string;
+            slug: string;
+            icon: string;
+            apps: {
+                id: number;
+                name: string;
+                slug: string;
+                short_description: string;
+                description: string | null;
+                features: {
+                    title: string;
+                    items: string[];
+                }[] | null;
+                built_by: string | null;
+                icon: string | null;
+                /** @enum {string} */
+                connection_type: "oauth2" | "api_key";
+                activepieces_app_piece_name: string | null;
+                is_active: boolean;
+                user_connection: {
+                    id: number;
+                    /** @enum {string} */
+                    status: "active" | "disconnected" | "error";
+                    activepieces_internal_connection_id: string;
+                    activepieces_external_connection_id: string;
+                    connected_date: string;
+                } | null;
+            }[];
+        }[];
+        /** @description User integration connections list */
+        ListIntegrationConnectionsResponse: {
+            id: number;
+            /** @enum {string} */
+            status: "active" | "disconnected" | "error";
+            activepieces_internal_connection_id: string;
+            activepieces_external_connection_id: string;
+            connected_date: string;
+            app: {
+                id: number;
+                name: string;
+                slug: string;
+                short_description: string;
+                description: string | null;
+                features: {
+                    title: string;
+                    items: string[];
+                }[] | null;
+                built_by: string | null;
+                icon: string | null;
+                /** @enum {string} */
+                connection_type: "oauth2" | "api_key";
+                activepieces_app_piece_name: string | null;
+                is_active: boolean;
+                category: {
+                    id: number;
+                    name: string;
+                    slug: string;
+                    icon: string;
+                };
+            };
+        }[];
+        /** @description Request body for creating an integration connection */
+        CreateIntegrationConnectionRequest: {
+            /**
+             * @description ID of the integration app to connect
+             * @example 1
+             */
+            integration_app_id: number;
+            /** @description Activepieces internal connection identifier from the FE connection flow */
+            activepieces_internal_connection_id: string;
+            /** @description Activepieces external connection identifier */
+            activepieces_external_connection_id: string;
+        };
+        /** @description Request body for updating an integration connection */
+        UpdateIntegrationConnectionRequest: {
+            /**
+             * @description Connection status
+             * @example active
+             * @enum {string}
+             */
+            status?: "active" | "disconnected" | "error";
+            /** @description Activepieces internal connection identifier */
+            activepieces_internal_connection_id?: string;
+            /** @description Activepieces external connection identifier */
+            activepieces_external_connection_id?: string;
         };
         /** @description Current authenticated user information */
         UserMeResponse: {
@@ -937,228 +2386,145 @@ export interface components {
              */
             external_user_id: string;
         };
-        /** @description Gmail integrations list response */
-        ListIntegrationsResponse: {
-            /** @description List of Gmail integrations */
-            integrations: {
+        /** @description Response for importing user relationships */
+        ImportRelationshipsResponse: {
+            /** @description Summary of the import operation */
+            summary: {
                 /**
-                 * @description Integration ID
-                 * @example 123
+                 * @description Total number of relationships processed
+                 * @example 10
                  */
-                id: number;
+                processed: number;
                 /**
-                 * @description Integration type
-                 * @example gmail
+                 * @description Number of new relationships created
+                 * @example 7
                  */
-                type: string;
+                created: number;
                 /**
-                 * @description Account identifier (email address)
-                 * @example user@gmail.com
+                 * @description Number of existing relationships updated
+                 * @example 2
                  */
-                account_identifier: string;
+                updated: number;
                 /**
-                 * @description Integration status
-                 * @example connected
+                 * @description Number of relationships that failed to process
+                 * @example 1
+                 */
+                failed: number;
+            };
+            /** @description Detailed results for each relationship */
+            results: {
+                /**
+                 * @description The original identifier provided
+                 * @example john@example.com
+                 */
+                identifier: string;
+                /**
+                 * @description Result status for this relationship
+                 * @example created
                  * @enum {string}
                  */
-                status: "connected" | "disconnected" | "failed";
-                /**
-                 * @description Daily email sending limit
-                 * @example 50
-                 */
-                email_sending_per_day: number;
-                /**
-                 * @description Hourly email sending limit
-                 * @example 20
-                 */
-                email_sending_per_hour: number;
-                /**
-                 * @description Minimum delay between emails in seconds
-                 * @example 600
-                 */
-                email_sending_min_delay_seconds: number;
-                /**
-                 * @description Timezone for scheduling
-                 * @example America/New_York
-                 */
-                timezone: string;
-                /**
-                 * @description Whether Gmail is authorized
-                 * @example true
-                 */
-                authorized_gmail: boolean;
-                /**
-                 * @description Token expiry date
-                 * @example 2024-12-31T23:59:59Z
-                 */
-                token_expiry_date: string | null;
-                /**
-                 * @description Whether this is the default integration for email sending
-                 * @example true
-                 */
-                email_sending_default: boolean;
-                /**
-                 * @description Whether refresh token is available
-                 * @example true
-                 */
-                refresh_token_exists: boolean;
+                status: "created" | "updated" | "failed";
+                /** @description Person details (present on success) */
+                person?: {
+                    /**
+                     * @description Village person ID
+                     * @example person_abc123
+                     */
+                    id: string;
+                    /**
+                     * @description Person full name
+                     * @example John Doe
+                     */
+                    name: string;
+                    /**
+                     * @description LinkedIn profile URL
+                     * @example https://linkedin.com/in/johndoe
+                     */
+                    linkedin?: string;
+                };
+                /** @description Error details (present on failure) */
+                error?: {
+                    /**
+                     * @description Error code
+                     * @example PERSON_NOT_FOUND
+                     */
+                    code: string;
+                    /**
+                     * @description Error message
+                     * @example Could not find or create person with this identifier
+                     */
+                    message: string;
+                };
             }[];
-            /** @description Default integration (if any) */
-            default_integration: {
-                /**
-                 * @description Integration ID
-                 * @example 123
-                 */
-                id: number;
-                /**
-                 * @description Integration type
-                 * @example gmail
-                 */
-                type: string;
-                /**
-                 * @description Account identifier (email address)
-                 * @example user@gmail.com
-                 */
-                account_identifier: string;
-                /**
-                 * @description Integration status
-                 * @example connected
-                 * @enum {string}
-                 */
-                status: "connected" | "disconnected" | "failed";
-                /**
-                 * @description Daily email sending limit
-                 * @example 50
-                 */
-                email_sending_per_day: number;
-                /**
-                 * @description Hourly email sending limit
-                 * @example 20
-                 */
-                email_sending_per_hour: number;
-                /**
-                 * @description Minimum delay between emails in seconds
-                 * @example 600
-                 */
-                email_sending_min_delay_seconds: number;
-                /**
-                 * @description Timezone for scheduling
-                 * @example America/New_York
-                 */
-                timezone: string;
-                /**
-                 * @description Whether Gmail is authorized
-                 * @example true
-                 */
-                authorized_gmail: boolean;
-                /**
-                 * @description Token expiry date
-                 * @example 2024-12-31T23:59:59Z
-                 */
-                token_expiry_date: string | null;
-                /**
-                 * @description Whether this is the default integration for email sending
-                 * @example true
-                 */
-                email_sending_default: boolean;
-                /**
-                 * @description Whether refresh token is available
-                 * @example true
-                 */
-                refresh_token_exists: boolean;
-            } | null;
-            /**
-             * @description Whether user can sync Google based on plan
-             * @example true
-             */
-            can_sync_google: boolean;
         };
-        /** @description Updated Gmail integration details */
-        UpdateIntegrationResponse: {
+        /** @description Request body for importing user relationships */
+        ImportRelationshipsRequest: {
             /**
-             * @description Integration ID
-             * @example 123
+             * @description Array of people to import as relationships. Can be email addresses, LinkedIn URLs, or objects with identifier and optional score.
+             * @example [
+             *       "john@example.com",
+             *       "https://linkedin.com/in/janedoe",
+             *       {
+             *         "identifier": "mike@company.com",
+             *         "score": 8
+             *       }
+             *     ]
              */
-            id: number;
+            people: (string | {
+                identifier: string;
+                score?: number;
+            })[];
             /**
-             * @description Integration type
-             * @example google
+             * @description Default score for relationships without explicit score (0-10). Defaults to 5.
+             * @example 5
              */
-            type: string;
-            /**
-             * @description Account identifier (email address)
-             * @example user@gmail.com
-             */
-            account_identifier: string;
-            /**
-             * @description Integration status
-             * @example connected
-             */
-            status: string;
-            /**
-             * @description Whether Gmail is authorized
-             * @example true
-             */
-            authorized_gmail: boolean;
-            /**
-             * @description Daily email sending limit
-             * @example 50
-             */
-            email_sending_per_day: number;
-            /**
-             * @description Hourly email sending limit
-             * @example 20
-             */
-            email_sending_per_hour: number;
-            /**
-             * @description Minimum delay between emails in seconds
-             * @example 600
-             */
-            email_sending_min_delay_seconds: number;
-            /**
-             * @description Timezone for scheduling
-             * @example America/New_York
-             */
-            timezone: string;
-            /**
-             * @description Whether this is the default integration for email sending
-             * @example true
-             */
-            email_sending_default: boolean;
+            min_score?: number;
         };
-        /** @description Gmail integration details */
-        IntegrationResponse: {
+        /** @description Authentication token response */
+        TokenResponse: {
             /**
-             * @description Integration ID
-             * @example 123
+             * @description JWT access token for API requests
+             * @example eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
              */
-            id: number;
+            token: string;
             /**
-             * @description Integration type
-             * @example google
+             * @description Token lifetime in seconds
+             * @example 31536000
              */
-            type: string;
+            expires_in: number;
+            /**
+             * @description Unix timestamp when token expires
+             * @example 1764739200
+             */
+            expires_at: number;
+            /**
+             * @description Token type (always Bearer)
+             * @example Bearer
+             * @enum {string}
+             */
+            token_type: "Bearer";
+        };
+        /** @description Request body for creating an authentication token */
+        CreateTokenRequest: {
+            /**
+             * @description Unique identifier for the user in your system
+             * @example user_123
+             */
+            external_user_id: string;
             /**
              * Format: email
-             * @description Gmail email address
-             * @example user@gmail.com
+             * @description Email address of the user
+             * @example user@example.com
              */
             email: string;
+        };
+        /** @description Token revocation response */
+        RevokeTokenResponse: {
             /**
-             * @description Integration status
-             * @example connected
+             * @description Success message
+             * @example Token revoked successfully
              */
-            status: string;
-            /**
-             * @description Whether Gmail is authorized
-             * @example true
-             */
-            authorized_gmail: boolean;
-            /**
-             * @description Account identifier
-             * @example google:123456789012345678
-             */
-            account_identifier: string;
+            message: string;
         };
         /** @description Partner application information */
         AppResponse: {
@@ -1193,6 +2559,284 @@ export interface components {
              */
             is_active: boolean;
         };
+        /**
+         * @description Email template for sequence automation
+         * @example {
+         *       "id": 1,
+         *       "name": "Ask for Introduction",
+         *       "use_case": "sales",
+         *       "used_for": "Use when you have a warm introducer available",
+         *       "subject": "Quick intro request?",
+         *       "email_body": "Hi {introducer_name}, Hope you're doing well! I'm reaching out..."
+         *     }
+         */
+        EmailTemplate: {
+            id: number;
+            name: string;
+            use_case: string;
+            used_for?: string;
+            subject: string;
+            email_body: string;
+        };
+        /**
+         * @description Type of sequence activity
+         * @enum {string}
+         */
+        ActivityType: "incoming_email" | "outgoing_email" | "note";
+        /**
+         * @description Decision status of the activity
+         * @enum {string|null}
+         */
+        ActivityDecision: "pending" | "approved" | "rejected" | null;
+        /**
+         * @description Person who can make an introduction
+         * @example {
+         *       "linkedin_identifier": "john-doe-123",
+         *       "name": "John Doe",
+         *       "rank": 1,
+         *       "is_direct": false
+         *     }
+         */
+        Introducer: {
+            linkedin_identifier: string;
+            name?: string;
+            rank: number;
+            is_direct?: boolean;
+        };
+        /**
+         * @description Encrypted sequence identifier
+         * @example MLVEUadsfgzdsafsc10q5g%3D%3D!vNnNM
+         */
+        SequenceId: string;
+        /**
+         * @description Encrypted lead identifier
+         * @example MLVEUwp4gsag4gMsc10q5g%3D%3D!vNnNM
+         */
+        LeadId: string;
+        /**
+         * @description Status of the lead within the sequence
+         * @enum {string}
+         */
+        LeadStatus: "active" | "not_started" | "pending" | "finished" | "deleted";
+        /** @description Person data from PostgreSQL people table for sequences */
+        SequencePerson: {
+            id: number;
+            first_name: string | null;
+            last_name: string | null;
+            full_name: string | null;
+            /** Format: uri */
+            linkedin_url: string | null;
+            linkedin_identifier: string | null;
+            headline: string | null;
+            location: {
+                city: string | null;
+                state: string | null;
+                country: string | null;
+            } | null;
+            position: {
+                title: string | null;
+                company: {
+                    id: string;
+                    name: string;
+                    /** Format: uri */
+                    linkedin_url: string | null;
+                    domain: string | null;
+                } | null;
+                start_date: string | null;
+                end_date: string | null;
+            } | null;
+            /** Format: uri */
+            image_url: string | null;
+            /** Format: email */
+            email: string | null;
+        };
+        /**
+         * @description Status of the outgoing email
+         * @enum {string}
+         */
+        EmailStatus: "draft" | "scheduled" | "sending" | "sent" | "failed" | "canceled";
+        /**
+         * @description Email sequence for lead nurturing
+         * @example {
+         *       "id": "MLVEUadsfgzdsafsc10q5g%3D%3D!vNnNM",
+         *       "name": "Cold Outreach – Founders in SaaS",
+         *       "description": "3-step intro sequence for early-stage SaaS founders",
+         *       "status": "active",
+         *       "ai_instructions": "You are a helpful SDR. Keep emails under 120 words...",
+         *       "ai_email_templates": [
+         *         {
+         *           "id": 1,
+         *           "name": "Ask for Introduction",
+         *           "use_case": "sales",
+         *           "used_for": "Use when you have a warm introducer available",
+         *           "subject": "Quick intro request?",
+         *           "email_body": "Hi {introducer_name}..."
+         *         }
+         *       ],
+         *       "total_leads": 25,
+         *       "active_leads": 18,
+         *       "open_rate": 68,
+         *       "reply_rate": 12,
+         *       "click_rate": 8,
+         *       "forward_rate": 3
+         *     }
+         */
+        Sequence: {
+            id: components["schemas"]["SequenceId"];
+            name: string;
+            description: string | null;
+            /**
+             * @description Sequence status
+             * @example active
+             * @enum {string}
+             */
+            status: "draft" | "active" | "paused" | "archived";
+            ai_instructions: string;
+            ai_email_templates: components["schemas"]["EmailTemplate"][];
+            /** Format: date-time */
+            leads_last_visited?: string | null;
+            total_leads?: number;
+            active_leads?: number;
+            open_rate?: number;
+            reply_rate?: number;
+            click_rate?: number;
+            forward_rate?: number;
+            /** Format: date-time */
+            created_at?: string;
+            /** Format: date-time */
+            updated_at?: string;
+        };
+        /** @description Response containing list of sequences with pagination */
+        SequencesListResponse: {
+            sequences: components["schemas"]["Sequence"][];
+            pagination: {
+                cursor: string | null;
+                has_next_page: boolean;
+                count: number;
+            };
+        };
+        /** @description Request to create a new sequence */
+        CreateSequenceRequest: {
+            name: string;
+            description?: string | null;
+            ai_instructions: string;
+            ai_email_templates: components["schemas"]["EmailTemplate"][];
+        };
+        /** @description Request to update an existing sequence (partial updates allowed) */
+        UpdateSequenceRequest: {
+            name?: string;
+            description?: string | null;
+            /**
+             * @description Sequence status
+             * @example active
+             * @enum {string}
+             */
+            status?: "draft" | "active" | "paused" | "archived";
+            ai_instructions?: string;
+            ai_email_templates?: components["schemas"]["EmailTemplate"][];
+            /** Format: date-time */
+            leads_last_visited?: string | null;
+        };
+        /** @description Lead within a sequence with person data */
+        SequenceLead: {
+            id: components["schemas"]["LeadId"];
+            sequence_id: components["schemas"]["SequenceId"];
+            village_person_id: number;
+            status: components["schemas"]["LeadStatus"];
+            /** Format: date-time */
+            next_followup_at: string | null;
+            selected_introducers: (components["schemas"]["Introducer"] & {
+                linkedin_identifier?: string;
+                name?: string;
+                rank?: number;
+                is_direct?: boolean;
+            })[] | null;
+            /** Format: date-time */
+            created_at: string;
+            person: components["schemas"]["SequencePerson"] & unknown;
+        };
+        /**
+         * @description Encrypted email identifier
+         * @example MLVEUwp4gsag4gMsc10q5g%3D%3D!vNnNM
+         */
+        EmailId: string;
+        /** @description Request to add leads to a sequence using lead identifiers (person IDs as strings or numbers) */
+        AddLeadsRequest: {
+            lead_identifiers: (string | number)[];
+        };
+        /** @description Request to bulk update all leads in a sequence with the same introducer configuration */
+        BulkUpdateLeadsRequest: {
+            selected_introducers: (components["schemas"]["Introducer"] & {
+                linkedin_identifier?: string;
+                name?: string;
+                rank?: number;
+                is_direct?: boolean;
+            })[] | null;
+        };
+        /** @description Request to update a sequence lead */
+        UpdateLeadRequest: {
+            status?: components["schemas"]["LeadStatus"];
+            selected_introducers?: (components["schemas"]["Introducer"] & {
+                linkedin_identifier?: string;
+                name?: string;
+                rank?: number;
+                is_direct?: boolean;
+            })[] | null;
+            /** Format: date-time */
+            next_followup_at?: string | null;
+        };
+        /**
+         * @description Encrypted activity identifier
+         * @example MLVEUwp4gsag4gMsc10q5g%3D%3D!vNnNM
+         */
+        ActivityId: string;
+        /** @description Request to update an activity decision and email content */
+        UpdateActivityRequest: {
+            decision: components["schemas"]["ActivityDecision"];
+            note?: string;
+            subject?: string;
+            body?: string;
+            /** Format: date-time */
+            scheduled_at?: string;
+            /** Format: email */
+            from_email?: string;
+            user_integration_id?: number;
+            /** Format: email */
+            to_email?: string;
+            reply_in_thread?: boolean;
+        };
+        /** @description Standardized response after creating a sequence activity or performing lead actions */
+        CreateActivityResponse: {
+            id: components["schemas"]["ActivityId"] & unknown;
+            sequence_lead_id: components["schemas"]["LeadId"];
+            activity_type: components["schemas"]["ActivityType"] & unknown;
+            note: string | null;
+            /** Format: date-time */
+            created_at: string | null;
+            message: string;
+            /** Format: date-time */
+            next_followup_at: string | null;
+        };
+        /**
+         * @description Type of user action that creates an activity
+         * @enum {string}
+         */
+        UserAction: "add_note_replan" | "finish" | "snooze" | "remove";
+        /**
+         * @description Duration for snoozing a lead
+         * @enum {string}
+         */
+        SnoozeDuration: "1_day" | "3_days" | "1_week";
+        /** @description Request to create a new sequence activity */
+        CreateActivityRequest: {
+            sequence_lead_id: components["schemas"]["LeadId"];
+            /** @enum {string} */
+            activity_type: "note";
+            user_action: components["schemas"]["UserAction"];
+            note?: string;
+            snooze_duration?: components["schemas"]["SnoozeDuration"];
+            activity_id?: components["schemas"]["ActivityId"];
+        };
     };
     responses: never;
     parameters: never;
@@ -1201,4 +2845,3007 @@ export interface components {
     pathItems: never;
 }
 export type $defs = Record<string, never>;
-export type operations = Record<string, never>;
+export interface operations {
+    list_people: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ListPeopleBody"];
+            };
+        };
+        responses: {
+            /** @description People list retrieved successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["ListPeopleResponse"];
+                        metadata: {
+                            request_id: string;
+                        };
+                    };
+                };
+            };
+            /** @description User profile incomplete */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    search_people: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PeopleSearchRequest"];
+            };
+        };
+        responses: {
+            /** @description Search completed successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["PeopleSearchResponse"];
+                        metadata: {
+                            request_id: string;
+                        };
+                    };
+                };
+            };
+            /** @description Bad request - invalid parameters */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation error - invalid request format */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    get_person_paths: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PersonPathsRequest"];
+            };
+        };
+        responses: {
+            /** @description Person paths found successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["PersonPathsResponse"];
+                        metadata: {
+                            request_id: string;
+                        };
+                    };
+                };
+            };
+            /** @description Bad request - invalid parameters */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Person not found or no connection paths found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    get_person_paths_bulk: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PeopleBulkPathsRequest"];
+            };
+        };
+        responses: {
+            /** @description Bulk person paths found successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["PeopleBulkPathsResponse"];
+                        metadata: {
+                            request_id: string;
+                        };
+                    };
+                };
+            };
+            /** @description Invalid request - missing LinkedIn IDs or exceeds maximum limit */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    sort_people: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PersonSortRequest"];
+            };
+        };
+        responses: {
+            /** @description People sorted successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["PersonSortResponse"];
+                        metadata: {
+                            request_id: string;
+                        };
+                    };
+                };
+            };
+            /** @description Bad request - invalid parameters */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    enrich_person: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EnrichBasicRequest"];
+            };
+        };
+        responses: {
+            /** @description Person enriched successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["EnrichBasicResponse"];
+                        metadata: {
+                            request_id: string;
+                        };
+                    };
+                };
+            };
+            /** @description Bad request - invalid parameters */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Person not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    enrich_person_bulk: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EnrichBulkRequest"];
+            };
+        };
+        responses: {
+            /** @description Bulk enrichment completed (may include partial failures) */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["EnrichBulkResponse"];
+                        metadata: {
+                            request_id: string;
+                        };
+                    };
+                };
+            };
+            /** @description Bad request - invalid parameters */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    enrich_person_email: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EnrichEmailsRequest"];
+            };
+        };
+        responses: {
+            /** @description Email retrieved successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["EnrichEmailsResponse"];
+                        metadata: {
+                            request_id: string;
+                        };
+                    };
+                };
+            };
+            /** @description Bad request - invalid parameters */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Person not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    enrich_person_email_bulk: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EnrichEmailsBulkRequest"];
+            };
+        };
+        responses: {
+            /** @description Bulk email retrieval completed (may include partial failures) */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["EnrichEmailsBulkResponse"];
+                        metadata: {
+                            request_id: string;
+                        };
+                    };
+                };
+            };
+            /** @description Bad request - invalid parameters */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    people_refresh: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PeopleRefreshRequest"];
+            };
+        };
+        responses: {
+            /** @description People refresh initiated successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["PeopleRefreshResponse"];
+                        metadata: {
+                            request_id: string;
+                        };
+                    };
+                };
+            };
+            /** @description Bad request - invalid parameters */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation error - invalid request format */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Failed to process people refresh request */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    get_company_paths: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CompanyPathsRequest"];
+            };
+        };
+        responses: {
+            /** @description Company paths found successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["CompanyPathsResponse"];
+                        metadata: {
+                            request_id: string;
+                        };
+                    };
+                };
+            };
+            /** @description Bad request - invalid parameters */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Company not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    check_company_paths: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CompanyIdentifierInput"];
+            };
+        };
+        responses: {
+            /** @description Company check completed successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["CompanyCheckResponse"];
+                        metadata: {
+                            request_id: string;
+                        };
+                    };
+                };
+            };
+            /** @description Bad request - invalid parameters */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    sort_companies: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CompanySortRequest"];
+            };
+        };
+        responses: {
+            /** @description Companies sorted successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["CompanySortResponse"];
+                        metadata: {
+                            request_id: string;
+                        };
+                    };
+                };
+            };
+            /** @description Bad request - invalid parameters */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Internal server error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    list_companies: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ListCompaniesBody"];
+            };
+        };
+        responses: {
+            /** @description Top companies retrieved successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["ListCompaniesResponse"];
+                        metadata: {
+                            request_id: string;
+                        };
+                    };
+                };
+            };
+            /** @description User profile incomplete */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    enrich_company: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CompanyEnrichIdentifier"];
+            };
+        };
+        responses: {
+            /** @description Company enriched successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["SingleCompanyEnrichResponse"];
+                        metadata: {
+                            request_id: string;
+                        };
+                    };
+                };
+            };
+            /** @description Bad request - invalid parameters */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Company not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Internal server error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    enrich_company_bulk: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CompanyEnrichBulkRequest"];
+            };
+        };
+        responses: {
+            /** @description Bulk enrichment completed (check individual results for errors) */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["CompanyEnrichResponse"];
+                        metadata: {
+                            request_id: string;
+                        };
+                    };
+                };
+            };
+            /** @description Bad request - invalid parameters */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Internal server error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    search_companies: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CompaniesSearchRequest"];
+            };
+        };
+        responses: {
+            /** @description Search completed successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["CompaniesSearchResponse"];
+                        metadata: {
+                            request_id: string;
+                        };
+                    };
+                };
+            };
+            /** @description Bad request - invalid parameters */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation error - invalid request format */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    companies_refresh: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CompanyRefreshResponse"] & {
+                    linkedin_urls: string | string[];
+                    domains: string | string[];
+                    realtime: boolean | 0 | 1;
+                };
+            };
+        };
+        responses: {
+            /** @description Companies refresh initiated successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["CompanyRefreshResponse"];
+                        metadata: {
+                            request_id: string;
+                        };
+                    };
+                };
+            };
+            /** @description Bad request - invalid parameters */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation error - invalid request format */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Failed to process company refresh request */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    list_lists: {
+        parameters: {
+            query?: {
+                page?: string;
+                limit?: string;
+                type?: "people" | "company";
+                search?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Lists retrieved successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["ListsListResponse"];
+                        metadata: {
+                            request_id: string;
+                        };
+                    };
+                };
+            };
+            /** @description Bad request - invalid parameters */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    create_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateListRequest"];
+            };
+        };
+        responses: {
+            /** @description List created successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["CreateListResponse"];
+                        metadata: {
+                            request_id: string;
+                        };
+                    };
+                };
+            };
+            /** @description Bad request - invalid parameters */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Plan limit reached */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    get_list: {
+        parameters: {
+            query?: {
+                page?: string;
+                limit?: string;
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description List retrieved successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["ListWithItemsResponse"];
+                        metadata: {
+                            request_id: string;
+                        };
+                    };
+                };
+            };
+            /** @description Bad request - invalid parameters */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description List not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    delete_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description List deleted successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["DeleteListResponse"];
+                        metadata: {
+                            request_id: string;
+                        };
+                    };
+                };
+            };
+            /** @description Bad request - invalid parameters */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description List not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    update_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateListRequest"];
+            };
+        };
+        responses: {
+            /** @description List updated successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["UpdateListResponse"];
+                        metadata: {
+                            request_id: string;
+                        };
+                    };
+                };
+            };
+            /** @description Bad request - invalid parameters */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description List not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    add_list_items: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AddItemsRequest"];
+            };
+        };
+        responses: {
+            /** @description Items processed */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["AddItemsResponse"];
+                        metadata: {
+                            request_id: string;
+                        };
+                    };
+                };
+            };
+            /** @description Bad request - invalid parameters */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description List not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    remove_list_items: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RemoveItemsRequest"];
+            };
+        };
+        responses: {
+            /** @description Items removed successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["RemoveItemsResponse"];
+                        metadata: {
+                            request_id: string;
+                        };
+                    };
+                };
+            };
+            /** @description Bad request - invalid parameters */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description List not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    list_teams: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Teams retrieved successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["TeamsListResponse"];
+                        metadata: {
+                            request_id: string;
+                        };
+                    };
+                };
+            };
+            /** @description Bad request - invalid parameters */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    upsert_team: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpsertTeamRequest"];
+            };
+        };
+        responses: {
+            /** @description Team created or updated successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["UpsertTeamResponse"];
+                        metadata: {
+                            request_id: string;
+                        };
+                    };
+                };
+            };
+            /** @description Bad request - invalid parameters */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Team not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    join_team: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["JoinTeamRequest"];
+            };
+        };
+        responses: {
+            /** @description Successfully joined team */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["JoinTeamResponse"];
+                        metadata: {
+                            request_id: string;
+                        };
+                    };
+                };
+            };
+            /** @description Bad request - invalid parameters */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Team invite link not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Conflict - user already in team */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    list_groups: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Groups retrieved successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["ListGroupsResponse"];
+                        metadata: {
+                            request_id: string;
+                        };
+                    };
+                };
+            };
+            /** @description Bad request - invalid parameters */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    upsert_group: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpsertGroupRequest"];
+            };
+        };
+        responses: {
+            /** @description Group created or updated successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["UpsertGroupResponse"];
+                        metadata: {
+                            request_id: string;
+                        };
+                    };
+                };
+            };
+            /** @description Bad request - invalid parameters */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Group not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    join_group: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["JoinGroupRequest"];
+            };
+        };
+        responses: {
+            /** @description Successfully joined group */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["JoinGroupResponse"];
+                        metadata: {
+                            request_id: string;
+                        };
+                    };
+                };
+            };
+            /** @description Bad request - invalid parameters */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Group invite link not found or group not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description User is already a member of this group */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Alumni communities not supported */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    get_integration_store: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Integration store retrieved successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["IntegrationStoreResponse"];
+                        metadata: {
+                            request_id: string;
+                        };
+                    };
+                };
+            };
+            /** @description Bad request - invalid parameters */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    get_integration_store_token: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Bad request - invalid parameters */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    list_integration_connections: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Connections retrieved successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["ListIntegrationConnectionsResponse"];
+                        metadata: {
+                            request_id: string;
+                        };
+                    };
+                };
+            };
+            /** @description Bad request - invalid parameters */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    create_integration_connection: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateIntegrationConnectionRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Bad request — app not active */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Integration app not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    delete_integration_connection: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Bad request - invalid parameters */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Forbidden — you do not own this connection */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Connection not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    update_integration_connection: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateIntegrationConnectionRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Bad request - invalid parameters */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Forbidden — you do not own this connection */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Connection not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    get_current_user: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description User information retrieved successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["UserMeResponse"];
+                        metadata: {
+                            request_id: string;
+                        };
+                    };
+                };
+            };
+            /** @description Bad request - invalid parameters */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description User not found in the partner app */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    cancel_user: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description User subscription cancelled successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["CancelUserResponse"];
+                        metadata: {
+                            request_id: string;
+                        };
+                    };
+                };
+            };
+            /** @description Bad request - invalid parameters */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    import_relationships: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ImportRelationshipsRequest"];
+            };
+        };
+        responses: {
+            /** @description Relationships imported successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["ImportRelationshipsResponse"];
+                        metadata: {
+                            request_id: string;
+                        };
+                    };
+                };
+            };
+            /** @description Bad request - invalid parameters */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation error - invalid identifiers or scores */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    create_auth_token: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateTokenRequest"];
+            };
+        };
+        responses: {
+            /** @description Token created successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["TokenResponse"];
+                        metadata: {
+                            request_id: string;
+                        };
+                    };
+                };
+            };
+            /** @description Bad request - invalid parameters */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation error - invalid external_user_id or email format */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    revoke_auth_token: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Token revoked successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["RevokeTokenResponse"];
+                        metadata: {
+                            request_id: string;
+                        };
+                    };
+                };
+            };
+            /** @description Bad request - invalid parameters */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    get_app_info: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description App information retrieved successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["AppResponse"];
+                        metadata: {
+                            request_id: string;
+                        };
+                    };
+                };
+            };
+            /** @description Bad request - invalid parameters */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    get_system_email_templates: {
+        parameters: {
+            query?: {
+                use_case?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description System email templates retrieved successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            use_cases?: string[];
+                            templates: components["schemas"]["EmailTemplate"][];
+                        };
+                        metadata: {
+                            request_id: string;
+                        };
+                    };
+                };
+            };
+            /** @description Bad request - invalid parameters */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    get_sequence_outgoing_activities: {
+        parameters: {
+            query?: {
+                decision?: components["schemas"]["ActivityDecision"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Sequence lead activities retrieved successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            activities: {
+                                id: string;
+                                activity_type: components["schemas"]["ActivityType"];
+                                decision: components["schemas"]["ActivityDecision"];
+                                decision_confirmed_at: string | null;
+                                ai_confidence_score: number | null;
+                                introducer_data: components["schemas"]["Introducer"][] | null;
+                                note: string | null;
+                                ai_prompt: string | null;
+                                created_at: string;
+                                sequence: {
+                                    id: components["schemas"]["SequenceId"];
+                                    name: string;
+                                    /**
+                                     * @description Sequence status
+                                     * @example active
+                                     * @enum {string}
+                                     */
+                                    status: "draft" | "active" | "paused" | "archived";
+                                };
+                                sequence_lead: {
+                                    id: components["schemas"]["LeadId"];
+                                    village_person_id: number;
+                                    status: components["schemas"]["LeadStatus"];
+                                };
+                                person?: components["schemas"]["SequencePerson"];
+                                email_outgoing?: {
+                                    id: string;
+                                    subject: string;
+                                    status: components["schemas"]["EmailStatus"];
+                                    scheduled_at: string | null;
+                                    sent_at: string | null;
+                                    from_email: string;
+                                    to_email: string;
+                                    thread_id: string | null;
+                                    content: {
+                                        body: string;
+                                        html_body: string;
+                                        text_body: string;
+                                    };
+                                };
+                            }[];
+                        };
+                        metadata: {
+                            request_id: string;
+                        };
+                    };
+                };
+            };
+            /** @description Bad request - invalid parameters */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    create_sequence_activity: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateActivityRequest"];
+            };
+        };
+        responses: {
+            /** @description Activity created successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["CreateActivityResponse"];
+                        metadata: {
+                            request_id: string;
+                        };
+                    };
+                };
+            };
+            /** @description Invalid request data */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Sequence lead not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    list_sequences: {
+        parameters: {
+            query?: {
+                status?: "draft" | "active" | "paused" | "archived";
+                limit?: number;
+                cursor?: number | null;
+                search?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Sequences retrieved successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["SequencesListResponse"];
+                        metadata: {
+                            request_id: string;
+                        };
+                    };
+                };
+            };
+            /** @description Bad request - invalid parameters */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    create_sequence: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateSequenceRequest"];
+            };
+        };
+        responses: {
+            /** @description Sequence created successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: components["schemas"]["SequenceId"];
+                        };
+                        metadata: {
+                            request_id: string;
+                        };
+                    };
+                };
+            };
+            /** @description Bad request - invalid parameters */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    get_sequence: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: components["schemas"]["SequenceId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Sequence retrieved successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["Sequence"];
+                        metadata: {
+                            request_id: string;
+                        };
+                    };
+                };
+            };
+            /** @description Bad request - invalid parameters */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Sequence not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    update_sequence: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: components["schemas"]["SequenceId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateSequenceRequest"];
+            };
+        };
+        responses: {
+            /** @description Sequence updated successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["Sequence"];
+                        metadata: {
+                            request_id: string;
+                        };
+                    };
+                };
+            };
+            /** @description Bad request - invalid parameters */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Sequence not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    archive_sequence: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: components["schemas"]["SequenceId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Sequence archived successfully (no content) */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Bad request - invalid parameters */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Sequence not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    get_sequence_leads: {
+        parameters: {
+            query?: {
+                status?: components["schemas"]["LeadStatus"];
+                cursor?: string;
+                limit?: string;
+            };
+            header?: never;
+            path: {
+                sequence_id: components["schemas"]["SequenceId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Sequence leads retrieved successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            leads: (components["schemas"]["SequenceLead"] & {
+                                latest_update: string | null;
+                                /** Format: date-time */
+                                latest_update_date: string | null;
+                            })[];
+                        };
+                        metadata: {
+                            request_id: string;
+                        };
+                    };
+                };
+            };
+            /** @description Bad request - invalid parameters */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Sequence not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    add_leads_to_sequence: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                sequence_id: components["schemas"]["SequenceId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AddLeadsRequest"];
+            };
+        };
+        responses: {
+            /** @description Leads added to sequence successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            added_leads: {
+                                id: components["schemas"]["LeadId"];
+                                village_person_id: number;
+                                status: components["schemas"]["LeadStatus"];
+                            }[];
+                            skipped_leads: {
+                                village_person_id: number;
+                                reason: string;
+                            }[];
+                        };
+                        metadata: {
+                            request_id: string;
+                        };
+                    };
+                };
+            };
+            /** @description Bad request - invalid parameters */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Sequence not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    get_sequence_emails: {
+        parameters: {
+            query?: {
+                status?: components["schemas"]["EmailStatus"];
+            };
+            header?: never;
+            path: {
+                sequence_id: components["schemas"]["SequenceId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Sequence emails retrieved successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            emails: {
+                                id: components["schemas"]["EmailId"];
+                                sequence_id: components["schemas"]["SequenceId"];
+                                sequence_lead_id: components["schemas"]["LeadId"];
+                                subject: string;
+                                from: string | null;
+                                content?: unknown;
+                                status: components["schemas"]["EmailStatus"];
+                                /** Format: date-time */
+                                scheduled_at: string | null;
+                                /** Format: date-time */
+                                sent_at: string | null;
+                                /** Format: date-time */
+                                created_at: string;
+                                person: components["schemas"]["SequencePerson"] & unknown;
+                            }[];
+                        };
+                        metadata: {
+                            request_id: string;
+                        };
+                    };
+                };
+            };
+            /** @description Bad request - invalid parameters */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Sequence not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    bulk_update_sequence_leads: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                sequence_id: components["schemas"]["SequenceId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BulkUpdateLeadsRequest"];
+            };
+        };
+        responses: {
+            /** @description Bulk update completed successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            updated_count: number;
+                            message: string;
+                        };
+                        metadata: {
+                            request_id: string;
+                        };
+                    };
+                };
+            };
+            /** @description Bad request - invalid parameters */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Not authorized to modify this sequence */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Sequence not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    update_sequence_lead: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                sequence_id: components["schemas"]["SequenceId"];
+                lead_id: components["schemas"]["LeadId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateLeadRequest"];
+            };
+        };
+        responses: {
+            /** @description Lead updated successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["SequenceLead"] & (components["schemas"]["SequenceLead"] & {
+                            latest_update: string | null;
+                            /** Format: date-time */
+                            latest_update_date: string | null;
+                        });
+                        metadata: {
+                            request_id: string;
+                        };
+                    };
+                };
+            };
+            /** @description Bad request - invalid parameters */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Sequence or lead not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    delete_sequence_lead: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                lead_id: components["schemas"]["LeadId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Lead deleted successfully (no content) */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Bad request - invalid parameters */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Lead not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    cancel_outgoing_email: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: components["schemas"]["EmailId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Email canceled successfully (no content) */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Bad request - invalid parameters */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Email not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    get_lead_activities: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                sequence_lead_id: components["schemas"]["LeadId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Lead activities retrieved successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            activities: {
+                                id: components["schemas"]["ActivityId"];
+                                activity_type: components["schemas"]["ActivityType"] & unknown;
+                                decision: components["schemas"]["ActivityDecision"];
+                                /** Format: date-time */
+                                decision_confirmed_at: string | null;
+                                ai_confidence_score: number | null;
+                                introducer_data: components["schemas"]["Introducer"] & ({
+                                    linkedin_identifier?: string;
+                                    name?: string;
+                                    rank?: number;
+                                    is_direct?: boolean;
+                                } | null);
+                                note: string | null;
+                                ai_prompt: string | null;
+                                /** Format: date-time */
+                                created_at: string;
+                                email_outgoing: {
+                                    id: components["schemas"]["EmailId"];
+                                    subject: string;
+                                    status: components["schemas"]["EmailStatus"];
+                                    /** Format: date-time */
+                                    scheduled_at: string | null;
+                                    /** Format: date-time */
+                                    sent_at: string | null;
+                                    from_email: string;
+                                    to_email: string;
+                                    thread_id: string | null;
+                                    content: {
+                                        body: string;
+                                        html_body: string;
+                                        text_body: string;
+                                    };
+                                } | null;
+                                email_inbox: {
+                                    id: string;
+                                    subject: string;
+                                    from_email: string;
+                                    to_email: string;
+                                    cc_emails: string[] | null;
+                                    thread_id: string | null;
+                                    /** Format: date-time */
+                                    received_at: string | null;
+                                    /** @enum {string} */
+                                    type: "reply" | "oof" | "bounce_notice" | "other";
+                                    content: {
+                                        body: string;
+                                        html_body: string;
+                                        text_body: string;
+                                    };
+                                } | null;
+                            }[];
+                        };
+                        metadata: {
+                            request_id: string;
+                        };
+                    };
+                };
+            };
+            /** @description Bad request - invalid parameters */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Lead not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    update_activity_decision: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                activity_id: components["schemas"]["ActivityId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateActivityRequest"];
+            };
+        };
+        responses: {
+            /** @description Activity updated successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: {
+                            id: components["schemas"]["ActivityId"];
+                            decision: components["schemas"]["ActivityDecision"];
+                            /** Format: date-time */
+                            decision_confirmed_at: string;
+                            note: string | null;
+                        };
+                        metadata: {
+                            request_id: string;
+                        };
+                    };
+                };
+            };
+            /** @description Bad request - invalid parameters */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized - missing or invalid authentication */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Activity not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+}

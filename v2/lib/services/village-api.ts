@@ -107,11 +107,12 @@ export async function fetchVillageUser(): Promise<VillageUser> {
 
 // POST /v2/companies/paths - Get full company paths
 export async function fetchCompanyPaths(
-  identifier: CompanyIdentifier
+  identifier: CompanyIdentifier,
+  pagination?: { cursor?: string; limit?: number }
 ): Promise<VillageCompanyPathsResponse> {
   const client = getVillageClient();
   const { data, error, response } = await client.POST("/v2/companies/paths", {
-    body: identifier,
+    body: { ...identifier, ...pagination },
   });
 
   if (error || !data) {
