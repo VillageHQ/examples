@@ -12,16 +12,18 @@ async function initVillageForModals() {
     
     // Make it globally available - this enables full-page modals!
     window.Village = Village;
-    
+    publicKey = process.env.PUBLIC_KEY;
+    token = process.env.TOKEN;
+
     console.log('✅ Village SDK silently loaded - ready for full-page modals');
     
     // Initialize Village on the actual page (not popup)
-    Village.init('pk_SMhdS08sJc8UIIxDJbeN7lEeFekDcK9');
+    Village.init(publicKey);
     
     // Try to authorize
     try {
-      const result = await Village.authorize('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkZW50aWZpZXIiOiIxNTYiLCJwdWJsaWNfa2V5IjoicGtfelQ0SHpabjdvVjh4N2RnN1l1Q2pCRUc0MEFNNERoenUiLCJqdGkiOiJkMmEzNmM0ZmQwOWE4MDk0MDU0NGMyM2I1NWUzMjNlMCIsImlhdCI6MTc1NzMzODgxNCwiZXhwIjoxNzg4ODc0ODE0fQ.8nR4PdHAQsAUudYg4P_I1vvDzNPBkQKXW4-WyBR4Wjg');
-      console.log('🔐 Village silently authorized');
+        const result = await Village.authorize(token, 'yourdomain.com');
+        console.log('🔐 Village silently authorized');
     } catch (e) {
       console.log('⚠️ Auth failed, but SDK ready for modals:', e);
     }
