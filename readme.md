@@ -21,7 +21,7 @@ A comprehensive Next.js example that demonstrates:
 - 🛤️ **Browse Paths** - Connection path discovery for companies
 - 👥 **Find Intro Buttons** - Introduction facilitation for specific people
 
-See the [Authorization Flow Documentation](https://docs.village.do/authorization-flow) and [Embedded UIs Documentation](https://docs.village.do/embedded-uis) for more details.
+See the [Authorization Flow Documentation](https://docs.village.ai/authorization-flow) and [Embedded UIs Documentation](https://docs.village.ai/embedded-uis) for more details.
 
 ---
 
@@ -41,7 +41,8 @@ See the [V2 README](./v2/README.md) for detailed setup and integration guide.
 
 ## Documentation Links
 
-- [Village Documentation](https://docs.village.do/)
-- [Embedded UIs](https://docs.village.do/embedded-uis)
-- [Authorization Flow](https://docs.village.do/authorization-flow)
-- [API Reference](https://docs.village.do/api-reference)
+- [Village Documentation](https://docs.village.ai/)
+- [Embedded UIs](https://docs.village.ai/embedded-uis)
+- [Authorization Flow](https://docs.village.ai/authorization-flow)
+- [API Reference](https://docs.village.ai/api-reference)
+- What Village is: [the Village relationship graph API](https://village.ai/landing/relationship-graph-api)
